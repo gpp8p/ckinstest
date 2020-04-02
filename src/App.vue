@@ -2,7 +2,7 @@
     <span class="layoutScreen">
       <section class="navbar">
         <div v-if="this.navBarView==this.VIEW_TOP_MENU">
-            <span class="layoutMenu"><span class="layoutMenuItem" @click="createLayout">New Layout</span><span class="layoutMenuItem">User Administration</span></span>
+            <menu-component :items="this.topMenuItems"></menu-component>
         </div>
       </section>
       <section class="content">
@@ -12,8 +12,6 @@
         <div v-if="this.contentView==this.VIEW_LAYOUT_LIST">
             <layout-list></layout-list>
         </div>
-
-
       </section>
     </span>
 </template>
@@ -23,13 +21,14 @@
   import CKEditor from '@ckeditor/ckeditor5-vue';
   import Vue from 'vue';
   import layoutList from './components/LayoutList.vue';
+  import menuComponent from './components/menuComponent.vue'
 
 
   Vue.use( CKEditor );
 
   export default {
     name: 'app',
-    components: { layoutList, CkeditorComponent },
+    components: { layoutList, CkeditorComponent, menuComponent },
     mounted: function() {
           this.navBarView = this.VIEW_TOP_MENU;
           this.contentView = this.VIEW_LAYOUT_LIST;
@@ -48,7 +47,8 @@
         contentView: this.VIEW_TOP_MENU,
         navBarView: this.VIEW_TOP_MENU,
         showCkTest: false,
-        allLayouts: []
+        allLayouts: [],
+        topMenuItems: ['New Layout', 'UserAdministration']
       }
     },
     methods:{
