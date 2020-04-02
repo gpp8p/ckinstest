@@ -1,0 +1,55 @@
+<template>
+    <span>
+       <layoutListHeader></layoutListHeader>
+                <LayoutListLine v-for="(layout, index) in allLayouts"
+                                :key="index"
+                                :id="layout.id.toString()"
+                                :description="layout.description"
+                                :menu_label="layout.menu_label"
+                                :height="layout.height.toString()"
+                                :width="layout.width.toString()"
+                                @layoutSelected="layoutSelected"
+                >
+                </LayoutListLine>
+
+
+
+    </span>
+</template>
+
+<script>
+    import axios from "axios";
+    //  import LayoutListLine from './components/LayoutListLine.vue';
+    import layoutListHeader from '../components/layoutListHeader.vue';
+    import LayoutListLine from '../components/LayoutListLine.vue';
+
+    export default {
+        name: "LayoutList",
+        components: { LayoutListLine, layoutListHeader},
+        mounted: function() {
+            axios.get('http://localhost:8000//layoutList')
+                .then(response => {
+// eslint-disable-next-line no-debugger
+                    // JSON responses are automatically parsed.
+                    this.allLayouts = response.data;
+                })
+                .catch(e => {
+                    this.errors.push(e);
+                });
+        },
+        data(){
+            return{
+                allLayouts:[]
+            }
+        },
+        methods:{
+            layoutSelected(){
+                console.log('layoutSelected summoned');
+            }
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>
