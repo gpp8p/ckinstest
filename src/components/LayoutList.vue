@@ -43,8 +43,9 @@
             }
         },
         methods:{
-            layoutSelected(){
-                console.log('layoutSelected summoned');
+            layoutSelected(msg){
+                this.$emit('layoutSelected',[msg[0]]);
+                console.log('layoutSelected summoned'+msg);
             }
         }
     }

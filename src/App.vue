@@ -10,7 +10,7 @@
           <ckeditor-component></ckeditor-component>
         </span>
         <div v-if="this.contentView==this.VIEW_LAYOUT_LIST">
-            <layout-list></layout-list>
+            <layout-list @layoutSelected="layoutSelected"></layout-list>
         </div>
       </section>
     </span>
@@ -44,6 +44,7 @@
         VIEW_FLOATING_CONFIG: 5,
         VIEW_LAYOUT_LIST: 6,
         VIEW_TEST_CKEDITOR: 7,
+        VIEW_DEBUG:8,
         contentView: this.VIEW_TOP_MENU,
         navBarView: this.VIEW_TOP_MENU,
         showCkTest: false,
