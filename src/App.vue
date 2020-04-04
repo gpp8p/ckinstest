@@ -2,8 +2,12 @@
     <span class="layoutScreen">
       <section class="navbar">
         <div v-if="this.navBarView==this.VIEW_TOP_MENU">
-            <menu-component :items="this.topMenuItems"></menu-component>
+            <menu-component :items="this.topMenuItems" @menuSelection="menuSelection"></menu-component>
         </div>
+        <div v-if="this.navBarView==this.VIEW_GRID_MENU">
+            <menu-component :items="this.editMenuItems" @menuSelection="menuSelection"></menu-component>
+        </div>
+
       </section>
       <section class="content">
         <span v-if="this.contentView==this.VIEW_TEST_CKEDITOR" class="editor">
@@ -12,7 +16,7 @@
         <div v-if="this.contentView==this.VIEW_LAYOUT_LIST">
             <layout-list @layoutSelected="layoutSelected"></layout-list>
         </div>
-        <edit-layout  :layoutId="selectedLayoutId"  ref="editGrid" @storeValue="cellClicked" @configurationHasBeenSaved="configurationHasBeenSaved" @cardDataLoaded="cardDataLoaded" @linkHelperRequested="linkHelperRequested"></edit-layout>
+        <edit-layout  :layoutId="selectedLayoutId" :editCmd="editCmd" ref="editGrid" @storeValue="cellClicked" @configurationHasBeenSaved="configurationHasBeenSaved" @cardDataLoaded="cardDataLoaded" @linkHelperRequested="linkHelperRequested"></edit-layout>
       </section>
     </span>
 </template>
@@ -52,17 +56,30 @@
         showCkTest: false,
         allLayouts: [],
         topMenuItems: ['New Layout', 'UserAdministration'],
+        editMenuItems: ['Edit', 'Display', 'Layout List'],
         selectedLayoutId: '',
+        editCmd:''
       }
     },
     methods:{
         layoutSelected(msg){
             console.log('layoutSelected');
+            this.navBarView = this.VIEW_GRID_MENU;
             this.contentView = this.VIEW_GRID_MENU;
+            this.editCmd='show';
             this.selectedLayoutId=msg[0];
         },
         createLayout(){
             console.log('createLayout summoned');
+        },
+        menuSelection(msg){
+            switch(msg[0]){
+                case 'Layout List':
+                    this.navBarView = this.VIEW_TOP_MENU;
+                    this.contentView = this.VIEW_LAYOUT_LIST;
+                    this.editCmd='hide';
+                    break;
+            }
         }
     }
   }

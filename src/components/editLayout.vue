@@ -36,12 +36,27 @@ export default {
     layoutId: {
       type: String,
       required: true
+    },
+    editCmd:{
+      type: String,
+      required:true
     }
+
   },
   watch: {
     layoutId: function(){
       debugger;
       this.reloadLayout(this.layoutId);
+    },
+    editCmd: function(){
+      switch(this.editCmd){
+        case 'hide':
+          this.displayGrid=false;
+          break;
+        case 'show':
+          this.displayGrid=true;
+          break;
+      }
     }
   },
   data() {
