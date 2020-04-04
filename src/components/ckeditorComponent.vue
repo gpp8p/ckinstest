@@ -1,7 +1,12 @@
 <template>
-    <div id="ckeditorComponent" class="ckdiv" >
-        <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
-    </div>
+    <span>
+        <div class="configComponentHeader">
+            <span class="headingText"><MyClickLink @myButtonClicked="pageLinkClicked" buttonLabel="Page Link Helper"></MyClickLink></span>
+        </div>
+        <div id="ckeditorComponent" class="ckdiv" >
+            <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
+        </div>
+    </span>
 </template>
 
 <script>
@@ -24,6 +29,28 @@
 
     export default {
         name: "ckeditorComponent",
+        props: {
+            cardStyle: {
+                type: String,
+                required: true
+            },
+            cardId: {
+                type: String,
+                required: true
+            },
+            cardKey: {
+                type: String,
+                required: true
+            },
+            cardPosition: {
+                type: Array,
+                required: true
+            },
+            cardProperties: {
+                type: String,
+                required: false
+            }
+        },
         data() {
             return {
                 editor: ClassicEditor,

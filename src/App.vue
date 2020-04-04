@@ -12,6 +12,7 @@
         <div v-if="this.contentView==this.VIEW_LAYOUT_LIST">
             <layout-list @layoutSelected="layoutSelected"></layout-list>
         </div>
+        <edit-layout  :layoutId="selectedLayoutId"  ref="editGrid" @storeValue="cellClicked" @configurationHasBeenSaved="configurationHasBeenSaved" @cardDataLoaded="cardDataLoaded" @linkHelperRequested="linkHelperRequested"></edit-layout>
       </section>
     </span>
 </template>
@@ -22,13 +23,14 @@
   import Vue from 'vue';
   import layoutList from './components/LayoutList.vue';
   import menuComponent from './components/menuComponent.vue'
+  import EditLayout from "./components/editLayout";
 
 
   Vue.use( CKEditor );
 
   export default {
     name: 'app',
-    components: { layoutList, CkeditorComponent, menuComponent },
+    components: {EditLayout, layoutList, CkeditorComponent, menuComponent },
     mounted: function() {
           this.navBarView = this.VIEW_TOP_MENU;
           this.contentView = this.VIEW_LAYOUT_LIST;
@@ -49,12 +51,15 @@
         navBarView: this.VIEW_TOP_MENU,
         showCkTest: false,
         allLayouts: [],
-        topMenuItems: ['New Layout', 'UserAdministration']
+        topMenuItems: ['New Layout', 'UserAdministration'],
+        selectedLayoutId: '',
       }
     },
     methods:{
-        layoutSelected(){
+        layoutSelected(msg){
             console.log('layoutSelected');
+            this.contentView = this.VIEW_GRID_MENU;
+            this.selectedLayoutId=msg[0];
         },
         createLayout(){
             console.log('createLayout summoned');
