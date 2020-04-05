@@ -1,6 +1,6 @@
 <template>
-    <span>
-        {{prompt}}<input type="text" :name=name :size=size   @keyup.enter="valueEntered" v-model="value"/>
+    <span class="inputField">
+        <span class="inputPrompt">{{prompt}}:</span><span><input type="text" :name=name :size=size   @keyup.enter="valueEntered" v-model="value"/></span>
     </span>
 </template>
 
@@ -39,5 +39,15 @@
 </script>
 
 <style scoped>
+    .inputField {
+        display: grid;
+        grid-template-columns: 30% auto;
+    }
+    .inputPrompt {
+        font-family: Geneva;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: bold;
+    }
 
 </style>

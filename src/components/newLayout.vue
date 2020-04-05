@@ -10,21 +10,25 @@
                          :value="this.fields[0][this.FVALUE]"
                          :name="this.fields[0][this.FNAME]"
             ></input-field>
+
             <input-field :prompt="this.fields[1][this.FPROMPT]"
                          :size="this.fields[1][this.FSIZE]"
                          :value="this.fields[1][this.FVALUE]"
                          :name="this.fields[1][this.FNAME]"
             ></input-field>
+
             <input-field :prompt="this.fields[2][this.FPROMPT]"
                          :size="this.fields[2][this.FSIZE]"
                          :value="this.fields[2][this.FVALUE]"
                          :name="this.fields[2][this.FNAME]"
             ></input-field>
+
             <input-field :prompt="this.fields[3][this.FPROMPT]"
                          :size="this.fields[3][this.FSIZE]"
                          :value="this.fields[3][this.FVALUE]"
                          :name="this.fields[3][this.FNAME]"
             ></input-field>
+
 
         </div>
     </div>

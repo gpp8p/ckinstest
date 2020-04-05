@@ -1,5 +1,10 @@
 <template>
     <span class="layoutScreen">
+        <div v-if="this.floatingView==this.VIEW_FLOATING_CONFIG" id="infoi" v-bind:style='styleObject' >
+            <new-layout v-if="this.draggedComponent=='newLayout'"></new-layout>
+
+        </div>
+
       <section class="navbar">
         <div v-if="this.navBarView==this.VIEW_TOP_MENU">
             <menu-component :items="this.topMenuItems" @menuSelection="menuSelection"></menu-component>
@@ -28,13 +33,14 @@
   import layoutList from './components/LayoutList.vue';
   import menuComponent from './components/menuComponent.vue'
   import EditLayout from "./components/editLayout";
+  import newLayout from "./components/newLayout.vue";
 
 
   Vue.use( CKEditor );
 
   export default {
     name: 'app',
-    components: {EditLayout, layoutList, CkeditorComponent, menuComponent },
+    components: {EditLayout, layoutList, CkeditorComponent, menuComponent, newLayout },
     mounted: function() {
           this.navBarView = this.VIEW_TOP_MENU;
           this.contentView = this.VIEW_LAYOUT_LIST;
@@ -53,12 +59,25 @@
         VIEW_DEBUG:8,
         contentView: this.VIEW_TOP_MENU,
         navBarView: this.VIEW_TOP_MENU,
+        floatingView: this.VIEW_TOP_MENU,
         showCkTest: false,
         allLayouts: [],
         topMenuItems: ['New Layout', 'UserAdministration'],
         editMenuItems: ['Edit', 'Display', 'Layout List'],
         selectedLayoutId: '',
-        editCmd:''
+        editCmd:'',
+
+      componentLeft:0,
+      componentTop:0,
+      styleObject:{
+          left: '200px',
+          top: '300px',
+      },
+      offsetLeft:0,
+      offsetTop:0,
+      showDrg:true,
+      draggedComponent:''
+
       }
     },
     methods:{
@@ -78,6 +97,10 @@
                     this.navBarView = this.VIEW_TOP_MENU;
                     this.contentView = this.VIEW_LAYOUT_LIST;
                     this.editCmd='hide';
+                    break;
+                case 'New Layout':
+                    this.floatingView = this.VIEW_FLOATING_CONFIG;
+                    this.draggedComponent='newLayout';
                     break;
             }
         }
