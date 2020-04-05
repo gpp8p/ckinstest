@@ -1,8 +1,13 @@
 <template>
     <span class="layoutScreen">
         <div v-if="this.floatingView==this.VIEW_FLOATING_CONFIG" id="infoi" v-bind:style='styleObject' >
-            <new-layout v-if="this.draggedComponent=='newLayout'"></new-layout>
-
+            <config-component v-if="this.draggedComponent=='configComponent'"
+                          @newLocation="this.setNewLocation"
+                          @startDrag="this.startDrag"
+                          :currentValues=[]
+                          :configElement="this.newLayoutConfig"
+                          @configSelected="selectionHandler_layout" >
+            ></config-component>
         </div>
 
       <section class="navbar">
@@ -33,52 +38,83 @@
   import layoutList from './components/LayoutList.vue';
   import menuComponent from './components/menuComponent.vue'
   import EditLayout from "./components/editLayout";
-  import newLayout from "./components/newLayout.vue";
+  import configComponent from "./components/configComponent.vue";
 
 
   Vue.use( CKEditor );
 
   export default {
     name: 'app',
-    components: {EditLayout, layoutList, CkeditorComponent, menuComponent, newLayout },
+    components: {EditLayout, layoutList, CkeditorComponent, menuComponent, configComponent },
     mounted: function() {
           this.navBarView = this.VIEW_TOP_MENU;
           this.contentView = this.VIEW_LAYOUT_LIST;
      },
 
     data () {
-      return {
-        VIEW_TOP_MENU: 0,
-        VIEW_CREATE_LAYOUT: 1,
-        VIEW_GRID_MENU: 2,
-        VIEW_CARD_MENU: 3,
-        VIEW_HEADLINE_CONFIG: 4,
-        VIEW_FLOATING_CONFIG: 5,
-        VIEW_LAYOUT_LIST: 6,
-        VIEW_TEST_CKEDITOR: 7,
-        VIEW_DEBUG:8,
-        contentView: this.VIEW_TOP_MENU,
-        navBarView: this.VIEW_TOP_MENU,
-        floatingView: this.VIEW_TOP_MENU,
-        showCkTest: false,
-        allLayouts: [],
-        topMenuItems: ['New Layout', 'UserAdministration'],
-        editMenuItems: ['Edit', 'Display', 'Layout List'],
-        selectedLayoutId: '',
-        editCmd:'',
+        return {
+            VIEW_TOP_MENU: 0,
+            VIEW_CREATE_LAYOUT: 1,
+            VIEW_GRID_MENU: 2,
+            VIEW_CARD_MENU: 3,
+            VIEW_HEADLINE_CONFIG: 4,
+            VIEW_FLOATING_CONFIG: 5,
+            VIEW_LAYOUT_LIST: 6,
+            VIEW_TEST_CKEDITOR: 7,
+            VIEW_DEBUG: 8,
+            contentView: this.VIEW_TOP_MENU,
+            navBarView: this.VIEW_TOP_MENU,
+            floatingView: this.VIEW_TOP_MENU,
+            showCkTest: false,
+            allLayouts: [],
+            topMenuItems: ['New Layout', 'UserAdministration'],
+            editMenuItems: ['Edit', 'Display', 'Layout List'],
+            selectedLayoutId: '',
+            editCmd: '',
 
-      componentLeft:0,
-      componentTop:0,
-      styleObject:{
-          left: '200px',
-          top: '300px',
-      },
-      offsetLeft:0,
-      offsetTop:0,
-      showDrg:true,
-      draggedComponent:''
+            componentLeft: 0,
+            componentTop: 0,
+            styleObject: {
+                left: '200px',
+                top: '300px',
+            },
+            offsetLeft: 0,
+            offsetTop: 0,
+            showDrg: true,
+            draggedComponent: '',
 
-      }
+
+            newLayoutConfig: [
+                {
+                    "label": "New Layout",
+                    "configurationElements": [
+                        {
+                            "type": "input",
+                            "element": "layoutName",
+                            "valueFrom": "layoutName",
+                            "fieldSize": "32",
+                            "prompt": "Layout Name:"
+                        },
+                        {
+                            "type": "input",
+                            "element": "layoutDescription",
+                            "valueFrom": "layoutDescription",
+                            "fieldSize": "50",
+                            "prompt": "Description:"
+                        },
+                        {"type": "input", "element": "rows", "valueFrom": "rows", "fieldSize": "5", "prompt": "Rows:"},
+                        {
+                            "type": "input",
+                            "element": "cols",
+                            "valueFrom": "cols",
+                            "fieldSize": "5",
+                            "prompt": "Columns:"
+                        },
+                        {"type": "saveConfiguration", "element": "saveConfiguration", "prompt": ""}
+                    ]
+                }
+            ]
+        }
     },
     methods:{
         layoutSelected(msg){
@@ -101,8 +137,27 @@
                 case 'New Layout':
                     this.floatingView = this.VIEW_FLOATING_CONFIG;
                     this.draggedComponent='newLayout';
+                    this.draggedComponent='configComponent'
                     break;
             }
+        },
+        setNewLocation(msg){
+// eslint-disable-next-line no-debugger
+//      debugger;
+            this.componentLeft = msg[0]-this.offsetLeft;
+            this.componentTop = msg[1]-this.offsetTop;
+
+            this.styleObject.left = this.componentLeft+'px';
+            this.styleObject.top= this.componentTop+'px';
+
+        },
+        startDrag(msg){
+//        debugger;
+            console.log(msg);
+            this.offsetLeft = msg[0]-this.componentLeft;
+            this.offsetTop = msg[1]-this.componentTop;
+
+
         }
     }
   }
