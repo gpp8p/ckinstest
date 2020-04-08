@@ -26,7 +26,7 @@
         <div v-if="this.contentView==this.VIEW_LAYOUT_LIST">
             <layout-list @layoutSelected="layoutSelected"></layout-list>
         </div>
-        <edit-layout  :layoutId="selectedLayoutId" :editCmd="editCmd" ref="editGrid" @storeValue="cellClicked" @configurationHasBeenSaved="configurationHasBeenSaved" @cardDataLoaded="cardDataLoaded" @linkHelperRequested="linkHelperRequested"></edit-layout>
+        <edit-layout  :layoutId="selectedLayoutId" :editCmd="editCmd" ref="editGrid" @cardClick="cardClick" @storeValue="cellClicked" @configurationHasBeenSaved="configurationHasBeenSaved" @cardDataLoaded="cardDataLoaded" @linkHelperRequested="linkHelperRequested"></edit-layout>
       </section>
     </span>
 </template>
@@ -71,6 +71,8 @@
             editMenuItems: ['Edit', 'Display', 'Layout List'],
             selectedLayoutId: '',
             editCmd: '',
+
+
 
             componentLeft: 0,
             componentTop: 0,
@@ -169,6 +171,21 @@
             this.offsetTop = msg[1]-this.componentTop;
 
 
+        },
+        cardClick(msg){
+            console.log(msg);
+/*
+            this.configCard=true;
+            this.cardTypeBeingConfigured = msg[2]
+            this.instancePositionBeingConfigured = msg[1];
+            this.screenElementBeingConfigured = msg[4];
+            this.cardDataFunction = msg[3];
+            this.cardConfigurationElements=msg[4];
+            this.cardCurrentConfigurationValues=msg[5];
+            this.viewStatus = this.VIEW_FLOATING_CONFIG;
+            this.draggedComponent = 'configComponent';
+            
+ */
         }
     }
   }

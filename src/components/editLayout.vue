@@ -11,7 +11,7 @@
       :gridCss="gridParamDefinition"
       :cardProperties="instance.card_parameters.properties"
       @storeValue="processClick"
-      @cardClick="processCardClick"
+      @cardClick="cardClick"
       @configurationHasBeenSaved="configurationHasBeenSaved"
       @cardDataLoaded="cardDataLoaded"
       @linkHelperRequested="linkHelperRequested"
@@ -313,7 +313,7 @@ export default {
       }
 //      console.log('done');
     },
-    processCardClick(msg){
+    cardClick(msg){
 //      debugger;
 //      var setMsg = msg[0][3];
 //      var cKey = setMsg('here is a message');
@@ -323,7 +323,7 @@ export default {
       var instanceNum = msg[0][1];
       msg[0].push(this.$refs.key[instanceNum].$el);
       msg[0].push(this.cardInstances[instanceNum]);
-      this.$emit('storeValue', msg[0])
+      this.$emit('cardClick', msg[0])
 //      debugger;
     },
     processClick(msg){
