@@ -23,7 +23,12 @@ export default {
      .linkStyle {
           margin-left: 10px;
           margin-right: 10px;
-          color: #0537aa;
+          color: blue;
+          font-family: Geneva;
+          font-size: 12px;
+          font-style: normal;
+          font-weight: bold;
+
      }
      /* unvisited link */
      a:hover {

@@ -6,7 +6,7 @@
                           @startDrag="this.startDrag"
                           :currentValues=[]
                           :configElement="this.newLayoutConfig"
-                          @configSelected="selectionHandler_layout" >
+                          @configSelected="configSelected" >
             ></config-component>
         </div>
 
@@ -123,6 +123,17 @@
             this.contentView = this.VIEW_GRID_MENU;
             this.editCmd='show';
             this.selectedLayoutId=msg[0];
+        },
+        configSelected(msg){
+            switch(msg[0]){
+                case 'cancel':
+                    this.navBarView = this.VIEW_TOP_MENU;
+                    this.contentView = this.VIEW_LAYOUT_LIST;
+                    this.draggedComponent="";
+                    break;
+
+            }
+            console.log(msg);
         },
         createLayout(){
             console.log('createLayout summoned');

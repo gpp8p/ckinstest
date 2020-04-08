@@ -1,6 +1,6 @@
 <template>
     <span>
-        <MyClickLink @myButtonClicked="nextClicked" buttonLabel="Next"></MyClickLink>
+        <MyClickLink @myButtonClicked="nextClicked" v-if="this.currentStatus>0" buttonLabel="Next"></MyClickLink>
         <MyClickLink v-if="this.currentStatus>0"   @myButtonClicked="prevClicked" buttonLabel="Previous"></MyClickLink>
         <MyClickLink @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyClickLink>
     </span>

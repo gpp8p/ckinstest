@@ -1,6 +1,6 @@
 <template>
     <span class="saveConfigButton">
-        <MyButton @myButtonClicked="saveConfiguration" buttonLabel="Save Configuration"></MyButton>
+        <MyButton @myButtonClicked="saveConfiguration" buttonLabel="Save"></MyButton>
     </span>
 
 </template>
