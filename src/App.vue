@@ -4,8 +4,8 @@
             <config-component v-if="this.draggedComponent=='configComponent'"
                           @newLocation="this.setNewLocation"
                           @startDrag="this.startDrag"
-                          :currentValues=[]
-                          :configElement="this.newLayoutConfig"
+                          :currentValues=this.cardCurrentConfigurationValues
+                          :configElement=this.cardConfigurationElements
                           @configSelected="configSelected" >
             ></config-component>
         </div>
@@ -85,6 +85,16 @@
             showDrg: true,
             draggedComponent: '',
 
+            cardCurrentConfigurationValues:{},
+            configCard: false,
+            cardTypeBeingConfigured: '',
+            instancePositionBeingConfigured:0,
+            screenElementBeingConfigured: {},
+            cardDataFunction:null,
+            cardConfigurationElements:{},
+
+
+
 
             newLayoutConfig: [
                 {
@@ -132,6 +142,10 @@
                     this.navBarView = this.VIEW_TOP_MENU;
                     this.contentView = this.VIEW_LAYOUT_LIST;
                     this.draggedComponent="";
+                    this.editCmd = 'hide';
+                    break;
+                default:
+                    this.cardDataFunction(msg[1], msg[0]);
                     break;
 
             }
@@ -149,6 +163,8 @@
                     break;
                 case 'New Layout':
                     this.floatingView = this.VIEW_FLOATING_CONFIG;
+                    this.cardCurrentConfigurationValues={};
+                    this.cardConfigurationElements = this.newLayoutConfig;
                     this.draggedComponent='newLayout';
                     this.draggedComponent='configComponent'
                     break;
@@ -172,9 +188,13 @@
 
 
         },
+        cardDataLoaded(msg){
+          console.log(msg);
+          this.cardCurrentConfigurationValues=msg[1];
+        },
         cardClick(msg){
             console.log(msg);
-/*
+
             this.configCard=true;
             this.cardTypeBeingConfigured = msg[2]
             this.instancePositionBeingConfigured = msg[1];
@@ -182,10 +202,8 @@
             this.cardDataFunction = msg[3];
             this.cardConfigurationElements=msg[4];
             this.cardCurrentConfigurationValues=msg[5];
-            this.viewStatus = this.VIEW_FLOATING_CONFIG;
+            this.floatingView = this.VIEW_FLOATING_CONFIG;
             this.draggedComponent = 'configComponent';
-            
- */
         }
     }
   }
