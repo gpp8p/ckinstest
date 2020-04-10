@@ -11,7 +11,7 @@
                                        :configElement="configElement"
                                        :key="index"
                                        @configSelected="selectionHandler_flexConfig2"  ></configElement>
-                        <next-cancel-link :currentStatus="this.configurationLine" @buttonClick="bumpLine" ></next-cancel-link>
+                        <next-cancel-link :show-next="this.next" :show-prev="this.prev" :show-save="this.save" @buttonClick="bumpLine" ></next-cancel-link>
                 </div>
         </div>
 
@@ -36,7 +36,10 @@
                closeExpanderFunction: null,
                configurationLine: 0,
                configurationElements:this.configElement,
-               configurationCurrentValues:this.currentValues
+               configurationCurrentValues:this.currentValues,
+               next: false,
+               prev: false,
+               save: false
 
             }
         },
@@ -49,7 +52,22 @@
                             type: Object,
                             required:true
                     },
+                    onePage:{
+                            type: Boolean,
+                            required:true
+                    }
          },
+        mounted(){
+                if(this.onePage){
+                        this.next=false;
+                        this.prev=false;
+                        this.save=true;
+                }else{
+                        this.next=true;
+                        this.prev=false;
+                        this.save=false;
+                }
+        },
 
         methods: {
             handleDragStart(evt){
@@ -66,7 +84,8 @@
                     // eslint-disable-next-line no-console
                console.log(evt);
             },
-                selectionHandler_flexConfig2(msg){
+
+            selectionHandler_flexConfig2(msg){
                         // eslint-disable-next-line no-debugger
                         debugger;
                         // eslint-disable-next-line no-console
@@ -87,24 +106,42 @@
                                 }
                         }
                         this.$emit('configSelected',[msg[0],msg[1],this.openExpander, this.closeExpander ]);
-                },
+             },
 
-                bumpLine(msg){
-//        debugger;
-                        if(this.configurationLine<this.configurationElements.length){
-                                switch(msg[0]){
-                                        case 'cancel':
-                                                this.$emit('configSelected',[msg[0]]);
-                                                break;
-                                        case 'next':
-                                                this.configurationLine++;
-                                                break;
-                                        case 'previous':
-                                                this.configurationLine--;
-                                                break;
-                                }
-                        }
+             bumpLine(msg){
+  //      debugger;
+                if(msg[0]=='cancel'){
+                        this.$emit('configSelected',[msg[0]]);
                 }
+                if(msg[0]=='save'){
+                        this.$emit('configSelected',[msg[0]]);
+                }
+//                if(this.configurationLine<(this.configurationElements.length-1)){
+                        switch(msg[0]){
+                                 case 'next':
+                                        this.configurationLine++;
+                                         if(this.configurationLine==(this.configurationElements.length-1)){
+                                                 this.next=false;
+                                                 this.save=true;
+                                         }
+                                         if(this.configurationLine>0){
+                                                 this.prev=true;
+                                         }
+                                        break;
+                                case 'previous':
+                                        this.configurationLine--;
+                                        if(this.configurationLine==0){
+                                                this.prev=false;
+                                        }
+                                        if(this.configurationLine<(this.configurationElements.length-1)){
+                                                this.next=true;
+                                                this.save=false;
+                                        }
+                                        break;
+                        }
+
+//                }
+             }
 
         }
     }

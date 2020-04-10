@@ -6,6 +6,7 @@
                           @startDrag="this.startDrag"
                           :currentValues=this.cardCurrentConfigurationValues
                           :configElement=this.cardConfigurationElements
+                          :onePage=this.onePageStatus
                           @configSelected="configSelected" >
             ></config-component>
         </div>
@@ -92,6 +93,7 @@
             screenElementBeingConfigured: {},
             cardDataFunction:null,
             cardConfigurationElements:{},
+            onePageStatus:false,
 
 
 
@@ -121,8 +123,7 @@
                             "valueFrom": "cols",
                             "fieldSize": "5",
                             "prompt": "Columns:"
-                        },
-                        {"type": "saveConfiguration", "element": "saveConfiguration", "prompt": ""}
+                        }
                     ]
                 }
             ]
@@ -165,6 +166,7 @@
                     this.floatingView = this.VIEW_FLOATING_CONFIG;
                     this.cardCurrentConfigurationValues={};
                     this.cardConfigurationElements = this.newLayoutConfig;
+                    this.onePageStatus=true;
                     this.draggedComponent='newLayout';
                     this.draggedComponent='configComponent'
                     break;

@@ -45,7 +45,7 @@ export default {
   },
   watch: {
     layoutId: function(){
-      debugger;
+//      debugger;
       this.reloadLayout(this.layoutId);
     },
     editCmd: function(){

@@ -1,7 +1,8 @@
 <template>
     <span>
-        <MyClickLink @myButtonClicked="nextClicked" v-if="this.currentStatus>0" buttonLabel="Next"></MyClickLink>
-        <MyClickLink v-if="this.currentStatus>0"   @myButtonClicked="prevClicked" buttonLabel="Previous"></MyClickLink>
+        <MyClickLink v-if=showNext @myButtonClicked="nextClicked"  buttonLabel="Next"></MyClickLink>
+        <MyClickLink v-if=showPrev @myButtonClicked="prevClicked" buttonLabel="Previous"></MyClickLink>
+        <MyClickLink v-if=showSave @myButtonClicked="saveClicked" buttonLabel="Save"></MyClickLink>
         <MyClickLink @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyClickLink>
     </span>
 </template>
@@ -12,9 +13,17 @@
     name: "nextCancelButtons",
     components: {MyClickLink},
     props: {
-      currentStatus:{
-        type: Number,
+      showNext:{
+        type: Boolean,
         required: true
+      },
+      showPrev:{
+          type: Boolean,
+          required: true
+      },
+      showSave:{
+          type: Boolean,
+          required: true
       }
     },
     methods:{
@@ -26,6 +35,9 @@
       },
       cancelClicked(){
         this.$emit('buttonClick', ['cancel'])
+      },
+      saveClicked(){
+         this.$emit('buttonClick', ['save'])
       }
     }
 

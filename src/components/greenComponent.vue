@@ -141,12 +141,6 @@ export default {
             },
             { "type": "color", "valueFrom":"color", "element": "color", "prompt": "Color:" }
           ]
-        },
-        {
-          "label":"Save Configuration",
-          "configurationElements":[
-            {"type":"saveConfiguration", "element":"saveConfiguration", "prompt":""}
-          ]
         }
       ],
     }
