@@ -11,6 +11,9 @@
                                        :configElement="configElement"
                                        :key="index"
                                        @configSelected="selectionHandler_flexConfig2"  ></configElement>
+
+                </div>
+                <div class="linkFooter">
                         <next-cancel-link :show-next="this.next" :show-prev="this.prev" :show-save="this.save" @buttonClick="bumpLine" ></next-cancel-link>
                 </div>
         </div>
@@ -173,7 +176,12 @@
                 margin-top: 5px;
         }
         .configComponentBody {
-                height: 90%;
+                height: 80%;
+                margin-left: 10px;
+                margin-right: 10px;
+        }
+        .linkFooter {
+                height: 10%;
                 margin-left: 10px;
                 margin-right: 10px;
         }

@@ -27,7 +27,7 @@
         <div v-if="this.contentView==this.VIEW_LAYOUT_LIST">
             <layout-list @layoutSelected="layoutSelected"></layout-list>
         </div>
-        <edit-layout  :layoutId="selectedLayoutId" :editCmd="editCmd" ref="editGrid" @cardClick="cardClick" @storeValue="cellClicked" @configurationHasBeenSaved="configurationHasBeenSaved" @cardDataLoaded="cardDataLoaded" @linkHelperRequested="linkHelperRequested"></edit-layout>
+        <layout  :layoutId="selectedLayoutId" :layoutCmd="layoutCmd" ref="editGrid" @cardClick="cardClick" @storeValue="cellClicked" @configurationHasBeenSaved="configurationHasBeenSaved" @cardDataLoaded="cardDataLoaded" @linkHelperRequested="linkHelperRequested"></layout>
       </section>
     </span>
 </template>
@@ -38,7 +38,7 @@
   import Vue from 'vue';
   import layoutList from './components/LayoutList.vue';
   import menuComponent from './components/menuComponent.vue'
-  import EditLayout from "./components/editLayout";
+  import Layout from "./components/Layout";
   import configComponent from "./components/configComponent.vue";
 
 
@@ -46,7 +46,7 @@
 
   export default {
     name: 'app',
-    components: {EditLayout, layoutList, CkeditorComponent, menuComponent, configComponent },
+    components: {Layout, layoutList, CkeditorComponent, menuComponent, configComponent },
     mounted: function() {
           this.navBarView = this.VIEW_TOP_MENU;
           this.contentView = this.VIEW_LAYOUT_LIST;
@@ -71,7 +71,7 @@
             topMenuItems: ['New Layout', 'UserAdministration'],
             editMenuItems: ['Edit', 'Display', 'Layout List'],
             selectedLayoutId: '',
-            editCmd: '',
+            layoutCmd: '',
 
 
 
@@ -116,7 +116,12 @@
                             "fieldSize": "50",
                             "prompt": "Description:"
                         },
-                        {"type": "input", "element": "rows", "valueFrom": "rows", "fieldSize": "5", "prompt": "Rows:"},
+                        {"type": "input",
+                            "element": "rows",
+                            "valueFrom": "rows",
+                            "fieldSize": "5",
+                            "prompt": "Rows:"
+                        },
                         {
                             "type": "input",
                             "element": "cols",
@@ -134,7 +139,7 @@
             console.log('layoutSelected');
             this.navBarView = this.VIEW_GRID_MENU;
             this.contentView = this.VIEW_GRID_MENU;
-            this.editCmd='show';
+            this.layoutCmd='show';
             this.selectedLayoutId=msg[0];
         },
         configSelected(msg){
@@ -143,7 +148,7 @@
                     this.navBarView = this.VIEW_TOP_MENU;
                     this.contentView = this.VIEW_LAYOUT_LIST;
                     this.draggedComponent="";
-                    this.editCmd = 'hide';
+                    this.layoutCmd = 'hide';
                     break;
                 default:
                     this.cardDataFunction(msg[1], msg[0]);
@@ -160,15 +165,17 @@
                 case 'Layout List':
                     this.navBarView = this.VIEW_TOP_MENU;
                     this.contentView = this.VIEW_LAYOUT_LIST;
-                    this.editCmd='hide';
+                    this.layoutCmd='hide';
                     break;
                 case 'New Layout':
-                    this.floatingView = this.VIEW_FLOATING_CONFIG;
-                    this.cardCurrentConfigurationValues={};
-                    this.cardConfigurationElements = this.newLayoutConfig;
-                    this.onePageStatus=true;
-                    this.draggedComponent='newLayout';
-                    this.draggedComponent='configComponent'
+
+//                    this.floatingView = this.VIEW_FLOATING_CONFIG;
+//                    this.cardCurrentConfigurationValues={};
+//                    this.cardConfigurationElements = this.newLayoutConfig;
+//                    this.onePageStatus=true;
+//                    this.draggedComponent='newLayout';
+//                    this.draggedComponent='configComponent';
+                    this.layoutCmd = 'new';
                     break;
             }
         },
@@ -195,6 +202,7 @@
           this.cardCurrentConfigurationValues=msg[1];
         },
         cardClick(msg){
+            debugger;
             console.log(msg);
 
             this.configCard=true;

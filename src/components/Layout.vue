@@ -30,14 +30,14 @@ import genericCard from '../components/genericCard.vue';
 
 
 export default {
-  name: "editLayout",
+  name: "Layout",
   components: {genericCard},
   props: {
     layoutId: {
       type: String,
       required: true
     },
-    editCmd:{
+    layoutCmd:{
       type: String,
       required:true
     }
@@ -48,13 +48,17 @@ export default {
 //      debugger;
       this.reloadLayout(this.layoutId);
     },
-    editCmd: function(){
-      switch(this.editCmd){
+    layoutCmd: function(){
+      debugger;
+      switch(this.layoutCmd){
         case 'hide':
           this.displayGrid=false;
           break;
         case 'show':
           this.displayGrid=true;
+          break;
+        case 'new':
+          this.$emit('cardClick',['cardClicked',null,'newLayout',this.setData,this.newLayoutConfig,{},null]);
           break;
       }
     }
@@ -89,7 +93,42 @@ export default {
       unSelectedColor: 'rgb(219, 170, 110)',
       newCardType: '',
       scolor: '',
+      layoutConfigurationValues: {},
 
+      newLayoutConfig: [
+        {
+          "label": "New Layout",
+          "configurationElements": [
+            {
+              "type": "input",
+              "element": "layoutName",
+              "valueFrom": "layoutName",
+              "fieldSize": "32",
+              "prompt": "Layout Name:"
+            },
+            {
+              "type": "input",
+              "element": "layoutDescription",
+              "valueFrom": "layoutDescription",
+              "fieldSize": "50",
+              "prompt": "Description:"
+            },
+            {"type": "input",
+              "element": "rows",
+              "valueFrom": "rows",
+              "fieldSize": "5",
+              "prompt": "Rows:"
+            },
+            {
+              "type": "input",
+              "element": "cols",
+              "valueFrom": "cols",
+              "fieldSize": "5",
+              "prompt": "Columns:"
+            }
+          ]
+        }
+      ]
 
     };
   },
@@ -384,36 +423,28 @@ export default {
 
 //      }
 //    },
-    setElementStyle(instanceNumber, styleType, newStyle){
-//      debugger;
-//      console.log(newStyle);
-      if(styleType == 'backgroundColor'){
-        this.$refs.key[instanceNumber].$el.style.backgroundColor=newStyle;
-      }
-      if(styleType == 'backgroundImage'){
-        var backGroundImageReference = "url('"+newStyle+"')";
-        this.$refs.key[instanceNumber].$el.style.backgroundImage=backGroundImageReference;
-        this.$refs.key[instanceNumber].$el.style.backgroundSize="100% 100%";
-      }
-      if(styleType == 'fontFamily'){
-        this.$refs.key[instanceNumber].$el.style.fontFamily=newStyle;
-      }
-      if(styleType=='fontSize'){
-        this.$refs.key[instanceNumber].$el.style.fontSize=newStyle;
-      }
-      if(styleType=='fontWeight'){
-        this.$refs.key[instanceNumber].$el.style.fontWeight=newStyle;
-      }
-      if(styleType=='fontStyle'){
-        this.$refs.key[instanceNumber].$el.style.fontStyle=newStyle;
-      }
-      if(styleType=='color'){
-        this.$refs.key[instanceNumber].$el.style.color=newStyle;
-      }
-      if(styleType=='textAlign'){
-        this.$refs.key[instanceNumber].$el.style.textAlign=newStyle;
+
+    setData(cardData, cardDataElement){
+      switch (cardDataElement){
+        case 'layoutName':
+          this.layoutConfigurationValues['layoutName'] = cardData;
+          break;
+        case 'layoutDescription':
+          this.layoutConfigurationValues['layoutDescription'] = cardData;
+          break;
+        case 'rows':
+          this.layoutConfigurationValues['rows'] = cardData;
+          break;
+        case 'cols':
+          this.layoutConfigurationValues['cols'] = cardData;
+          break;
+        case 'backgroundColor':
+          break;
+        case 'save':
+          break;
       }
     },
+
 
     createBlankLayout(height,width, description, menu_label){
 //      console.log('createBlankLayout:'+height+' '+width);

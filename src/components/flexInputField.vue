@@ -55,7 +55,7 @@
 <style scoped>
     .inputField {
         display: grid;
-        grid-template-columns: 25% auto;
+        grid-template-columns: 30% auto;
     }
     .inputPrompt {
         font-family: Geneva;
