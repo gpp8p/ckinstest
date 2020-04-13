@@ -1,6 +1,6 @@
 <template>
     <span class="inputField">
-        <span class="inputPrompt">{{configElement.prompt}}</span><span><input type="text" :size=configElement.fieldSize ref="titleText"  @keyup.enter="titleEntered" v-model="value"/></span>
+        <span class="inputPrompt">{{configElement.prompt}}</span><span><input type="text" :size=configElement.fieldSize ref="titleText"  @keydown.tab.exact = "textEntered" @keyup.enter="textEntered" v-model="value"/></span>
     </span>
 </template>
 
@@ -32,7 +32,7 @@
       }
     },
     methods:{
-      titleEntered(){
+      textEntered(){
 //        debugger;
         this.currentValues[this.configElement.element]=this.value;
         this.$emit('configSelected', [this.configElement.element, this.value, null, null,true]);

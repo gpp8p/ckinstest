@@ -49,7 +49,7 @@ export default {
       this.reloadLayout(this.layoutId);
     },
     layoutCmd: function(){
-      debugger;
+//      debugger;
       switch(this.layoutCmd){
         case 'hide':
           this.displayGrid=false;
@@ -353,17 +353,10 @@ export default {
 //      console.log('done');
     },
     cardClick(msg){
-//      debugger;
-//      var setMsg = msg[0][3];
-//      var cKey = setMsg('here is a message');
-//      console.log(cKey);
-//      console.log("Card Click - "+msg);
-//      debugger
       var instanceNum = msg[0][1];
       msg[0].push(this.$refs.key[instanceNum].$el);
       msg[0].push(this.cardInstances[instanceNum]);
       this.$emit('cardClick', msg[0])
-//      debugger;
     },
     processClick(msg){
       console.log('editGrid2 gets storeValue-'+msg);

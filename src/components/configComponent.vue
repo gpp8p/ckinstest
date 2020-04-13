@@ -10,7 +10,9 @@
                                        :currentValues="currentValues"
                                        :configElement="configElement"
                                        :key="index"
-                                       @configSelected="selectionHandler_flexConfig2"  ></configElement>
+                                       :fieldNumber="index"
+                                       :onePage="onePage"
+                                       @configSelected="configSelected"  ></configElement>
 
                 </div>
                 <div class="linkFooter">
@@ -38,29 +40,39 @@
                expandedElementNow: 'null',
                closeExpanderFunction: null,
                configurationLine: 0,
+               activeInputField:0,
+               inputElementsOnPage:0,
                configurationElements:this.configElement,
                configurationCurrentValues:this.currentValues,
                next: false,
                prev: false,
-               save: false
+               save: false,
+               onePage: false
 
             }
         },
         props: {
                     configElement: {
-                            type: Object,
+                            type: Array,
                             required: true
                     },
                     currentValues:{
                             type: Object,
                             required:true
                     },
-                    onePage:{
-                            type: Boolean,
-                            required:true
-                    }
          },
         mounted(){
+                console.log('configComponent mounted');
+                if(this.configElement.length>1){
+                        this.onePage=false;
+                }else{
+                        this.onePage=true;
+                }
+                for(var e=0;e<this.configurationElements[this.configurationLine].configurationElements.length;e++){
+                     if(this.configurationElements[this.configurationLine].configurationElements[e].type=='input'){
+                             this.inputElementsOnPage++;
+                     }
+                }
                 if(this.onePage){
                         this.next=false;
                         this.prev=false;
@@ -70,6 +82,7 @@
                         this.prev=false;
                         this.save=false;
                 }
+                this.activeInputField=0;
         },
 
         methods: {
@@ -87,12 +100,14 @@
                     // eslint-disable-next-line no-console
                console.log(evt);
             },
-
-            selectionHandler_flexConfig2(msg){
+            bumpField(){
+               this.activeInputField++;
+            },
+            configSelected(msg){
                         // eslint-disable-next-line no-debugger
                         debugger;
                         // eslint-disable-next-line no-console
-                        console.log('selectionHandler');
+                        console.log('configSelected');
                         // eslint-disable-next-line no-console
                         console.log(msg);
                         if (msg[1] == 'activated'){
@@ -105,7 +120,22 @@
                         }
                         if(typeof msg[4] != 'undefined'){
                                 if(msg[4]==true){
-                                        this.bumpLine(['next']);
+                                        if(this.activeInputField<this.configurationElements[this.configurationLine].configurationElements.length){
+                                                this.activeInputField++;
+                                        }else{
+                                                this.activeInputField=0;
+                                                this.bumpLine(['next']);
+                                        }
+
+                            /*
+                                        if(this.onePage){
+                                                this.activeInputField++;
+                                        }else{
+                                                this.bumpLine(['next']);
+                                        }
+
+                             */
+
                                 }
                         }
                         this.$emit('configSelected',[msg[0],msg[1],this.openExpander, this.closeExpander ]);
@@ -123,6 +153,13 @@
                         switch(msg[0]){
                                  case 'next':
                                         this.configurationLine++;
+                                         this.inputElementsOnPage=0;
+                                         for(var e=0;e<this.configurationElements[this.configurationLine].configurationElements.length;e++){
+                                                 if(this.configurationElements[this.configurationLine].configurationElements[e].type=='input'){
+                                                         this.inputElementsOnPage++;
+                                                 }
+                                         }
+
                                          if(this.configurationLine==(this.configurationElements.length-1)){
                                                  this.next=false;
                                                  this.save=true;
@@ -133,6 +170,13 @@
                                         break;
                                 case 'previous':
                                         this.configurationLine--;
+                                        this.inputElementsOnPage=0;
+                                        for(e=0;e<this.configurationElements[this.configurationLine].configurationElements.length;e++){
+                                                if(this.configurationElements[this.configurationLine].configurationElements[e].type=='input'){
+                                                        this.inputElementsOnPage++;
+                                                }
+                                        }
+
                                         if(this.configurationLine==0){
                                                 this.prev=false;
                                         }

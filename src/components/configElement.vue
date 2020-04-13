@@ -47,6 +47,14 @@
       currentValues:{
         type: Object,
         required: false
+      },
+      fieldNumber:{
+          type: Number,
+          required: true
+      },
+      onePage:{
+          type: Boolean,
+          required: true
       }
 
     },

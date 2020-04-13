@@ -6,7 +6,6 @@
                           @startDrag="this.startDrag"
                           :currentValues=this.cardCurrentConfigurationValues
                           :configElement=this.cardConfigurationElements
-                          :onePage=this.onePageStatus
                           @configSelected="configSelected" >
             ></config-component>
         </div>
@@ -93,47 +92,14 @@
             screenElementBeingConfigured: {},
             cardDataFunction:null,
             cardConfigurationElements:{},
-            onePageStatus:false,
+            onePage:false,
 
 
 
-
-            newLayoutConfig: [
-                {
-                    "label": "New Layout",
-                    "configurationElements": [
-                        {
-                            "type": "input",
-                            "element": "layoutName",
-                            "valueFrom": "layoutName",
-                            "fieldSize": "32",
-                            "prompt": "Layout Name:"
-                        },
-                        {
-                            "type": "input",
-                            "element": "layoutDescription",
-                            "valueFrom": "layoutDescription",
-                            "fieldSize": "50",
-                            "prompt": "Description:"
-                        },
-                        {"type": "input",
-                            "element": "rows",
-                            "valueFrom": "rows",
-                            "fieldSize": "5",
-                            "prompt": "Rows:"
-                        },
-                        {
-                            "type": "input",
-                            "element": "cols",
-                            "valueFrom": "cols",
-                            "fieldSize": "5",
-                            "prompt": "Columns:"
-                        }
-                    ]
-                }
-            ]
         }
     },
+
+
     methods:{
         layoutSelected(msg){
             console.log('layoutSelected');
@@ -172,7 +138,7 @@
 //                    this.floatingView = this.VIEW_FLOATING_CONFIG;
 //                    this.cardCurrentConfigurationValues={};
 //                    this.cardConfigurationElements = this.newLayoutConfig;
-//                    this.onePageStatus=true;
+//                    this.onePage=true;
 //                    this.draggedComponent='newLayout';
 //                    this.draggedComponent='configComponent';
                     this.layoutCmd = 'new';
@@ -202,9 +168,15 @@
           this.cardCurrentConfigurationValues=msg[1];
         },
         cardClick(msg){
-            debugger;
+ //           debugger;
             console.log(msg);
-
+/*
+            if(msg[4][0].onePage){
+                this.onePage=true;
+            }else{
+                this.onePage=false;
+            }
+ */
             this.configCard=true;
             this.cardTypeBeingConfigured = msg[2]
             this.instancePositionBeingConfigured = msg[1];
