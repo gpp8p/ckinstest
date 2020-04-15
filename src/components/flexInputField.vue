@@ -1,12 +1,12 @@
 <template>
     <span class="inputField">
-        <span class="inputPrompt">{{configElement.prompt}}</span><span><input type="text" :size=configElement.fieldSize ref="titleText"  @keydown.tab.exact = "textEntered" @keyup.enter="textEntered" v-model="value"/></span>
+        <span class="inputPrompt">{{configElement.prompt}}</span><span><input type="text" :size=configElement.fieldSize ref="titleText" v-focus="this.configElement.element==this.activeInputField"  @keydown.tab.exact = "textEntered" @keyup.enter="textEntered" v-model="value"/></span>
     </span>
 </template>
 
 <script>
   /* eslint-disable no-debugger,no-console */
-
+  import { focus } from 'vue-focus';
   export default {
     name: "flexInputField",
     props: {
@@ -17,14 +17,20 @@
       currentValues:{
         type: Object,
         required: false
+      },
+      activeInputField:{
+        type: String,
+        required: true
       }
 
     },
     data(){
       return{
-        value: this.getCurrentValue()
+        value: this.getCurrentValue(),
+        focusActive: this.isActive
       }
     },
+    directives: { focus: focus },
     watch:{
       currentValues: function(){
 //          debugger;
@@ -32,6 +38,14 @@
       }
     },
     methods:{
+      isActive(){
+          debugger;
+        if(this.configElement.element==this.activeInputField){
+            return true;
+        }else{
+            return false;
+        }
+      },
       textEntered(){
 //        debugger;
         this.currentValues[this.configElement.element]=this.value;

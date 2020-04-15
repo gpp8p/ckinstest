@@ -10,6 +10,7 @@
                                        :currentValues="currentValues"
                                        :configElement="configElement"
                                        :key="index"
+                                       :activeInputField="currentlyActiveInputElement"
                                        :fieldNumber="index"
                                        :onePage="onePage"
                                        @configSelected="configSelected"  ></configElement>
@@ -47,7 +48,10 @@
                next: false,
                prev: false,
                save: false,
-               onePage: false
+               onePage: false,
+               inputElements: [],
+               currentlyActiveInputElement: this.activeField,
+
 
             }
         },
@@ -71,6 +75,7 @@
                 for(var e=0;e<this.configurationElements[this.configurationLine].configurationElements.length;e++){
                      if(this.configurationElements[this.configurationLine].configurationElements[e].type=='input'){
                              this.inputElementsOnPage++;
+                             this.inputElements.push(this.configurationElements[this.configurationLine].configurationElements[e].element);
                      }
                 }
                 if(this.onePage){
@@ -82,7 +87,9 @@
                         this.prev=false;
                         this.save=false;
                 }
-                this.activeInputField=0;
+                this.activeInputField=-1;
+                this.bumpField();
+                console.log(this.currentlyActiveInputElement);
         },
 
         methods: {
@@ -101,11 +108,20 @@
                console.log(evt);
             },
             bumpField(){
+//               debugger;
                this.activeInputField++;
+               this.currentlyActiveInputElement = this.activeField();
+            },
+            activeField(){
+                    if(this.inputElements.length>0){
+                            return this.inputElements[this.activeInputField];
+                    }else{
+                            return '';
+                    }
             },
             configSelected(msg){
                         // eslint-disable-next-line no-debugger
-                        debugger;
+//                        debugger;
                         // eslint-disable-next-line no-console
                         console.log('configSelected');
                         // eslint-disable-next-line no-console
@@ -121,7 +137,7 @@
                         if(typeof msg[4] != 'undefined'){
                                 if(msg[4]==true){
                                         if(this.activeInputField<this.configurationElements[this.configurationLine].configurationElements.length){
-                                                this.activeInputField++;
+                                                this.bumpField();
                                         }else{
                                                 this.activeInputField=0;
                                                 this.bumpLine(['next']);

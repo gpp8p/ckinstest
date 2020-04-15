@@ -5,7 +5,7 @@
         <flex-color2 v-if="this.configElement.type=='color'" ref="this.configElement.element" :currentValues="currentValues" :config-element="this.configElement" @configSelected="selectionHandler_recursionComponent" ></flex-color2>
         <flex-radio v-if="this.configElement.type=='radio'" ref="this.configElement.element" :currentValues="currentValues" :config-element="this.configElement" @configSelected="selectionHandler_recursionComponent" @openCheckedByDefault="openCheckedByDefault"></flex-radio>
         <flex-font-select v-if="this.configElement.type=='fontSelect'" ref="this.configElement.element" :currentValues="currentValues" :config-element="this.configElement" @configSelected="selectionHandler_recursionComponent" ></flex-font-select>
-        <flex-input-field v-if="this.configElement.type=='input'" ref="this.configElement.element" :currentValues="currentValues" :config-element="this.configElement" @configSelected="selectionHandler_recursionComponent" ></flex-input-field>
+        <flex-input-field v-if="this.configElement.type=='input'" ref="this.configElement.element" :activeInputField=activeInputField :currentValues="currentValues" :config-element="this.configElement" @configSelected="selectionHandler_recursionComponent" ></flex-input-field>
         <flex-file-upload v-if="this.configElement.type=='file'" ref="this.configElement.element" :currentValues="currentValues" :config-element="this.configElement" @configSelected="selectionHandler_recursionComponent" ></flex-file-upload>
         <save-configuration v-if="this.configElement.type=='saveConfiguration'" ref="this.configElement.element" :currentValues="currentValues" :config-element="this.configElement" @configSelected="selectionHandler_recursionComponent" ></save-configuration>
         <span  v-if="configElement.element==this.elementExpandedNow">
@@ -55,6 +55,10 @@
       onePage:{
           type: Boolean,
           required: true
+      },
+      activeInputField:{
+          type: String,
+          required: true
       }
 
     },
@@ -68,6 +72,7 @@
 
 // eslint-disable-next-line no-console
     methods: {
+
       selectionHandler_recursionComponent(msg){
 //        debugger;
         console.log('selectionHandler');
