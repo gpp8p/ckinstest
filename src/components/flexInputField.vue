@@ -1,12 +1,11 @@
 <template>
     <span class="inputField">
-        <span class="inputPrompt">{{configElement.prompt}}</span><span><input type="text" :size=configElement.fieldSize ref="titleText" v-focus="this.configElement.element==this.activeInputField"  @keydown.tab.exact = "textEntered" @keyup.enter="textEntered" v-model="value"/></span>
+        <span class="inputPrompt">{{configElement.prompt}}</span><span><input ref="inputField" type="text" :size=configElement.fieldSize  @keydown.tab.exact = "tabErr" @keyup.enter="textEntered" v-model="value"/></span>
     </span>
 </template>
 
 <script>
   /* eslint-disable no-debugger,no-console */
-  import { focus } from 'vue-focus';
   export default {
     name: "flexInputField",
     props: {
@@ -27,24 +26,39 @@
     data(){
       return{
         value: this.getCurrentValue(),
-        focusActive: this.isActive
+        focusActive: this.isActive,
       }
     },
-    directives: { focus: focus },
     watch:{
+      activeInputField: function(){
+        console.log('activeInputField is'+ this.activeInputField+" element is:"+this.configElement.element);
+        if(this.isActive()){
+            console.log('was active');
+            this.$refs.inputField.focus();
+        }
+      },
       currentValues: function(){
 //          debugger;
         this.val = this.getCurrentValue();
       }
     },
+    mounted(){
+//        debugger;
+        if(this.isActive()){
+            console.log(this.configElement.element+' is active');
+        }
+    },
     methods:{
       isActive(){
-          debugger;
+//          debugger;
         if(this.configElement.element==this.activeInputField){
             return true;
         }else{
             return false;
         }
+      },
+      tabErr(){
+        alert('use Enter key instead');
       },
       textEntered(){
 //        debugger;
@@ -60,7 +74,8 @@
           var thisProp = this.currentValues[this.configElement.element].substr(colonDelimiterLocatedAt+1);
           return thisProp;
         }
-      }
+      },
+
 // eslint-disable-next-line no-debugger
     },
   };
