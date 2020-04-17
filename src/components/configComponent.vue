@@ -17,7 +17,7 @@
 
                 </div>
                 <div class="linkFooter">
-                        <next-cancel-link :show-next="this.next" :show-prev="this.prev" :show-save="this.save" @buttonClick="bumpLine" ></next-cancel-link>
+                        <next-cancel-link :cmd="this.cmdHighlight" :show-next="this.next" :show-prev="this.prev" :show-save="this.save" @buttonClick="bumpLine" ></next-cancel-link>
                 </div>
         </div>
 
@@ -51,7 +51,7 @@
                onePage: false,
                inputElements: [],
                currentlyActiveInputElement: this.activeField,
-
+               cmdHighlight:''
 
             }
         },
@@ -136,11 +136,17 @@
                         }
                         if(typeof msg[4] != 'undefined'){
                                 if(msg[4]==true){
-                                        if(this.activeInputField<this.configurationElements[this.configurationLine].configurationElements.length){
-                                                this.bumpField();
-                                        }else{
-                                                this.activeInputField=0;
-                                                this.bumpLine(['next']);
+                                        debugger;
+                                        var numberOfConfigurationElements = this.configurationElements[this.configurationLine].configurationElements.length;
+                                        this.bumpField();
+                                        if(this.activeInputField==numberOfConfigurationElements){
+                                                if(this.onePage){
+                                                    this.activeInputField=0;
+                                                    this.cmdHighlight = 'highlightSave';
+                                                }else{
+                                                     this.activeInputField=0;
+                                                     this.bumpLine(['next']);
+                                                }
                                         }
 
                             /*
