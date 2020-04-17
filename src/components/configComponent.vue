@@ -168,14 +168,19 @@
 //                if(this.configurationLine<(this.configurationElements.length-1)){
                         switch(msg[0]){
                                  case 'next':
+                                         debugger;
+                                         this.inputElements = [];
                                         this.configurationLine++;
                                          this.inputElementsOnPage=0;
                                          for(var e=0;e<this.configurationElements[this.configurationLine].configurationElements.length;e++){
                                                  if(this.configurationElements[this.configurationLine].configurationElements[e].type=='input'){
+                                                         this.inputElements.push(this.configurationElements[this.configurationLine].configurationElements[e].element);
                                                          this.inputElementsOnPage++;
                                                  }
                                          }
-
+                                         this.currentlyActiveInputElement='';
+                                         this.activeInputField=-1;
+                                         this.bumpField();
                                          if(this.configurationLine==(this.configurationElements.length-1)){
                                                  this.next=false;
                                                  this.save=true;
@@ -185,14 +190,18 @@
                                          }
                                         break;
                                 case 'previous':
+                                        this.inputElements = [];
                                         this.configurationLine--;
                                         this.inputElementsOnPage=0;
                                         for(e=0;e<this.configurationElements[this.configurationLine].configurationElements.length;e++){
                                                 if(this.configurationElements[this.configurationLine].configurationElements[e].type=='input'){
+                                                        this.inputElements.push(this.configurationElements[this.configurationLine].configurationElements[e].element);
                                                         this.inputElementsOnPage++;
                                                 }
                                         }
-
+                                        this.currentlyActiveInputElement='';
+                                        this.activeInputField=-1;
+                                        this.bumpField();
                                         if(this.configurationLine==0){
                                                 this.prev=false;
                                         }

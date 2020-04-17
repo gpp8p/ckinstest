@@ -31,6 +31,7 @@
     },
     watch:{
       activeInputField: function(){
+        debugger;
         console.log('activeInputField is'+ this.activeInputField+" element is:"+this.configElement.element);
         if(this.isActive()){
             console.log('was active');
@@ -40,12 +41,16 @@
       currentValues: function(){
 //          debugger;
         this.val = this.getCurrentValue();
+          if(this.isActive()){
+              this.$refs.inputField.focus();
+          }
       }
     },
     mounted(){
 //        debugger;
         if(this.isActive()){
             console.log(this.configElement.element+' is active');
+            this.$refs.inputField.focus();
         }
     },
     methods:{
