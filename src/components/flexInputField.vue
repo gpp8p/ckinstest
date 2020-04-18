@@ -27,6 +27,7 @@
       return{
         value: this.getCurrentValue(),
         focusActive: this.isActive,
+        filterComponents:[]
       }
     },
     watch:{
@@ -66,7 +67,25 @@
         alert('use Enter key instead');
       },
       textEntered(){
-//        debugger;
+        debugger;
+       if(this.configElement.required && typeof(this.value)=='undefined') {
+              alert('this field is required');
+              return;
+       }
+       if(typeof(this.configElement.filter)!='undefined'){
+            this.filterComponents = this.configElement.filter.split(':');
+            switch(this.filterComponents[0]){
+                case 'number':
+                    if(isNaN(this.value)){
+                        alert('a number is required');
+                        return;
+                    }
+                    break;
+            }
+       }
+
+
+
         this.currentValues[this.configElement.element]=this.value;
         this.$emit('configSelected', [this.configElement.element, this.value, null, null,true]);
       },

@@ -104,7 +104,8 @@ export default {
               "element": "layoutName",
               "valueFrom": "layoutName",
               "fieldSize": "32",
-              "prompt": "Layout Name:"
+              "prompt": "Layout Name:",
+              "required":true
             },
             {
               "type": "input",
@@ -117,14 +118,16 @@ export default {
               "element": "rows",
               "valueFrom": "rows",
               "fieldSize": "5",
-              "prompt": "Rows:"
+              "prompt": "Rows:",
+              "filter":"number:0:20"
             },
             {
               "type": "input",
               "element": "cols",
               "valueFrom": "cols",
               "fieldSize": "5",
-              "prompt": "Columns:"
+              "prompt": "Columns:",
+              "filter":"number:0:20"
             }
           ]
         }
