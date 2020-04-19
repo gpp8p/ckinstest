@@ -8,6 +8,11 @@
                           :configElement=this.cardConfigurationElements
                           @configSelected="configSelected" >
             ></config-component>
+            <SimpleNewLayout
+                    v-if="this.draggedComponent=='simpleNewLayout'"
+                    @newLocation="this.setNewLocation"
+                    @startDrag="this.startDrag"
+            ></SimpleNewLayout>
         </div>
 
       <section class="navbar">
@@ -39,13 +44,14 @@
   import menuComponent from './components/menuComponent.vue'
   import Layout from "./components/Layout";
   import configComponent from "./components/configComponent.vue";
+  import SimpleNewLayout from "./components/SimpleNewLayout.vue";
 
 
   Vue.use( CKEditor );
 
   export default {
     name: 'app',
-    components: {Layout, layoutList, CkeditorComponent, menuComponent, configComponent },
+    components: {Layout, layoutList, CkeditorComponent, menuComponent, configComponent, SimpleNewLayout },
     mounted: function() {
           this.navBarView = this.VIEW_TOP_MENU;
           this.contentView = this.VIEW_LAYOUT_LIST;
@@ -135,13 +141,13 @@
                     break;
                 case 'New Layout':
 
-//                    this.floatingView = this.VIEW_FLOATING_CONFIG;
+                    this.floatingView = this.VIEW_FLOATING_CONFIG;
 //                    this.cardCurrentConfigurationValues={};
 //                    this.cardConfigurationElements = this.newLayoutConfig;
 //                    this.onePage=true;
 //                    this.draggedComponent='newLayout';
-//                    this.draggedComponent='configComponent';
-                    this.layoutCmd = 'new';
+                    this.draggedComponent='simpleNewLayout';
+//                    this.layoutCmd = 'new';
                     break;
             }
         },
