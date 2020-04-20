@@ -10,10 +10,12 @@
             <span class="inputPrompt">Layout Description:</span><span><input ref="description" type="text" size="50" v-model="description" @keydown.tab.exact = "descriptionCheck"/></span>
             <span class="inputPrompt">Rows:</span><span><input ref="rows" type="text" size="5" v-model="rows" @keydown.tab.exact = "rowCheck"/></span>
             <span class="inputPrompt">Columns:</span><span><input ref="cols" type="text" size="5" v-model="cols" @keydown.tab.exact = "colsCheck"/></span>
+            <span class="inputPrompt">Background Color:</span>
+            <span class="input-color-container">
+                    <input  id="input-color" type="color" class="input-color" @change="newColor" :value="colorVal"/>
+            </span>
+
         </div>
-
-
-
         <div class="dialogComponentFooter">
             <a href="#" class="linkStyle" v-on:click="saveClicked" >Save</a>
             <a href="#" class="linkStyle" v-on:click="cancelClicked" >Cancel</a>
@@ -33,6 +35,8 @@
                 description:'',
                 rows:'',
                 cols:'',
+                colorVal:'#05a9ff'
+
 
             }
         },
@@ -92,7 +96,17 @@
                     event.preventDefault();
                 }
 
-            }
+            },
+            saveClicked(){
+                this.$emit('saveNewLayout', [this.name, this.description, this.rows, this.cols, this.colorVal]);
+            },
+            cancelClicked(){
+                this.$emit('configSelected',['cancel']);
+            },
+            newColor(evt){
+                this.colorVal=evt.target.value;
+            },
+
         }
     }
 </script>
@@ -165,6 +179,36 @@
         font-style: normal;
         font-weight: bold;
     }
+    .input-color-container {
+        position: relative;
+        overflow: hidden;
+        width: 15px;
+        height: 20px;
+        top: 2px;
+        margin-right: 5px;
+        border: solid 2px #ddd;
+        border-radius: 5px;
+    }
+
+    .input-color {
+        position: absolute;
+        right: -8px;
+        top: -5px;
+        width: 36px;
+        height: 26px;
+        border: none;
+    }
+
+    .input-color-label {
+        cursor: pointer;
+        text-decoration: underline;
+        color: #dbd50c;
+        margin-right: 30px;
+    }
+    .colorSpan{
+        margin-left: 26px;
+    }
+
 
 
 

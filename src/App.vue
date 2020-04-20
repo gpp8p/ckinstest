@@ -12,6 +12,8 @@
                     v-if="this.draggedComponent=='simpleNewLayout'"
                     @newLocation="this.setNewLocation"
                     @startDrag="this.startDrag"
+                    @configSelected="this.configSelected"
+                    @saveNewLayout="this.saveBlankLayout"
             ></SimpleNewLayout>
         </div>
 
@@ -45,6 +47,7 @@
   import Layout from "./components/Layout";
   import configComponent from "./components/configComponent.vue";
   import SimpleNewLayout from "./components/SimpleNewLayout.vue";
+  import axios from 'axios';
 
 
   Vue.use( CKEditor );
@@ -115,6 +118,7 @@
             this.selectedLayoutId=msg[0];
         },
         configSelected(msg){
+            debugger;
             switch(msg[0]){
                 case 'cancel':
                     this.navBarView = this.VIEW_TOP_MENU;
@@ -192,7 +196,24 @@
             this.cardCurrentConfigurationValues=msg[5];
             this.floatingView = this.VIEW_FLOATING_CONFIG;
             this.draggedComponent = 'configComponent';
-        }
+        },
+        saveBlankLayout(msg){
+//        debugger;
+            axios.post('http://localhost:8000/createLayoutNoBlanks?XDEBUG_SESSION_START=17516', {
+                name: msg[0],
+                description: msg[1],
+                height: msg[2],
+                width:msg[3],
+                backgroundColor:msg[4]
+            }).then(response=>
+            {
+//            debugger;
+                this.layoutId=response.data;
+//                this.$refs.editGrid.createBlankLayout(msg[2],msg[3],msg[1],msg[0]);
+            }).catch(function(error) {
+                console.log(error);
+            });
+        },
     }
   }
 </script>
