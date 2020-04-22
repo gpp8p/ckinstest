@@ -50,7 +50,9 @@ export default {
     },
     layoutCmd: function(){
 //      debugger;
-      switch(this.layoutCmd){
+      var cmd = this.layoutCmd.split(':');
+      console.log(cmd);
+      switch(cmd[0]){
         case 'hide':
           this.displayGrid=false;
           break;
@@ -59,6 +61,10 @@ export default {
           break;
         case 'new':
           this.$emit('cardClick',['cardClicked',null,'newLayout',this.setData,this.newLayoutConfig,{},null]);
+          break;
+        case 'blankLayout':
+          this.makeBlankLayout(cmd[1],cmd[2], cmd[3], cmd[4], cmd[5]);
+          this.$emit("newLayoutSaved");
           break;
       }
     }
@@ -442,9 +448,9 @@ export default {
     },
 
 
-    createBlankLayout(height,width, description, menu_label){
+    createBlankLayout(height,width, description, menu_label, backgroundColor){
 //      console.log('createBlankLayout:'+height+' '+width);
-      this.$emit('storeValue', this.makeBlankLayout(height,width, description, menu_label));
+      this.$emit('storeValue', this.makeBlankLayout(height,width, description, menu_label, backgroundColor));
     },
 
     makeBlankLayout(height,width, description, menu_label, backgroundColor){
@@ -467,6 +473,7 @@ export default {
       }
       var newLayout = {cards: newCards, layout: {description:description, menu_label: menu_label, height: (height-1), width:(width-1)}};
       var newGridParameters = this.layoutGridParameters(height, width, backgroundColor);
+      this.reloadBlankLayout(newLayout);
       return ['newBlankGrid', newLayout, newGridParameters, this.layoutGrid ];
     },
 

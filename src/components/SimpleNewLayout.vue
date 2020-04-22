@@ -27,6 +27,7 @@
 
 <script>
     import Vue from 'vue';
+    import axios from "axios";
     export default {
         name: "SimpleNewLayout",
         data () {
@@ -35,7 +36,8 @@
                 description:'',
                 rows:'',
                 cols:'',
-                colorVal:'#05a9ff'
+                colorVal:'#05a9ff',
+                layoutId:0
 
 
             }
@@ -97,14 +99,29 @@
                 }
 
             },
-            saveClicked(){
-                this.$emit('saveNewLayout', [this.name, this.description, this.rows, this.cols, this.colorVal]);
-            },
             cancelClicked(){
                 this.$emit('configSelected',['cancel']);
             },
             newColor(evt){
                 this.colorVal=evt.target.value;
+            },
+            saveClicked(){
+//        debugger;
+                axios.post('http://localhost:8000/createLayoutNoBlanks?XDEBUG_SESSION_START=17516', {
+                    name: this.name,
+                    description: this.description,
+                    height: this.rows,
+                    width: this.cols,
+                    backgroundColor: this.colorVal
+                }).then(response=>
+                {
+//            debugger;
+                    this.layoutId=response.data;
+                    this.$emit('saveNewLayout', [this.layoutId, this.height, this.width, this.description, this.name, this.backgroundColor]);
+//                this.$refs.editGrid.createBlankLayout(msg[2],msg[3],msg[1],msg[0]);
+                }).catch(function(error) {
+                    console.log(error);
+                });
             },
 
         }

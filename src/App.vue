@@ -33,7 +33,7 @@
         <div v-if="this.contentView==this.VIEW_LAYOUT_LIST">
             <layout-list @layoutSelected="layoutSelected"></layout-list>
         </div>
-        <layout  :layoutId="selectedLayoutId" :layoutCmd="layoutCmd" ref="editGrid" @cardClick="cardClick" @storeValue="cellClicked" @configurationHasBeenSaved="configurationHasBeenSaved" @cardDataLoaded="cardDataLoaded" @linkHelperRequested="linkHelperRequested"></layout>
+        <layout  :layoutId="selectedLayoutId" :layoutCmd="layoutCmd" ref="editGrid" @cardClick="cardClick" @storeValue="cellClicked" @configurationHasBeenSaved="configurationHasBeenSaved" @cardDataLoaded="cardDataLoaded" @linkHelperRequested="linkHelperRequested" @newLayoutSaved="newLayoutSaved"></layout>
       </section>
     </span>
 </template>
@@ -47,7 +47,7 @@
   import Layout from "./components/Layout";
   import configComponent from "./components/configComponent.vue";
   import SimpleNewLayout from "./components/SimpleNewLayout.vue";
-  import axios from 'axios';
+//  import axios from 'axios';
 
 
   Vue.use( CKEditor );
@@ -198,22 +198,17 @@
             this.draggedComponent = 'configComponent';
         },
         saveBlankLayout(msg){
-//        debugger;
-            axios.post('http://localhost:8000/createLayoutNoBlanks?XDEBUG_SESSION_START=17516', {
-                name: msg[0],
-                description: msg[1],
-                height: msg[2],
-                width:msg[3],
-                backgroundColor:msg[4]
-            }).then(response=>
-            {
-//            debugger;
-                this.layoutId=response.data;
-//                this.$refs.editGrid.createBlankLayout(msg[2],msg[3],msg[1],msg[0]);
-            }).catch(function(error) {
-                console.log(error);
-            });
+//            console.log(msg);
+            this.selectedLayoutId = msg[0];
+            this.layoutCmd = 'blankLayout'+':'+msg[1]+':'+msg[2]+':'+msg[3]+':'+msg[4]+':'+msg[5];
         },
+        newLayoutSaved(){
+            debugger;
+            this.navBarView = this.VIEW_GRID_MENU;
+            this.contentView = this.VIEW_GRID_MENU;
+            this.draggedComponent="";
+            this.layoutCmd='show';
+        }
     }
   }
 </script>
