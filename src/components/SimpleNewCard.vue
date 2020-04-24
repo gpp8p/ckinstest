@@ -28,7 +28,7 @@
 
 <script>
     import Vue from 'vue';
-    import axios from "axios";
+//    import axios from "axios";
     export default {
         name: "SimpleNewCard",
         data () {

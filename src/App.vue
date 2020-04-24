@@ -8,6 +8,15 @@
                           :configElement=this.cardConfigurationElements
                           @configSelected="configSelected" >
             ></config-component>
+            <SimpleNewCard
+                    v-if="this.draggedComponent=='simpleNewCard'"
+                    @newLocation="this.setNewLocation"
+                    @startDrag="this.startDrag"
+                    @configSelected="this.configSelected"
+                    @saveNewCard="this.saveNewCard"
+            >
+            </SimpleNewCard>
+
             <SimpleNewLayout
                     v-if="this.draggedComponent=='simpleNewLayout'"
                     @newLocation="this.setNewLocation"
@@ -33,7 +42,7 @@
         <div v-if="this.contentView==this.VIEW_LAYOUT_LIST">
             <layout-list @layoutSelected="layoutSelected"></layout-list>
         </div>
-        <layout  :layoutId="selectedLayoutId" :layoutCmd="layoutCmd" ref="editGrid" @cardClick="cardClick" @storeValue="cellClicked" @configurationHasBeenSaved="configurationHasBeenSaved" @cardDataLoaded="cardDataLoaded" @linkHelperRequested="linkHelperRequested" @newLayoutSaved="newLayoutSaved"></layout>
+        <layout  :layoutId="selectedLayoutId" :layoutCmd="layoutCmd" ref="editGrid" @cardClick="cardClick" @layoutMessage="this.layoutMessage" @configurationHasBeenSaved="configurationHasBeenSaved" @cardDataLoaded="cardDataLoaded" @linkHelperRequested="linkHelperRequested" @newLayoutSaved="newLayoutSaved"></layout>
       </section>
     </span>
 </template>
@@ -47,6 +56,8 @@
   import Layout from "./components/Layout";
   import configComponent from "./components/configComponent.vue";
   import SimpleNewLayout from "./components/SimpleNewLayout.vue";
+  import SimpleNewCard from "./components/SimpleNewCard.vue";
+
 //  import axios from 'axios';
 
 
@@ -54,7 +65,7 @@
 
   export default {
     name: 'app',
-    components: {Layout, layoutList, CkeditorComponent, menuComponent, configComponent, SimpleNewLayout },
+    components: {Layout, layoutList, CkeditorComponent, menuComponent, configComponent, SimpleNewLayout, SimpleNewCard },
     mounted: function() {
           this.navBarView = this.VIEW_TOP_MENU;
           this.contentView = this.VIEW_LAYOUT_LIST;
@@ -103,6 +114,8 @@
             cardConfigurationElements:{},
             onePage:false,
 
+            newCardCoords: []
+
 
 
         }
@@ -114,8 +127,8 @@
             console.log('layoutSelected');
             this.navBarView = this.VIEW_GRID_MENU;
             this.contentView = this.VIEW_GRID_MENU;
-            this.layoutCmd='show';
-            this.selectedLayoutId=msg[0];
+            this.layoutCmd='show:'+msg[0];
+//            this.selectedLayoutId=msg[0];
         },
         configSelected(msg){
             debugger;
@@ -208,6 +221,23 @@
             this.contentView = this.VIEW_GRID_MENU;
             this.draggedComponent="";
             this.layoutCmd='show';
+        },
+        layoutMessage(msg){
+            debugger;
+//            console.log(msg);
+            switch(msg[0]){
+                case 'topLeft':
+                    this.newCardCoords.push(msg[1]);
+                    this.newCardCoords.push(msg[2]);
+                    break;
+                case 'bottomRight':
+                    this.newCardCoords.push(msg[1]);
+                    this.newCardCoords.push(msg[2]);
+                    this.floatingView = this.VIEW_FLOATING_CONFIG;
+                    this.draggedComponent='simpleNewCard';
+                    break;
+
+            }
         }
     }
   }

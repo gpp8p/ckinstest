@@ -36,7 +36,7 @@
                 description:'',
                 rows:'',
                 cols:'',
-                colorVal:'#05a9ff',
+                colorVal:'#dbddd0',
                 layoutId:0
 
 
