@@ -712,6 +712,13 @@
   dependencies:
     "@ckeditor/ckeditor5-utils" "^18.0.0"
 
+"@ckeditor/ckeditor5-alignment@^18.0.0":
+  version "18.0.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-alignment/-/ckeditor5-alignment-18.0.0.tgz#3383e50e43e9fdd4ddb28422823d373f53d06ebf"
+  dependencies:
+    "@ckeditor/ckeditor5-core" "^18.0.0"
+    "@ckeditor/ckeditor5-ui" "^18.0.0"
+
 "@ckeditor/ckeditor5-basic-styles@^18.0.0":
   version "18.0.0"
   resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-basic-styles/-/ckeditor5-basic-styles-18.0.0.tgz#6df81f7e59343e43bbf6e91a350865a9844b1bfa"
@@ -816,6 +823,14 @@
     "@ckeditor/ckeditor5-typing" "^18.0.0"
     "@ckeditor/ckeditor5-undo" "^18.0.0"
 
+"@ckeditor/ckeditor5-font@^18.0.0":
+  version "18.0.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-font/-/ckeditor5-font-18.0.0.tgz#c975d2f0d2c3b1fdd2eff290ed9b693934d4055d"
+  dependencies:
+    "@ckeditor/ckeditor5-core" "^18.0.0"
+    "@ckeditor/ckeditor5-ui" "^18.0.0"
+    "@ckeditor/ckeditor5-utils" "^18.0.0"
+
 "@ckeditor/ckeditor5-image@^18.0.0":
   version "18.0.0"
   resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-image/-/ckeditor5-image-18.0.0.tgz#24ae3e8abd2ce2faac3a606a40cda1b2fc089b0b"
@@ -837,6 +852,16 @@
     "@ckeditor/ckeditor5-ui" "^18.0.0"
     lodash-es "^4.17.10"
 
+"@ckeditor/ckeditor5-list@^18.0.0":
+  version "18.0.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-list/-/ckeditor5-list-18.0.0.tgz#d41dad74db6ef8efbd4f33d608249a4d602f3daf"
+  dependencies:
+    "@ckeditor/ckeditor5-core" "^18.0.0"
+    "@ckeditor/ckeditor5-engine" "^18.0.0"
+    "@ckeditor/ckeditor5-paragraph" "^18.0.0"
+    "@ckeditor/ckeditor5-ui" "^18.0.0"
+    "@ckeditor/ckeditor5-utils" "^18.0.0"
+
 "@ckeditor/ckeditor5-paragraph@^18.0.0":
   version "18.0.0"
   resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-paragraph/-/ckeditor5-paragraph-18.0.0.tgz#ceff94020074ebaae00fbcc48d8062dd4953ca3f"
@@ -844,6 +869,23 @@
     "@ckeditor/ckeditor5-core" "^18.0.0"
     "@ckeditor/ckeditor5-ui" "^18.0.0"
     "@ckeditor/ckeditor5-utils" "^18.0.0"
+
+"@ckeditor/ckeditor5-paste-from-office@^18.0.0":
+  version "18.0.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-paste-from-office/-/ckeditor5-paste-from-office-18.0.0.tgz#421ca914940b747619c722dfdbb96cc55a258f4c"
+  dependencies:
+    "@ckeditor/ckeditor5-clipboard" "^18.0.0"
+    "@ckeditor/ckeditor5-core" "^18.0.0"
+    "@ckeditor/ckeditor5-engine" "^18.0.0"
+
+"@ckeditor/ckeditor5-table@^18.0.0":
+  version "18.0.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-table/-/ckeditor5-table-18.0.0.tgz#03af4cd969e32df3a1382ca2dd8668b00843a332"
+  dependencies:
+    "@ckeditor/ckeditor5-core" "^18.0.0"
+    "@ckeditor/ckeditor5-ui" "^18.0.0"
+    "@ckeditor/ckeditor5-widget" "^18.0.0"
+    lodash-es "^4.17.10"
 
 "@ckeditor/ckeditor5-theme-lark@^18.0.0":
   version "18.0.0"

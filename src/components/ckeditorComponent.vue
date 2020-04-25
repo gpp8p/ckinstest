@@ -26,6 +26,14 @@
     import EasyImage from '@ckeditor/ckeditor5-easy-image/src/easyimage';
     import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter';
 
+    import Font from '@ckeditor/ckeditor5-font/src/font'
+    import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment'
+    import List from '@ckeditor/ckeditor5-list/src/list'
+    import TodoList from '@ckeditor/ckeditor5-list/src/todolist';
+    import Table from '@ckeditor/ckeditor5-table/src/table';
+    import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
+    import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice'
+
 
     export default {
         name: "ckeditorComponent",
@@ -68,7 +76,14 @@
                         ImageStyle,
                         ImageResize,
                         EasyImage,
-                        SimpleUploadAdapter
+                        SimpleUploadAdapter,
+                        Font,
+                        Alignment,
+                        List,
+                        TodoList,
+                        Table,
+                        TableToolbar,
+                        PasteFromOffice
                     ],
 
                     toolbar: {
@@ -78,7 +93,18 @@
                             'link',
                             'undo',
                             'redo',
-                            'imageUpload'
+                            'imageUpload',
+                            'fontSize',
+                            'fontFamily',
+                            'fontColor',
+                            'fontBackgroundColor',
+                            'alignment',
+                            'bulletedList',
+                            'numberedList',
+                            'todoList',
+                            'insertTable'
+
+
                         ]
                     },
                     image: {
@@ -86,6 +112,19 @@
                     },
                     simpleUpload: {
                         uploadUrl: 'http://localhost:8000/imageUploadCk?XDEBUG_SESSION_START=19403'
+                    },
+                    fontFamily: {
+                        options: [
+                            'default', 'Helvetica', 'Times', 'Verdana', 'Arial Narrow', 'Candara', 'Geneva', 'Calibri', 'Optima', 'Cambria', 'Garamond', 'Perpetua', 'Monaco', 'Didot', 'Brush Script MT', 'Lucida Bright', 'Copperplate',
+                            'Ubuntu, Arial, sans-serif',
+                            'Ubuntu Mono, Courier New, Courier, monospace'
+                        ]
+                    },
+                    alignment: {
+                        options: [ 'left', 'right', 'center', 'justify' ]
+                    },
+                    table: {
+                        contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
                     }
 
                 }

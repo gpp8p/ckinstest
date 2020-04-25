@@ -137,7 +137,10 @@
                     this.navBarView = this.VIEW_TOP_MENU;
                     this.contentView = this.VIEW_LAYOUT_LIST;
                     this.draggedComponent="";
-                    this.layoutCmd = 'hide';
+                    this.layoutCmd = '';
+                    break;
+                case 'hideConfigComponent':
+                    this.draggedComponent="";
                     break;
                 default:
                     this.cardDataFunction(msg[1], msg[0]);

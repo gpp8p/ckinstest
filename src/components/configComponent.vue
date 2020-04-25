@@ -169,7 +169,8 @@
                         this.$emit('configSelected',[msg[0]]);
                 }
                 if(msg[0]=='save'){
-                        this.$emit('configSelected',[msg[0]]);
+                        this.$emit('configSelected',['saveConfiguration']);
+                        this.$emit('configSelected', ['hideConfigComponent']);
                 }
 //                if(this.configurationLine<(this.configurationElements.length-1)){
                         switch(msg[0]){
