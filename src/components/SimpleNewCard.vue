@@ -1,7 +1,7 @@
 <template>
     <div class="dialogComponent" ref="drg"  draggable="true"  @dragstart="handleDragStart" @dragend="handleDragEnd" >
         <div class="dialogComponentHeader">
-            <span class="headingText">New Layout</span>
+            <span class="headingText">New Card</span>
         </div>
         <br/>
 
@@ -34,13 +34,7 @@
         data () {
             return {
                 name:'',
-                description:'',
-                rows:'',
-                cols:'',
-                colorVal:'#05a9ff',
-                layoutId:0
-
-
+                type:''
             }
         },
         mounted(){
@@ -71,11 +65,17 @@
                     event.preventDefault();
                 }
             },
+            cardSelectionMade(evt){
+                console.log('Card type selection made:'+evt.target.value);
+                this.type = evt.target.value;
+            },
+
             cancelClicked(){
                 this.$emit('configSelected',['cancel']);
             },
             saveClicked(){
                 //        debugger;
+                this.$emit('saveNewCard', [this.name, this.type]);
             },
 
         }

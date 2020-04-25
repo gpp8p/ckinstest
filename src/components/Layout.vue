@@ -68,6 +68,9 @@ export default {
           this.makeBlankLayout(cmd[1],cmd[2], cmd[3], cmd[4], cmd[5]);
           this.$emit("newLayoutSaved");
           break;
+        case 'saveNewCard':
+          debugger;
+          this.insertCard(this.layoutId, cmd[1], cmd[2], this.topLeftRow, this.topLeftCol, this.bottomRightRow, this.bottomRightCol);
       }
     }
   },
@@ -434,6 +437,24 @@ export default {
 
 //      }
 //    },
+
+    insertCard(layoutId, title, cardType, tlrow, tlcol, brrow, brcol){
+      axios.post('http://localhost:8000/saveCardOnly?XDEBUG_SESSION_START=12016', {
+        layoutId: layoutId,
+        cardTitle: title,
+        cardType: cardType,
+        topLeftRow: tlrow,
+        topLeftCol: tlcol,
+        bottomRightRow: brrow,
+        bottomRightCol: brcol
+      }).then(response=>
+      {
+        console.log('card saved:'+response);
+        this.$emit('cardSaved', [layoutId]);
+      }).catch(function(error) {
+        console.log(error);
+      });
+    },
 
     setData(cardData, cardDataElement){
       switch (cardDataElement){

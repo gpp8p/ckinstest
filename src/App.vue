@@ -42,7 +42,7 @@
         <div v-if="this.contentView==this.VIEW_LAYOUT_LIST">
             <layout-list @layoutSelected="layoutSelected"></layout-list>
         </div>
-        <layout  :layoutId="selectedLayoutId" :layoutCmd="layoutCmd" ref="editGrid" @cardClick="cardClick" @layoutMessage="this.layoutMessage" @configurationHasBeenSaved="configurationHasBeenSaved" @cardDataLoaded="cardDataLoaded" @linkHelperRequested="linkHelperRequested" @newLayoutSaved="newLayoutSaved"></layout>
+        <layout  :layoutId="selectedLayoutId" :layoutCmd="layoutCmd" ref="editGrid" @cardClick="cardClick" @layoutMessage="this.layoutMessage" @configurationHasBeenSaved="configurationHasBeenSaved" @cardDataLoaded="cardDataLoaded" @linkHelperRequested="linkHelperRequested" @newLayoutSaved="newLayoutSaved" @cardSaved="cardSaved" ></layout>
       </section>
     </span>
 </template>
@@ -128,7 +128,7 @@
             this.navBarView = this.VIEW_GRID_MENU;
             this.contentView = this.VIEW_GRID_MENU;
             this.layoutCmd='show:'+msg[0];
-//            this.selectedLayoutId=msg[0];
+            this.selectedLayoutId=msg[0];
         },
         configSelected(msg){
             debugger;
@@ -213,7 +213,11 @@
         saveBlankLayout(msg){
 //            console.log(msg);
             this.selectedLayoutId = msg[0];
-            this.layoutCmd = 'blankLayout'+':'+msg[1]+':'+msg[2]+':'+msg[3]+':'+msg[4]+':'+msg[5];
+//            this.layoutCmd = 'blankLayout'+':'+msg[1]+':'+msg[2]+':'+msg[3]+':'+msg[4]+':'+msg[5];
+            this.navBarView = this.VIEW_GRID_MENU;
+            this.contentView = this.VIEW_GRID_MENU;
+            this.draggedComponent = '';
+            this.layoutCmd='show:'+msg[0];
         },
         newLayoutSaved(){
             debugger;
@@ -221,6 +225,18 @@
             this.contentView = this.VIEW_GRID_MENU;
             this.draggedComponent="";
             this.layoutCmd='show';
+        },
+        saveNewCard(msg){
+            debugger;
+          console.log('saveNewCard',msg);
+          this.layoutCmd="saveNewCard:"+msg[0]+":"+msg[1];
+        },
+        cardSaved(msg){
+          console.log('cardSaved:',msg);
+          this.navBarView = this.VIEW_GRID_MENU;
+          this.contentView = this.VIEW_GRID_MENU;
+          this.draggedComponent="";
+          this.layoutCmd='show:'+msg[0];
         },
         layoutMessage(msg){
             debugger;
