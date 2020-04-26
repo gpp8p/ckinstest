@@ -1,12 +1,21 @@
 <template>
-    <span>
-        <div class="configComponentHeader">
-            <span class="headingText"><MyClickLink @myButtonClicked="pageLinkClicked" buttonLabel="Page Link Helper"></MyClickLink></span>
+    <div class="dialogComponent" ref="drg"  draggable="true"  @dragstart="handleDragStart" @dragend="handleDragEnd" >
+        <div class="dialogComponentHeader">
+            <span class="headingText">New Card</span>
+            <a href="#" class="linkStyle" v-on:click="cancelClicked" >Cancel</a>
         </div>
-        <div id="ckeditorComponent" class="ckdiv" >
-            <ckeditor :editor="editor" v-model=dataEntered :config="editorConfig"></ckeditor>
+        <br/>
+
+        <div class="dialogComponentBody">
+            <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
         </div>
-    </span>
+        <div class="dialogComponentFooter">
+            <a href="#" class="linkStyle" v-on:click="saveClicked" >Save</a>
+            <a href="#" class="linkStyle" v-on:click="cancelClicked" >Cancel</a>
+        </div>
+    </div>
+
+
 </template>
 
 <script>
@@ -34,36 +43,13 @@
     import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
     import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice'
 
-
+//    import axios from "axios";
     export default {
-        name: "ckeditorComponent",
-        props: {
-            cardStyle: {
-                type: String,
-                required: true
-            },
-            cardId: {
-                type: String,
-                required: true
-            },
-            cardKey: {
-                type: String,
-                required: true
-            },
-            cardPosition: {
-                type: Array,
-                required: true
-            },
-            cardProperties: {
-                type: String,
-                required: false
-            },
-        },
+        name: "SimpleCkEditor",
         data() {
             return {
                 editor: ClassicEditor,
                 editorDisabled: false,
-                dataEntered:'',
                 editorConfig: {
                     plugins: [
                         EssentialsPlugin,
@@ -128,21 +114,59 @@
                         contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
                     }
 
-                }
+                },
+                editorData:''
             };
+        },
+        methods: {
+            handleDragStart(evt){
+                this.firstMouseX = evt.screenX;
+                this.firstMouseY = evt.screenY;
+                this.$emit('startDrag', [this.firstMouseX,this.firstMouseY]);
+            },
+            handleDragEnd(evt){
+                // eslint-disable-next-line no-debugger
+                //               debugger;
+                this.lastMouseX = evt.screenX;
+                this.lastMouseY = evt.screenY;
+                this.$emit('newLocation',[this.lastMouseX, this.lastMouseY]);
+                // eslint-disable-next-line no-console
+                console.log(evt);
+            },
+            cancelClicked(){
+                this.$emit('configSelected',['cancel']);
+            },
+            saveClicked(){
+                //        debugger;
+                this.$emit('saveCkCard', [this.name, this.type]);
+            },
+
         }
     }
 </script>
-
+<style>
+    .ck-editor__editable {
+        min-height: 350px;
+        max-height:350px;
+        min-width:950px;
+    }
+</style>
 
 <style scoped>
-    .ckdiv {
-        width: 100%;
+
+    .dialogComponent {
+        height:500px;
+        width:1000px;
         background-color: #ab97ff;
+        border: 2px solid blue;
+        border-radius: 8px;
+        box-shadow: 10px 10px 5px grey;
     }
-    .configComponentHeader {
-        height:7%;
+    .dialogComponentHeader {
+        height:10%;
         background-color: #fff722;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
         text-align: center;
         color: blue;
         font-family: Geneva;
@@ -150,6 +174,89 @@
         font-style: normal;
         font-weight: bold;
     }
+    .headingText{
+        margin-top: 5px;
+    }
+    .dialogComponentBody {
+        height: 72%;
+        margin-left: 10px;
+        margin-right: 10px;
+        display: grid;
+        grid-template-columns: 30% 70%;
+        grid-template-rows: 15% 15% 15% 15%
+
+
+    }
+    .dialogComponentFooter {
+        height: 10%;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    .linkStyle {
+        margin-left: 10px;
+        margin-right: 10px;
+        color: blue;
+        font-family: Geneva;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: bold;
+
+    }
+    .highlight {
+        background-color: #feff06;
+        margin-left: 10px;
+        margin-right: 10px;
+        color: blue;
+        font-family: Geneva;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: bold;
+
+    }
+
+    .inputPrompt {
+        font-family: Geneva;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: bold;
+    }
+    .input-color-container {
+        position: relative;
+        overflow: hidden;
+        width: 15px;
+        height: 20px;
+        top: 2px;
+        margin-right: 5px;
+        border: solid 2px #ddd;
+        border-radius: 5px;
+    }
+
+    .input-color {
+        position: absolute;
+        right: -8px;
+        top: -5px;
+        width: 36px;
+        height: 26px;
+        border: none;
+    }
+
+    .input-color-label {
+        cursor: pointer;
+        text-decoration: underline;
+        color: #dbd50c;
+        margin-right: 30px;
+    }
+    .colorSpan{
+        margin-left: 26px;
+    }
+    .ckdiv {
+        width: 100%;
+        background-color: #ab97ff;
+    }
+
+
+
+
 
 
 </style>

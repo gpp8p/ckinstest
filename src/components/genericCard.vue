@@ -17,7 +17,6 @@
                           :card-id=cardId
                           :card-key=cardKey
                           :card-position=cardPosition
-                          :cardProperties = cardProperties
                           @cardClick="processCardClick"
                           @configurationHasBeenSaved="configurationHasBeenSaved"
                           @cardDataLoaded="cardDataLoaded"
@@ -78,7 +77,7 @@
     },
     data(){
       return {
-
+         dataEntered:''
       }
     },
     methods: {

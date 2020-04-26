@@ -54,10 +54,11 @@ export default {
       console.log(cmd);
       switch(cmd[0]){
         case 'hide':
+//          debugger;
           this.displayGrid=false;
           break;
         case 'show':
-          debugger;
+//          debugger;
           this.reloadLayout(cmd[1]);
           this.displayGrid=true;
           break;

@@ -24,6 +24,12 @@
                     @configSelected="this.configSelected"
                     @saveNewLayout="this.saveBlankLayout"
             ></SimpleNewLayout>
+            <SimpleCkEditor
+                    v-if="this.draggedComponent=='simpleCkEditor'"
+                    @newLocation="this.setNewLocation"
+                    @startDrag="this.startDrag"
+                    @configSelected="this.configSelected"
+            ></SimpleCkEditor>
         </div>
 
       <section class="navbar">
@@ -57,6 +63,7 @@
   import configComponent from "./components/configComponent.vue";
   import SimpleNewLayout from "./components/SimpleNewLayout.vue";
   import SimpleNewCard from "./components/SimpleNewCard.vue";
+  import SimpleCkEditor from "./components/SimpleCkEditor.vue";
 
 //  import axios from 'axios';
 
@@ -65,7 +72,7 @@
 
   export default {
     name: 'app',
-    components: {Layout, layoutList, CkeditorComponent, menuComponent, configComponent, SimpleNewLayout, SimpleNewCard },
+    components: {Layout, layoutList, CkeditorComponent, menuComponent, configComponent, SimpleNewLayout, SimpleNewCard, SimpleCkEditor },
     mounted: function() {
           this.navBarView = this.VIEW_TOP_MENU;
           this.contentView = this.VIEW_LAYOUT_LIST;
@@ -88,7 +95,7 @@
             showCkTest: false,
             allLayouts: [],
             topMenuItems: ['New Layout', 'UserAdministration'],
-            editMenuItems: ['Edit', 'Display', 'Layout List'],
+            editMenuItems: ['Edit', 'Display', 'Layout List', 'CkEditor'],
             selectedLayoutId: '',
             layoutCmd: '',
 
@@ -137,7 +144,7 @@
                     this.navBarView = this.VIEW_TOP_MENU;
                     this.contentView = this.VIEW_LAYOUT_LIST;
                     this.draggedComponent="";
-                    this.layoutCmd = '';
+                    this.layoutCmd = 'hide';
                     break;
                 case 'hideConfigComponent':
                     this.draggedComponent="";
@@ -153,11 +160,13 @@
             console.log('createLayout summoned');
         },
         menuSelection(msg){
+            debugger;
             switch(msg[0]){
                 case 'Layout List':
                     this.navBarView = this.VIEW_TOP_MENU;
                     this.contentView = this.VIEW_LAYOUT_LIST;
                     this.layoutCmd='hide';
+                    this.$refs.editGrid.hideGrid();
                     break;
                 case 'New Layout':
 
@@ -166,9 +175,13 @@
 //                    this.cardConfigurationElements = this.newLayoutConfig;
 //                    this.onePage=true;
 //                    this.draggedComponent='newLayout';
-                    this.draggedComponent='simpleNewLayout';
-//                    this.layoutCmd = 'new';
+//                    this.draggedComponent='simpleNewLayout';
+                    this.layoutCmd = 'new';
                     break;
+                 case 'CkEditor':
+                     this.floatingView = this.VIEW_FLOATING_CONFIG;
+                     this.draggedComponent='simpleCkEditor';
+                     break;
             }
         },
         setNewLocation(msg){
