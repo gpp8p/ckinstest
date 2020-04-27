@@ -122,7 +122,7 @@ export default {
         this.cardConfiguration,
         this.configurationCurrentValues,
       ]);
-      if(this.cardData=='Click on this card to set it up!'){
+      if(this.cardData=='Click on this card to configure its appearence'){
         this.cardData = "";
       }
 
@@ -133,7 +133,7 @@ export default {
     getCardProps() {
 //      debugger;
       if ((typeof this.cardProperties === "undefined") | (this.cardProperties == "")) {
-        return "Click on this card to set it up (green card)";
+        return "Click on this card to configure its appearence";
       }else {
         var colonDelimiterLocatedAt= this.cardProperties.indexOf(":");
         var thisProp = this.cardProperties.substr(colonDelimiterLocatedAt+1);

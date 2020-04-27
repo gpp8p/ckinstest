@@ -1,13 +1,14 @@
 <template>
-    <div class="dialogComponent" ref="drg"  draggable="true"  @dragstart="handleDragStart" @dragend="handleDragEnd" >
+    <div class="dialogComponent" ref="drg"  draggable="false"  @dragstart="handleDragStart" @dragend="handleDragEnd" >
         <div class="dialogComponentHeader">
             <span class="headingText">New Card</span>
             <a href="#" class="linkStyle" v-on:click="cancelClicked" >Cancel</a>
+            <a href="#" class="linkStyle" v-on:click="testClicked" >Test</a>
         </div>
         <br/>
 
         <div class="dialogComponentBody">
-            <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
+            <ckeditor :editor="editor" v-model="editorData" :config="editorConfig" @ready="onEditorReady" ></ckeditor>
         </div>
         <div class="dialogComponentFooter">
             <a href="#" class="linkStyle" v-on:click="saveClicked" >Save</a>
@@ -115,7 +116,8 @@
                     }
 
                 },
-                editorData:''
+                editorData:'',
+                editorInUse:{}
             };
         },
         methods: {
@@ -140,6 +142,12 @@
                 //        debugger;
                 this.$emit('saveCkCard', [this.name, this.type]);
             },
+            testClicked(){
+                this.editorInUse.execute( 'link', 'http://example.com' );
+            },
+            onEditorReady(editor){
+                this.editorInUse = editor;
+            }
 
         }
     }
