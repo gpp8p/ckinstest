@@ -48,7 +48,7 @@
         <div v-if="this.contentView==this.VIEW_LAYOUT_LIST">
             <layout-list @layoutSelected="layoutSelected"></layout-list>
         </div>
-        <layout  :layoutId="selectedLayoutId" :layoutCmd="layoutCmd" ref="editGrid" @cardClick="cardClick" @layoutMessage="this.layoutMessage" @configurationHasBeenSaved="configurationHasBeenSaved" @cardDataLoaded="cardDataLoaded" @linkHelperRequested="linkHelperRequested" @newLayoutSaved="newLayoutSaved" @cardSaved="cardSaved" ></layout>
+        <layout  :layoutId="selectedLayoutId" :layoutCmd="layoutCmd" ref="editGrid" @cardClick="cardClick" @textEditor="textEditor" @layoutMessage="this.layoutMessage" @configurationHasBeenSaved="configurationHasBeenSaved" @cardDataLoaded="cardDataLoaded" @linkHelperRequested="linkHelperRequested" @newLayoutSaved="newLayoutSaved" @cardSaved="cardSaved" ></layout>
       </section>
     </span>
 </template>
@@ -205,6 +205,11 @@
         cardDataLoaded(msg){
           console.log(msg);
           this.cardCurrentConfigurationValues=msg[1];
+        },
+        textEditor(msg){
+          console.log(msg);
+            this.floatingView = this.VIEW_FLOATING_CONFIG;
+            this.draggedComponent='simpleCkEditor';
         },
         cardClick(msg){
  //           debugger;

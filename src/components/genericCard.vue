@@ -24,6 +24,20 @@
                           @linkHelperRequested="linkHelperRequested"
                           ref="cardKey"
         ></ckeditor-component>
+        <text-show v-if="cardType=='textShow'"
+                   :card-style=cardStyle
+                   :card-id=cardId
+                   :card-key=cardKey
+                   :card-position=cardPosition
+                   :cardProperties = cardProperties
+                   @cardClick="processCardClick"
+                   @textEditor="textEditor"
+                   @configurationHasBeenSaved="configurationHasBeenSaved"
+                   @cardDataLoaded="cardDataLoaded"
+                   @cardPropertySet="cardPropertySet"
+                   ref="cardKey"
+        ></text-show>
+
 
 
 </span>
@@ -40,11 +54,12 @@
   import GreenComponent from "./greenComponent";
   import GenericCardBase from "./GenericCardBase.vue";
   import CkeditorComponent from "./ckeditorComponent";
+  import textShow from "./textShow.vue";
 
   export default {
     name: "genericCard",
     extends: GenericCardBase,
-    components: {CkeditorComponent,  GreenComponent},
+    components: {CkeditorComponent,  GreenComponent, textShow},
     props: {
       cardType: {
         type: String,
@@ -97,6 +112,10 @@
       processCardClick(msg){
         console.log('blankComponent card recieved a click:'+msg);
         this.$emit('cardClick', [msg])
+      },
+      textEditor(msg){
+        debugger;
+        this.$emit('textEditor', [msg[0]]);
       },
       hasChildern(refs){
         for(var o in refs ){

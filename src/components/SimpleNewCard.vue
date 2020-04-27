@@ -14,6 +14,7 @@
                     <option  value="blankComponent">Blue Card</option>
                     <option  value="greenComponent">Green Card</option>
                     <option  value="cktestComponent">CK-Editor Card</option>
+                    <option  value="textShow">Text Card</option>
                 </select>
             </span>
         </div>

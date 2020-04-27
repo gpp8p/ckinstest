@@ -12,6 +12,7 @@
       :cardProperties="instance.card_parameters.properties"
       @storeValue="processClick"
       @cardClick="cardClick"
+      @textEditor="textEditor"
       @configurationHasBeenSaved="configurationHasBeenSaved"
       @cardDataLoaded="cardDataLoaded"
       @linkHelperRequested="linkHelperRequested"
@@ -190,7 +191,7 @@ export default {
       this.$emit("linkHelperRequested");
     },
     reloadLayout: function(msg) {
-      debugger;
+//      debugger;
       this.cardInstances = [];
       this.displayGrid=true;
       this.layoutId = msg;
@@ -379,6 +380,9 @@ export default {
       msg[0].push(this.$refs.key[instanceNum].$el);
       msg[0].push(this.cardInstances[instanceNum]);
       this.$emit('cardClick', msg[0])
+    },
+    textEditor(msg){
+      this.$emit('textEditor',[msg[0]]);
     },
     processClick(msg){
       console.log('Layout gets storeValue -'+msg);

@@ -1,6 +1,18 @@
 <template>
-  <div v-on:click="cellClicked" >
-    {{ this.cardData }}
+  <div class="cardStyle">
+    <div class="cardHeader">
+      <span class="textLeft">
+        <a href="#" v-on:click="cellClicked" >Configure</a>
+      </span>
+      <span class="textRight">
+        <a href="#"  v-on:click="editClicked" >Edit</a>
+      </span>
+    </div>
+    <br/>
+
+    <div class="cardBody" @click="cellClicked">
+      {{ this.cardData }}
+    </div>
   </div>
 </template>
 
@@ -117,7 +129,7 @@ export default {
       this.$emit("cardClick", [
         "cardClicked",
         this.cardKey,
-        "greenComponent",
+        "textShow",
         this.setCardData,
         this.cardConfiguration,
         this.configurationCurrentValues,
@@ -127,13 +139,17 @@ export default {
       }
 
     },
+    editClicked(){
+      this.loadCardConfiguration(this.cardId);
+      this.$emit('textEditor', [this.cardKey]);
+    },
     refId: function() {
       return "card" + this.cardId;
     },
     getCardProps() {
 //      debugger;
       if ((typeof this.cardProperties === "undefined") | (this.cardProperties == "")) {
-        return "Click on this card to configure its appearence";
+        return "Click on configure to set its appearence";
       }else {
         var colonDelimiterLocatedAt= this.cardProperties.indexOf(":");
         var thisProp = this.cardProperties.substr(colonDelimiterLocatedAt+1);
@@ -149,4 +165,29 @@ export default {
   height: 100%;
   width: 100%;
 }
+.cardHeader {
+  height: 10%;
+  background-color: #fff722;
+  color: blue;
+  font-family: Geneva;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: bold;
+}
+.cardBody {
+  height: 90%;
+}
+.textLeft {
+  margin-left: 5px;
+}
+
+.textRight {
+    margin-left: 82%;
+}
+
+.textCenter {
+  text-align: center;
+}
+
+
 </style>
