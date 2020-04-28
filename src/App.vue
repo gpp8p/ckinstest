@@ -26,6 +26,8 @@
             ></SimpleNewLayout>
             <SimpleCkEditor
                     v-if="this.draggedComponent=='simpleCkEditor'"
+                    :updateCallback="this.updateCallback"
+                    :cardData="this.cardData"
                     @newLocation="this.setNewLocation"
                     @startDrag="this.startDrag"
                     @configSelected="this.configSelected"
@@ -121,7 +123,9 @@
             cardConfigurationElements:{},
             onePage:false,
 
-            newCardCoords: []
+            newCardCoords: [],
+            updateCallback: null,
+            cardData: ''
 
 
 
@@ -208,6 +212,9 @@
         },
         textEditor(msg){
           console.log(msg);
+            debugger;
+            this.updateCallback = msg[0][1];
+            this.cardData = msg[0][3];
             this.floatingView = this.VIEW_FLOATING_CONFIG;
             this.draggedComponent='simpleCkEditor';
         },

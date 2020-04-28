@@ -115,7 +115,7 @@
       },
       textEditor(msg){
         debugger;
-        this.$emit('textEditor', [msg[0]]);
+        this.$emit('textEditor', [msg]);
       },
       hasChildern(refs){
         for(var o in refs ){

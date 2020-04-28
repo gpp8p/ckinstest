@@ -10,8 +10,7 @@
     </div>
     <br/>
 
-    <div class="cardBody" @click="cellClicked">
-      {{ this.cardData }}
+    <div class="cardBody" @click="cellClicked" v-html="this.cardData">
     </div>
   </div>
 </template>
@@ -132,7 +131,7 @@ export default {
         "textShow",
         this.setCardData,
         this.cardConfiguration,
-        this.configurationCurrentValues,
+        this.configurationCurrentValues
       ]);
       if(this.cardData=='Click on this card to configure its appearence'){
         this.cardData = "";
@@ -140,8 +139,9 @@ export default {
 
     },
     editClicked(){
+      debugger;
       this.loadCardConfiguration(this.cardId);
-      this.$emit('textEditor', [this.cardKey]);
+      this.$emit('textEditor', [this.cardKey, this.setCardData,this.configurationCurrentValues, this.cardData]);
     },
     refId: function() {
       return "card" + this.cardId;

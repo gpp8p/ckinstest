@@ -19,6 +19,9 @@
             this.content.title = "title:"+cardData;
             delete this.styling.title;
             break;
+          case "cardText":
+            this.cardData=cardData;
+            break;
           case "backgroundType":
             this.configurationCurrentValues['backgroundType']="checked";
             this.styling.backgroundType="backgroundType:checked;";
@@ -227,7 +230,24 @@
         });
 
         console.log(jsonCardConfigurationPackage);
-      }
+      },
+        saveCardContent(){
+            var cardConfigurationPackage = [this.cardId, this.content];
+            var jsonCardConfigurationPackage = JSON.stringify(cardConfigurationPackage);
+            debugger;
+            axios.post('http://localhost:8000/saveCardContent?XDEBUG_SESSION_START=14252', {
+                cardParams: jsonCardConfigurationPackage,
+            }).then(response=>
+            {
+                console.log(response);
+                this.$emit('configurationHasBeenSaved')
+            }).catch(function(error) {
+                console.log(error);
+            });
+
+            console.log(jsonCardConfigurationPackage);
+        }
+
     }
   };
 </script>

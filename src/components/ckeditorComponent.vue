@@ -63,7 +63,7 @@
             return {
                 editor: ClassicEditor,
                 editorDisabled: false,
-                dataEntered:'',
+                dataEntered:'Type some text in here',
                 editorConfig: {
                     plugins: [
                         EssentialsPlugin,

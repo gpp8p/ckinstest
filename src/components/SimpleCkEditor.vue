@@ -4,6 +4,7 @@
             <span class="headingText">New Card</span>
             <a href="#" class="linkStyle" v-on:click="cancelClicked" >Cancel</a>
             <a href="#" class="linkStyle" v-on:click="testClicked" >Test</a>
+            <a href="#" class="linkStyle" v-on:click="saveClicked" >Save</a>
         </div>
         <br/>
 
@@ -47,6 +48,16 @@
 //    import axios from "axios";
     export default {
         name: "SimpleCkEditor",
+        props:{
+          updateCallback :{
+              type: Function,
+              required: true
+          },
+          cardData: {
+              type: String,
+              required: true
+          }
+        },
         data() {
             return {
                 editor: ClassicEditor,
@@ -116,7 +127,7 @@
                     }
 
                 },
-                editorData:'',
+                editorData:this.cardData,
                 editorInUse:{}
             };
         },
@@ -139,8 +150,9 @@
                 this.$emit('configSelected',['cancel']);
             },
             saveClicked(){
-                //        debugger;
-                this.$emit('saveCkCard', [this.name, this.type]);
+                debugger;
+                this.updateCallback(this.editorData, 'cardText');
+//                this.$emit('saveCkCard', [this.name, this.type]);
             },
             testClicked(){
                 this.editorInUse.execute( 'link', 'http://example.com' );
