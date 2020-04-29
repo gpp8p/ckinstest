@@ -10,6 +10,9 @@
           case "saveConfiguration":
             this.saveCardConfiguration();
             break;
+          case "saveCardContent":
+              this.saveCardContent();
+              break;
           case "loadConfiguration":
             this.loadCardConfiguration(cardData);
             break;
@@ -21,6 +24,7 @@
             break;
           case "cardText":
             this.cardData=cardData;
+            this.content.cardText = "cardText:"+cardData;
             break;
           case "backgroundType":
             this.configurationCurrentValues['backgroundType']="checked";

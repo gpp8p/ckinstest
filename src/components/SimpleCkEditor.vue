@@ -152,7 +152,8 @@
             saveClicked(){
                 debugger;
                 this.updateCallback(this.editorData, 'cardText');
-//                this.$emit('saveCkCard', [this.name, this.type]);
+                this.$emit('configSelected', ['hideCkDialog']);
+                this.updateCallback(this.editorData, 'saveCardContent');
             },
             testClicked(){
                 this.editorInUse.execute( 'link', 'http://example.com' );

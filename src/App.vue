@@ -153,6 +153,9 @@
                 case 'hideConfigComponent':
                     this.draggedComponent="";
                     break;
+                case 'hideCkDialog':
+                    this.draggedComponent="";
+                    break;
                 default:
                     this.cardDataFunction(msg[1], msg[0]);
                     break;
