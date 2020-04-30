@@ -164,6 +164,7 @@ export default {
 .cardStyle {
   height: 100%;
   width: 100%;
+  overflow: auto;
 }
 .cardHeader {
   height: 10%;

@@ -24,14 +24,14 @@
                     @configSelected="this.configSelected"
                     @saveNewLayout="this.saveBlankLayout"
             ></SimpleNewLayout>
-            <SimpleCkEditor
+            <simpleCkEditor
                     v-if="this.draggedComponent=='simpleCkEditor'"
                     :updateCallback="this.updateCallback"
                     :cardData="this.cardData"
                     @newLocation="this.setNewLocation"
                     @startDrag="this.startDrag"
                     @configSelected="this.configSelected"
-            ></SimpleCkEditor>
+            ></simpleCkEditor>
         </div>
 
       <section class="navbar">
@@ -178,12 +178,12 @@
                 case 'New Layout':
 
                     this.floatingView = this.VIEW_FLOATING_CONFIG;
-//                    this.cardCurrentConfigurationValues={};
-//                    this.cardConfigurationElements = this.newLayoutConfig;
-//                    this.onePage=true;
-//                    this.draggedComponent='newLayout';
-//                    this.draggedComponent='simpleNewLayout';
-                    this.layoutCmd = 'new';
+                    this.cardCurrentConfigurationValues={};
+                    this.cardConfigurationElements = this.newLayoutConfig;
+                    this.onePage=true;
+                    this.draggedComponent='newLayout';
+                    this.draggedComponent='simpleNewLayout';
+//                    this.layoutCmd = 'new';
                     break;
                  case 'CkEditor':
                      this.floatingView = this.VIEW_FLOATING_CONFIG;

@@ -843,6 +843,10 @@
     "@ckeditor/ckeditor5-utils" "^18.0.0"
     "@ckeditor/ckeditor5-widget" "^18.0.0"
 
+"@ckeditor/ckeditor5-inspector@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-inspector/-/ckeditor5-inspector-2.0.0.tgz#378ef4ca5dbdf652b04b50ca9455b3f5b00aa899"
+
 "@ckeditor/ckeditor5-link@^18.0.0":
   version "18.0.0"
   resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-link/-/ckeditor5-link-18.0.0.tgz#01484b4c1c966468ac712943cbcfba4311d07894"
