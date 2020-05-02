@@ -1,19 +1,18 @@
 <template>
     <div class="dialogComponent" ref="drg"  draggable="false"  @dragstart="handleDragStart" @dragend="handleDragEnd" >
         <div class="dialogComponentHeader">
-            <span class="headingText">New Card</span>
             <a href="#" class="linkStyle" v-on:click="cancelClicked" >Cancel</a>
-            <a href="#" class="linkStyle" v-on:click="testClicked" >Test</a>
+            <a v-if="this.viewStatus==this.VIEW_CKEDITOR" href="#" class="linkStyle" v-on:click="linkClicked" >Link Helper</a>
+            <a v-if="this.viewStatus==this.VIEW_LAYOUT_LIST" href="#" class="linkStyle" v-on:click="linkCancelClicked" >Editor</a>
             <a href="#" class="linkStyle" v-on:click="saveClicked" >Save</a>
         </div>
         <br/>
 
-        <div class="dialogComponentBody">
-            <ckeditor :editor="editor" v-model="editorData" :config="editorConfig" @ready="onEditorReady" ></ckeditor>
+        <div  v-if="this.viewStatus==this.VIEW_CKEDITOR" class="dialogComponentBody">
+            <ckeditor  :editor="editor" v-model="editorData" :config="editorConfig" @ready="onEditorReady" ></ckeditor>
         </div>
-        <div class="dialogComponentFooter">
-            <a href="#" class="linkStyle" v-on:click="saveClicked" >Save</a>
-            <a href="#" class="linkStyle" v-on:click="cancelClicked" >Cancel</a>
+        <div v-if="this.viewStatus==this.VIEW_LAYOUT_LIST" class="linkHelperStyle">
+            <layout-list  @layoutSelected="layoutSelected"></layout-list>
         </div>
     </div>
 
@@ -46,10 +45,15 @@
     import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice'
 
     import CKEditorInspector from '@ckeditor/ckeditor5-inspector';
+    import LayoutList from "../components/LayoutList.vue";
 
     //    import axios from "axios";
     export default {
         name: "SimpleCkEditor",
+        components: {LayoutList},
+        mounted(){
+          this.viewStatus=this.VIEW_CKEDITOR;
+        },
         props:{
           updateCallback :{
               type: Function,
@@ -141,7 +145,10 @@
 
                 },
                 editorData:this.cardData,
-                editorInUse:{}
+                editorInUse:{},
+                VIEW_CKEDITOR:0,
+                VIEW_LAYOUT_LIST:1,
+                viewStatus:this.VIEW_CKEDITOR
             };
         },
         methods: {
@@ -168,8 +175,12 @@
                 this.$emit('configSelected', ['hideCkDialog']);
                 this.updateCallback(this.editorData, 'saveCardContent');
             },
-            testClicked(){
-                this.editorInUse.execute( 'link', 'http://example.com' );
+            linkClicked(){
+                this.viewStatus=this.VIEW_LAYOUT_LIST;
+//                this.editorInUse.execute( 'link', 'http://example.com' );
+            },
+            linkCancelClicked(){
+                this.viewStatus=this.VIEW_CKEDITOR;
             },
             onEditorReady(editor){
                 this.editorInUse = editor;
@@ -209,7 +220,11 @@
 </style>
 
 <style scoped>
-
+    .linkHelperStyle {
+        overflow: auto;
+        height:75%;
+        margin-left: 0px;
+    }
     .dialogComponent {
         height:500px;
         width:1000px;
