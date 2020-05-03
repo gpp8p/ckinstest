@@ -4,6 +4,7 @@
             <a href="#" class="linkStyle" v-on:click="cancelClicked" >Cancel</a>
             <a v-if="this.viewStatus==this.VIEW_CKEDITOR" href="#" class="linkStyle" v-on:click="linkClicked" >Link Helper</a>
             <a v-if="this.viewStatus==this.VIEW_LAYOUT_LIST" href="#" class="linkStyle" v-on:click="linkCancelClicked" >Editor</a>
+            <a href="#" class="linkStyle" v-on:click="insertLink" >Insert Link</a>
             <a href="#" class="linkStyle" v-on:click="saveClicked" >Save</a>
         </div>
         <br/>
@@ -148,7 +149,8 @@
                 editorInUse:{},
                 VIEW_CKEDITOR:0,
                 VIEW_LAYOUT_LIST:1,
-                viewStatus:this.VIEW_CKEDITOR
+                viewStatus:this.VIEW_CKEDITOR,
+                forwardToUrl:''
             };
         },
         methods: {
@@ -179,12 +181,19 @@
                 this.viewStatus=this.VIEW_LAYOUT_LIST;
 //                this.editorInUse.execute( 'link', 'http://example.com' );
             },
+            insertLink(){
+                this.editorInUse.execute( 'link', this.forwardToUrl );
+            },
             linkCancelClicked(){
                 this.viewStatus=this.VIEW_CKEDITOR;
             },
             layoutSelected(msg){
-                var forwardToUrl = "http://localhost:8080/displayLayout/"+msg[0];
-                this.editorInUse.execute( 'link', forwardToUrl );
+                console.log(msg);
+                debugger;
+                this.forwardToUrl = "http://localhost:8080/displayLayout/"+msg[0];
+                this.viewStatus=this.VIEW_CKEDITOR;
+//                this.editorInUse.execute( 'link', forwardToUrl );
+//                this.editorInUse.execute( 'link', 'http://example.com' );
             },
             onEditorReady(editor){
                 this.editorInUse = editor;

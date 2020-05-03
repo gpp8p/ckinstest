@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Layout from '../components/Layout.vue'
+import displayLayout from "../components/displayLayout";
 
 Vue.use(VueRouter)
 
@@ -14,7 +14,7 @@ Vue.use(VueRouter)
     {
       path: "/displayLayout/:layoutId",
       name: "displayLayout",
-      component: Layout
+      component: displayLayout
     },
   {
     path: '/about',

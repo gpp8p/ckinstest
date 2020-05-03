@@ -50,6 +50,9 @@
         <div v-if="this.contentView==this.VIEW_LAYOUT_LIST">
             <layout-list @layoutSelected="layoutSelected"></layout-list>
         </div>
+        <div v-if="this.contentView==this.VIEW_DISPLAY_LAYOUT">
+            <display-layout :layoutId="this.displayLayoutId"></display-layout>
+        </div>
         <layout  :layoutId="selectedLayoutId" :layoutCmd="layoutCmd" ref="editGrid" @cardClick="cardClick" @textEditor="textEditor" @layoutMessage="this.layoutMessage" @configurationHasBeenSaved="configurationHasBeenSaved" @cardDataLoaded="cardDataLoaded" @linkHelperRequested="linkHelperRequested" @newLayoutSaved="newLayoutSaved" @cardSaved="cardSaved" ></layout>
       </section>
     </span>
@@ -66,6 +69,7 @@
   import SimpleNewLayout from "./components/SimpleNewLayout.vue";
   import SimpleNewCard from "./components/SimpleNewCard.vue";
   import SimpleCkEditor from "./components/SimpleCkEditor.vue";
+  import displayLayout from "./components/displayLayout";
 
 //  import axios from 'axios';
 
@@ -74,12 +78,17 @@
 
   export default {
     name: 'app',
-    components: {Layout, layoutList, CkeditorComponent, menuComponent, configComponent, SimpleNewLayout, SimpleNewCard, SimpleCkEditor },
+    components: {Layout, layoutList, CkeditorComponent, menuComponent, configComponent, SimpleNewLayout, SimpleNewCard, SimpleCkEditor, displayLayout },
     mounted: function() {
           this.navBarView = this.VIEW_TOP_MENU;
-          this.contentView = this.VIEW_LAYOUT_LIST;
-     },
+          if(typeof(this.displayLayoutId)=='undefined'){
+              this.contentView = this.VIEW_LAYOUT_LIST;
+          }else{
+              this.contentView = this.VIEW_DISPLAY_LAYOUT;
+          }
 
+          console.log('layoutId='+this.displayLayoutId);
+     },
     data () {
         return {
             VIEW_TOP_MENU: 0,
@@ -91,6 +100,7 @@
             VIEW_LAYOUT_LIST: 6,
             VIEW_TEST_CKEDITOR: 7,
             VIEW_DEBUG: 8,
+            VIEW_DISPLAY_LAYOUT: 9,
             contentView: this.VIEW_TOP_MENU,
             navBarView: this.VIEW_TOP_MENU,
             floatingView: this.VIEW_TOP_MENU,
@@ -125,10 +135,9 @@
 
             newCardCoords: [],
             updateCallback: null,
-            cardData: ''
+            cardData: '',
 
-
-
+            displayLayoutId: this.$route.params.layoutId
         }
     },
 

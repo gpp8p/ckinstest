@@ -31,7 +31,7 @@ import genericCard from '../components/genericCard.vue';
 
 
 export default {
-  name: "Layout",
+  name: "displayLayout",
   components: {genericCard},
 
   data() {
@@ -53,7 +53,14 @@ export default {
     }
   },
   mounted () {
-    this.reloadLayoutForDisplay($route.params.layoutId)
+//    debugger;
+    this.reloadLayoutForDisplay(this.layoutId)
+  },
+  props:{
+    layoutId:{
+      type: String,
+      required: true
+    }
   },
   methods: {
     layoutGridParameters(height, width, backgroundColor) {
@@ -87,13 +94,13 @@ export default {
       this.cardInstances = [];
       this.displayGrid=true;
       this.layoutId = layoutId;
-      this.cancelLayoutEdit();
+//      this.cancelLayoutEdit();
 //      console.log("reloading" + msg);
       axios
         .get("http://localhost:8000/getLayout?layoutId=" + this.layoutId+"&&XDEBUG_SESSION_START=15122")
         .then(response => {
           // JSON responses are automatically parsed.
-//          debugger;
+          debugger;
           this.cardInstances = response.data.cards;
           this.gridParamDefinition = this.layoutGridParameters(
             response.data.layout.height,
