@@ -10,6 +10,7 @@
       :card-position="instance.card_position"
       :gridCss="gridParamDefinition"
       :cardProperties="instance.card_parameters.properties"
+      :displayStatus="displayStatus"
       @storeValue="processClick"
       @cardClick="cardClick"
       @textEditor="textEditor"
@@ -70,6 +71,10 @@ export default {
           this.makeBlankLayout(cmd[1],cmd[2], cmd[3], cmd[4], cmd[5]);
           this.$emit("newLayoutSaved");
           break;
+        case 'display':
+          this.reloadLayoutForDisplay(this.layoutId);
+          this.displayGrid=true;
+          break;
         case 'saveNewCard':
           debugger;
           this.insertCard(this.layoutId, cmd[1], cmd[2], this.topLeftRow, this.topLeftCol, this.bottomRightRow, this.bottomRightCol);
@@ -107,6 +112,7 @@ export default {
       newCardType: '',
       scolor: '',
       layoutConfigurationValues: {},
+      displayStatus: false,
 
       newLayoutConfig: [
         {

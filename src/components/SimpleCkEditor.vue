@@ -182,6 +182,10 @@
             linkCancelClicked(){
                 this.viewStatus=this.VIEW_CKEDITOR;
             },
+            layoutSelected(msg){
+                var forwardToUrl = "http://localhost:8080/displayLayout/"+msg[0];
+                this.editorInUse.execute( 'link', forwardToUrl );
+            },
             onEditorReady(editor){
                 this.editorInUse = editor;
                 CKEditorInspector.attach( this.editorInUse );

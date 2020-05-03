@@ -189,6 +189,12 @@
                      this.floatingView = this.VIEW_FLOATING_CONFIG;
                      this.draggedComponent='simpleCkEditor';
                      break;
+                  case 'Display':
+                      this.navBarView = this.VIEW_GRID_MENU;
+                      this.contentView = this.VIEW_GRID_MENU;
+                      this.layoutCmd = 'display';
+                      break;
+
             }
         },
         setNewLocation(msg){

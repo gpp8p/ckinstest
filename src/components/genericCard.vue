@@ -30,6 +30,7 @@
                    :card-key=cardKey
                    :card-position=cardPosition
                    :cardProperties = cardProperties
+                   :displayStatus = displayStatus
                    @cardClick="processCardClick"
                    @textEditor="textEditor"
                    @configurationHasBeenSaved="configurationHasBeenSaved"
@@ -88,6 +89,10 @@
       cardProperties: {
         type: String,
         required: false
+      },
+      displayStatus:{
+         type: Boolean,
+         required: false
       }
     },
     data(){

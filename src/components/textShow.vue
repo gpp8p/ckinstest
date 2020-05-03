@@ -1,6 +1,6 @@
 <template>
   <div class="cardStyle">
-    <div class="cardHeader">
+    <div class="cardHeader" v-if="!displayStatus">
       <span class="textLeft">
         <a href="#" v-on:click="cellClicked" >Configure</a>
       </span>
@@ -41,6 +41,10 @@ export default {
     cardProperties: {
       type: String,
       required: false
+    },
+    displayStatus: {
+      type: Boolean,
+      required: true
     }
   },
   data() {
