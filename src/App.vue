@@ -28,10 +28,15 @@
                     v-if="this.draggedComponent=='simpleCkEditor'"
                     :updateCallback="this.updateCallback"
                     :cardData="this.cardData"
+                    :layoutLink="this.layoutLink"
                     @newLocation="this.setNewLocation"
                     @startDrag="this.startDrag"
                     @configSelected="this.configSelected"
             ></simpleCkEditor>
+            <div class="linkHelperStyle" >
+                <layout-links-helper v-if="showLinkHelper" @configSelected="configSelected" @layoutSelected="this.layoutLinkSelected"></layout-links-helper>
+            </div>
+
         </div>
 
       <section class="navbar">
@@ -41,7 +46,6 @@
         <div v-if="this.navBarView==this.VIEW_GRID_MENU">
             <menu-component :items="this.editMenuItems" @menuSelection="menuSelection"></menu-component>
         </div>
-
       </section>
       <section class="content">
         <span v-if="this.contentView==this.VIEW_TEST_CKEDITOR" class="editor">
@@ -70,6 +74,7 @@
   import SimpleNewCard from "./components/SimpleNewCard.vue";
   import SimpleCkEditor from "./components/SimpleCkEditor.vue";
   import displayLayout from "./components/displayLayout";
+  import layoutLinksHelper from "./components/LayoutLinksHelper.vue";
 
 //  import axios from 'axios';
 
@@ -78,7 +83,7 @@
 
   export default {
     name: 'app',
-    components: {Layout, layoutList, CkeditorComponent, menuComponent, configComponent, SimpleNewLayout, SimpleNewCard, SimpleCkEditor, displayLayout },
+    components: {Layout, layoutList, CkeditorComponent, menuComponent, configComponent, SimpleNewLayout, SimpleNewCard, SimpleCkEditor, displayLayout, layoutLinksHelper },
     mounted: function() {
           this.navBarView = this.VIEW_TOP_MENU;
           if(typeof(this.displayLayoutId)=='undefined'){
@@ -136,6 +141,9 @@
             newCardCoords: [],
             updateCallback: null,
             cardData: '',
+            layoutLink:'',
+
+            showLinkHelper:false,
 
             displayLayoutId: this.$route.params.layoutId
         }
@@ -164,6 +172,12 @@
                     break;
                 case 'hideCkDialog':
                     this.draggedComponent="";
+                    break;
+                case 'layoutLinkHelperRequested':
+                    this.showLinkHelper=true;
+                    break;
+                case 'layoutLinkHelperCanceled':
+                    this.showLinkHelper=false;
                     break;
                 default:
                     this.cardDataFunction(msg[1], msg[0]);
@@ -300,6 +314,12 @@
                     break;
 
             }
+        },
+        layoutLinkSelected(msg){
+//            debugger;
+//            console.log(msg);
+            this.layoutLink=msg[0];
+            this.showLinkHelper=false;
         }
     }
   }
@@ -371,6 +391,12 @@
   }
   #infoi {
     z-index: 10;
+  }
+  .linkHelperStyle {
+      position: absolute;
+      left: 30px;
+      top: 30px;
+      z-index: 10;
   }
 
 

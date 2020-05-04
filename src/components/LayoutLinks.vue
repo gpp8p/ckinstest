@@ -1,7 +1,7 @@
 <template>
-    <span>
-       <layoutListHeader></layoutListHeader>
-                <LayoutListLine v-for="(layout, index) in allLayouts"
+    <span >
+       <layoutLinksHeader></layoutLinksHeader>
+                <LayoutLinksLine v-for="(layout, index) in allLayouts"
                                 :key="index"
                                 :id="layout.id.toString()"
                                 :description="layout.description"
@@ -10,22 +10,23 @@
                                 :width="layout.width.toString()"
                                 @layoutSelected="layoutSelected"
                 >
-                </LayoutListLine>
+                </LayoutLinksLine>
 
     </span>
 </template>
 
 <script>
-    import axios from "axios";
+//    import axios from "axios";
     //  import LayoutListLine from './components/LayoutListLine.vue';
-    import layoutListHeader from '../components/layoutListHeader.vue';
-    import LayoutListLine from '../components/LayoutListLine.vue';
+    import layoutLinksHeader from '../components/layoutLinksHeader.vue';
+    import LayoutLinksLine from '../components/LayoutLinksLine.vue';
+import axios from "axios";
 
     export default {
-        name: "LayoutList",
-        components: { LayoutListLine, layoutListHeader},
-        mounted: function() {
-            console.log('mounted runs in layout list');
+        name: "LayoutLinks",
+        components: { LayoutLinksLine, layoutLinksHeader},
+        mounted: function(){
+          console.log('mounted runs in layoutLinks');
             axios.get('http://localhost:8000//layoutList')
                 .then(response => {
 // eslint-disable-next-line no-debugger
@@ -51,6 +52,8 @@
 </script>
 
 <style scoped>
-
+.layoutLinkList {
+    width: 100%;
+}
 
 </style>

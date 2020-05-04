@@ -4,7 +4,6 @@
             <a href="#" class="linkStyle" v-on:click="cancelClicked" >Cancel</a>
             <a v-if="this.viewStatus==this.VIEW_CKEDITOR" href="#" class="linkStyle" v-on:click="linkClicked" >Link Helper</a>
             <a v-if="this.viewStatus==this.VIEW_LAYOUT_LIST" href="#" class="linkStyle" v-on:click="linkCancelClicked" >Editor</a>
-            <a href="#" class="linkStyle" v-on:click="insertLink" >Insert Link</a>
             <a href="#" class="linkStyle" v-on:click="saveClicked" >Save</a>
         </div>
         <br/>
@@ -63,7 +62,17 @@
           cardData: {
               type: String,
               required: true
+          },
+          layoutLink: {
+              type: String,
+              required: true
           }
+        },
+        watch: {
+            layoutLink: function(){
+                this.forwardToUrl = "http://localhost:8080/displayLayout/"+this.layoutLink;
+                this.editorInUse.execute( 'link', this.forwardToUrl );
+            }
         },
         data() {
             return {
@@ -178,8 +187,9 @@
                 this.updateCallback(this.editorData, 'saveCardContent');
             },
             linkClicked(){
-                this.viewStatus=this.VIEW_LAYOUT_LIST;
+//                this.viewStatus=this.VIEW_LAYOUT_LIST;
 //                this.editorInUse.execute( 'link', 'http://example.com' );
+                this.$emit('configSelected', ['layoutLinkHelperRequested'])
             },
             insertLink(){
                 this.editorInUse.execute( 'link', this.forwardToUrl );
