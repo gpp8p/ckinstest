@@ -63,6 +63,7 @@ export default {
 //          debugger;
           this.reloadLayout(cmd[1]);
           this.displayGrid=true;
+          this.displayStatus=false;
           break;
         case 'new':
           this.$emit('cardClick',['cardClicked',null,'newLayout',this.setData,this.newLayoutConfig,{},null]);
@@ -74,6 +75,7 @@ export default {
         case 'display':
           this.reloadLayoutForDisplay(this.layoutId);
           this.displayGrid=true;
+          this.displayStatus=true;
           break;
         case 'saveNewCard':
           debugger;

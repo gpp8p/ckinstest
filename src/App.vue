@@ -112,7 +112,7 @@
             showCkTest: false,
             allLayouts: [],
             topMenuItems: ['New Layout', 'UserAdministration'],
-            editMenuItems: ['Edit', 'Display', 'Layout List', 'CkEditor'],
+            editMenuItems: ['Page Preview', 'Layout List'],
             selectedLayoutId: '',
             layoutCmd: '',
 
@@ -122,7 +122,7 @@
             componentTop: 0,
             styleObject: {
                 left: '200px',
-                top: '300px',
+                top: '200px',
             },
             offsetLeft: 0,
             offsetTop: 0,
@@ -212,11 +212,19 @@
                      this.floatingView = this.VIEW_FLOATING_CONFIG;
                      this.draggedComponent='simpleCkEditor';
                      break;
-                  case 'Display':
+                  case 'Page Preview':
                       this.navBarView = this.VIEW_GRID_MENU;
                       this.contentView = this.VIEW_GRID_MENU;
+                      this.editMenuItems = ['Edit', 'Layout List'];
                       this.layoutCmd = 'display';
                       break;
+                  case 'Edit':
+                      this.navBarView = this.VIEW_GRID_MENU;
+                      this.contentView = this.VIEW_GRID_MENU;
+                      this.editMenuItems = ['Page Preview', 'Layout List'];
+                      this.layoutCmd='show:'+this.selectedLayoutId;
+                      break;
+
 
             }
         },

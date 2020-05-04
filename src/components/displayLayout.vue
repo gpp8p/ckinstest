@@ -48,7 +48,7 @@ export default {
       newCardType: '',
       scolor: '',
       layoutConfigurationValues: {},
-      displayStatus: false,
+      displayStatus: true,
 
     }
   },

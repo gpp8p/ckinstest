@@ -1,6 +1,6 @@
 <template>
   <div class="cardStyle">
-    <div class="cardHeader" v-if="!displayStatus">
+    <div class="cardHeader" v-if="displayStatus==false">
       <span class="textLeft">
         <a href="#" v-on:click="cellClicked" >Configure</a>
       </span>
@@ -181,6 +181,7 @@ export default {
 }
 .cardBody {
   height: 90%;
+  margin:10px;
 }
 .textLeft {
   margin-left: 5px;

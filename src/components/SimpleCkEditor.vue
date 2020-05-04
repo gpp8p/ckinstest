@@ -2,17 +2,13 @@
     <div class="dialogComponent" ref="drg"  draggable="false"  @dragstart="handleDragStart" @dragend="handleDragEnd" >
         <div class="dialogComponentHeader">
             <a href="#" class="linkStyle" v-on:click="cancelClicked" >Cancel</a>
-            <a v-if="this.viewStatus==this.VIEW_CKEDITOR" href="#" class="linkStyle" v-on:click="linkClicked" >Link Helper</a>
-            <a v-if="this.viewStatus==this.VIEW_LAYOUT_LIST" href="#" class="linkStyle" v-on:click="linkCancelClicked" >Editor</a>
+            <a v-if="this.viewStatus==this.VIEW_CKEDITOR" href="#" class="linkStyle" v-on:click="linkClicked" >Link to Another Page</a>
             <a href="#" class="linkStyle" v-on:click="saveClicked" >Save</a>
         </div>
         <br/>
 
         <div  v-if="this.viewStatus==this.VIEW_CKEDITOR" class="dialogComponentBody">
             <ckeditor  :editor="editor" v-model="editorData" :config="editorConfig" @ready="onEditorReady" ></ckeditor>
-        </div>
-        <div v-if="this.viewStatus==this.VIEW_LAYOUT_LIST" class="linkHelperStyle">
-            <layout-list  @layoutSelected="layoutSelected"></layout-list>
         </div>
     </div>
 
@@ -45,12 +41,11 @@
     import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice'
 
     import CKEditorInspector from '@ckeditor/ckeditor5-inspector';
-    import LayoutList from "../components/LayoutList.vue";
+
 
     //    import axios from "axios";
     export default {
         name: "SimpleCkEditor",
-        components: {LayoutList},
         mounted(){
           this.viewStatus=this.VIEW_CKEDITOR;
         },
@@ -187,23 +182,10 @@
                 this.updateCallback(this.editorData, 'saveCardContent');
             },
             linkClicked(){
-//                this.viewStatus=this.VIEW_LAYOUT_LIST;
-//                this.editorInUse.execute( 'link', 'http://example.com' );
                 this.$emit('configSelected', ['layoutLinkHelperRequested'])
-            },
-            insertLink(){
-                this.editorInUse.execute( 'link', this.forwardToUrl );
             },
             linkCancelClicked(){
                 this.viewStatus=this.VIEW_CKEDITOR;
-            },
-            layoutSelected(msg){
-                console.log(msg);
-                debugger;
-                this.forwardToUrl = "http://localhost:8080/displayLayout/"+msg[0];
-                this.viewStatus=this.VIEW_CKEDITOR;
-//                this.editorInUse.execute( 'link', forwardToUrl );
-//                this.editorInUse.execute( 'link', 'http://example.com' );
             },
             onEditorReady(editor){
                 this.editorInUse = editor;
@@ -243,11 +225,6 @@
 </style>
 
 <style scoped>
-    .linkHelperStyle {
-        overflow: auto;
-        height:75%;
-        margin-left: 0px;
-    }
     .dialogComponent {
         height:500px;
         width:1000px;
@@ -268,9 +245,7 @@
         font-style: normal;
         font-weight: bold;
     }
-    .headingText{
-        margin-top: 5px;
-    }
+
     .dialogComponentBody {
         height: 72%;
         margin-left: 10px;
@@ -280,11 +255,6 @@
         grid-template-rows: 15% 15% 15% 15%
 
 
-    }
-    .dialogComponentFooter {
-        height: 10%;
-        margin-left: 10px;
-        margin-right: 10px;
     }
     .linkStyle {
         margin-left: 10px;
@@ -296,63 +266,6 @@
         font-weight: bold;
 
     }
-    .highlight {
-        background-color: #feff06;
-        margin-left: 10px;
-        margin-right: 10px;
-        color: blue;
-        font-family: Geneva;
-        font-size: 12px;
-        font-style: normal;
-        font-weight: bold;
-
-    }
-
-    .inputPrompt {
-        font-family: Geneva;
-        font-size: 12px;
-        font-style: normal;
-        font-weight: bold;
-    }
-    .input-color-container {
-        position: relative;
-        overflow: hidden;
-        width: 15px;
-        height: 20px;
-        top: 2px;
-        margin-right: 5px;
-        border: solid 2px #ddd;
-        border-radius: 5px;
-    }
-
-    .input-color {
-        position: absolute;
-        right: -8px;
-        top: -5px;
-        width: 36px;
-        height: 26px;
-        border: none;
-    }
-
-    .input-color-label {
-        cursor: pointer;
-        text-decoration: underline;
-        color: #dbd50c;
-        margin-right: 30px;
-    }
-    .colorSpan{
-        margin-left: 26px;
-    }
-    .ckdiv {
-        width: 100%;
-        background-color: #ab97ff;
-    }
-
-
-
-
-
-
 
 
 </style>
