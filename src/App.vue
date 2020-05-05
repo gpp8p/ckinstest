@@ -46,6 +46,10 @@
         <div v-if="this.navBarView==this.VIEW_GRID_MENU">
             <menu-component :items="this.editMenuItems" @menuSelection="menuSelection"></menu-component>
         </div>
+        <div v-if="this.navBarView==this.VIEW_DISPLAY_LAYOUT">
+            <menu-component :items="this.displayMenuItems" @menuSelection="menuSelection"></menu-component>
+        </div>
+
       </section>
       <section class="content">
         <span v-if="this.contentView==this.VIEW_TEST_CKEDITOR" class="editor">
@@ -90,6 +94,7 @@
               this.contentView = this.VIEW_LAYOUT_LIST;
           }else{
               this.contentView = this.VIEW_DISPLAY_LAYOUT;
+              this.navBarView = this.VIEW_DISPLAY_LAYOUT;
           }
 
           console.log('layoutId='+this.displayLayoutId);
@@ -113,6 +118,7 @@
             allLayouts: [],
             topMenuItems: ['New Layout', 'UserAdministration'],
             editMenuItems: ['Page Preview', 'Layout List'],
+            displayMenuItems: ['Go Back', 'Layout List'],
             selectedLayoutId: '',
             layoutCmd: '',
 
@@ -155,6 +161,7 @@
             console.log('layoutSelected');
             this.navBarView = this.VIEW_GRID_MENU;
             this.contentView = this.VIEW_GRID_MENU;
+            this.editMenuItems = ['Page Preview', 'Layout List'];
             this.layoutCmd='show:'+msg[0];
             this.selectedLayoutId=msg[0];
         },
@@ -224,6 +231,10 @@
                       this.editMenuItems = ['Page Preview', 'Layout List'];
                       this.layoutCmd='show:'+this.selectedLayoutId;
                       break;
+                  case 'Go Back':
+                      this.$router.go(-1);
+                      break;
+
 
 
             }
@@ -328,6 +339,9 @@
 //            console.log(msg);
             this.layoutLink=msg[0];
             this.showLinkHelper=false;
+        },
+        goBack(){
+            this.$router.go(-1);
         }
     }
   }
