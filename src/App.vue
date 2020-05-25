@@ -42,6 +42,7 @@
       <section class="navbar">
         <div v-if="this.navBarView==this.VIEW_TOP_MENU">
             <menu-component :items="this.topMenuItems" @menuSelection="menuSelection"></menu-component>
+
         </div>
         <div v-if="this.navBarView==this.VIEW_GRID_MENU">
             <menu-component :items="this.editMenuItems" @menuSelection="menuSelection"></menu-component>
@@ -79,6 +80,7 @@
   import SimpleCkEditor from "./components/SimpleCkEditor.vue";
   import displayLayout from "./components/displayLayout";
   import layoutLinksHelper from "./components/LayoutLinksHelper.vue";
+
 
 //  import axios from 'axios';
 

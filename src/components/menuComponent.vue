@@ -5,14 +5,16 @@
                    :key="index"
                    @menuSelection="itemSelected"
         ></menu-item>
+        <login-component></login-component>
     </span>
 </template>
 
 <script>
     import menuItem from '../components/menuItem.vue';
+    import loginComponent from "../components/loginComponent.vue";
     export default {
         name: "menuComponent",
-        components: { menuItem },
+        components: { menuItem, loginComponent },
         props:{
             items:{
                 type: Array,
