@@ -63,7 +63,6 @@ export default {
 //          debugger;
           this.reloadLayout(cmd[1]);
           this.displayGrid=true;
-          this.displayStatus=false;
           break;
         case 'new':
           this.$emit('cardClick',['cardClicked',null,'newLayout',this.setData,this.newLayoutConfig,{},null]);
