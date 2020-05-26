@@ -1,7 +1,7 @@
 <template>
     <span>
         <span v-if="this.logStatus==this.NOT_LOGGED">
-            <span class="welcomeMessage">Welcome Guest ! <a @click="showLogin">Please Log In</a></span>
+            <span class="welcomeMessage">Welcome {{this.loggedInUser}} ! <a @click="showLogin">Please Log In</a></span>
         </span>
         <span v-if="this.logStatus==this.SHOW_LOGIN">
             <label class="labelStyle" for="email">Email:</label>
@@ -14,7 +14,7 @@
             </span>
         </span>
         <span v-if="this.logStatus==this.LOGGED_IN">
-            <span class="welcomeMessage">Welcome Guest ! <a @click="doLogout">Log Out</a></span>
+            <span class="welcomeMessage">Welcome {{this.loggedInUser}} ! <a @click="doLogout">Log Out</a></span>
         </span>
     </span>
 </template>
@@ -23,6 +23,23 @@
     import axios from "axios";
     export default {
         name: "loginComponent",
+        mounted(){
+            this.sendLogin('GuestUser@nomail.com', 'GuestUser');
+/*
+            axios.post('http://localhost:8000/api/auth/loggedInUser?XDEBUG_SESSION_START=15022', {
+            }).then(response=>
+            {
+                console.log('login successful');
+                this.auth_token=response.data.access_token;
+                this.loggedInUser = response.data.userName;
+                if(this.loggedInUser=='Guest') this.logStatus=this.NOT_LOGGED;
+            }).catch(function(error) {
+                console.log(error);
+                return('error:');
+            });
+
+ */
+        },
         data(){
             return {
                 logStatus: 0,
@@ -31,7 +48,8 @@
                 LOGGED_IN:2,
                 email:'',
                 password:'',
-                auth_token:''
+                auth_token:'',
+                loggedInUser:''
             }
         },
         watch:{
@@ -39,6 +57,13 @@
 //                debugger;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${this.auth_token}`;
                 this.logStatus = this.LOGGED_IN;
+            },
+            loggedInUser: function(){
+                if(this.loggedInUser=='GuestUser'){
+                    this.logStatus=this.NOT_LOGGED;
+                }else{
+                    this.logStatus=this.LOGGED_IN;
+                }
             }
         },
         methods:{
@@ -57,13 +82,15 @@
 //                axios.defaults.headers.common['Authorization'] = `Bearer ${this.auth_token}`
             },
             sendLogin(email, password){
-                axios.post('http://localhost:8000/api/auth/login', {
+                axios.post('http://localhost:8000/api/auth/login?XDEBUG_SESSION_START=15022', {
                     email: email,
                     password: password
                 }).then(response=>
                 {
                     console.log('login successful');
+                    console.log(response);
                     this.auth_token=response.data.access_token;
+                    this.loggedInUser = response.data.userName;
                 }).catch(function(error) {
                     console.log(error);
                     return('error:');
