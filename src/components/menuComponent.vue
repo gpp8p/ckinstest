@@ -5,7 +5,7 @@
                    :key="index"
                    @menuSelection="itemSelected"
         ></menu-item>
-        <login-component></login-component>
+        <login-component @tokenInstalled="tokenInstalled" @userLogged="userLogged"></login-component>
     </span>
 </template>
 
@@ -24,6 +24,14 @@
         methods:{
             itemSelected(msg){
                 this.$emit('menuSelection', [msg[0]]);
+            },
+            tokenInstalled(msg){
+//                debugger;
+                this.$emit('tokenInstalled', [msg]);
+            },
+            userLogged(msg){
+//                debugger;
+                this.$emit('userLogged', [msg]);
             }
         }
     }

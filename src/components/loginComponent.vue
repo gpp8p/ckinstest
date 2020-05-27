@@ -49,7 +49,8 @@
                 email:'',
                 password:'',
                 auth_token:'',
-                loggedInUser:''
+                loggedInUser:'',
+                is_admin:0
             }
         },
         watch:{
@@ -57,6 +58,7 @@
 //                debugger;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${this.auth_token}`;
                 this.logStatus = this.LOGGED_IN;
+                this.$emit('tokenInstalled', [this.auth_token, this.loggedInUser, this.is_admin]);
             },
             loggedInUser: function(){
                 if(this.loggedInUser=='GuestUser'){
@@ -91,6 +93,8 @@
                     console.log(response);
                     this.auth_token=response.data.access_token;
                     this.loggedInUser = response.data.userName;
+                    this.is_admin = response.data.is_admin;
+                    this.$emit('userLogged',[this.auth_token, this.loggedInUser, this.is_admin]);
                 }).catch(function(error) {
                     console.log(error);
                     return('error:');

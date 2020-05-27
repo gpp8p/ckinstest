@@ -41,14 +41,14 @@
 
       <section class="navbar">
         <div v-if="this.navBarView==this.VIEW_TOP_MENU">
-            <menu-component :items="this.topMenuItems" @menuSelection="menuSelection"></menu-component>
+            <menu-component :items="this.topMenuItems" @tokenInstalled="tokenInstalled" @menuSelection="menuSelection" @userLogged="userLogged"></menu-component>
 
         </div>
         <div v-if="this.navBarView==this.VIEW_GRID_MENU">
-            <menu-component :items="this.editMenuItems" @menuSelection="menuSelection"></menu-component>
+            <menu-component :items="this.editMenuItems" @menuSelection="menuSelection" @tokenInstalled="tokenInstalled" @userLogged="userLogged"></menu-component>
         </div>
         <div v-if="this.navBarView==this.VIEW_DISPLAY_LAYOUT">
-            <menu-component :items="this.displayMenuItems" @menuSelection="menuSelection"></menu-component>
+            <menu-component :items="this.displayMenuItems" @menuSelection="menuSelection" @tokenInstalled="tokenInstalled" @userLogged="userLogged"></menu-component>
         </div>
 
       </section>
@@ -80,6 +80,7 @@
   import SimpleCkEditor from "./components/SimpleCkEditor.vue";
   import displayLayout from "./components/displayLayout";
   import layoutLinksHelper from "./components/LayoutLinksHelper.vue";
+  import axios from "axios";
 
 
 //  import axios from 'axios';
@@ -93,7 +94,7 @@
     mounted: function() {
           this.navBarView = this.VIEW_TOP_MENU;
           if(typeof(this.displayLayoutId)=='undefined'){
-              this.contentView = this.VIEW_LAYOUT_LIST;
+//              this.contentView = this.VIEW_LAYOUT_LIST;
           }else{
               this.contentView = this.VIEW_DISPLAY_LAYOUT;
               this.navBarView = this.VIEW_DISPLAY_LAYOUT;
@@ -153,7 +154,13 @@
 
             showLinkHelper:false,
 
-            displayLayoutId: this.$route.params.layoutId
+            displayLayoutId: this.$route.params.layoutId,
+            bearerToken:'',
+            loggedInUser:'',
+            is_admin:0,
+
+            default_org:'shannon',
+            org_home_id:0
         }
     },
 
@@ -166,6 +173,37 @@
             this.editMenuItems = ['Page Preview', 'Layout List'];
             this.layoutCmd='show:'+msg[0];
             this.selectedLayoutId=msg[0];
+        },
+        tokenInstalled(msg){
+//            debugger;
+            this.contentView = this.VIEW_LAYOUT_LIST;
+            console.log('token has been installed');
+            console.log(msg);
+            this.bearerToken = msg[0][0];
+            this.loggedInUser = msg[0][1];
+            this.is_admin = msg[0][2];
+            if(this.is_admin==0){
+                axios.get('http://localhost:8000/api/auth/orgHome?XDEBUG_SESSION_START=15022', {
+                    orgName: this.default_org,
+                }).then(response=>
+                {
+                    if(response.data.result=='ok'){
+                        this.org_home = response.data.orgHome;
+                        this.displayLayoutId = response.data.orgHome;
+                        this.contentView==this.VIEW_DISPLAY_LAYOUT
+                    }
+                }).catch(function(error) {
+                    console.log(error);
+                    return('error:');
+                });
+            }else{
+                this.contentView = this.VIEW_LAYOUT_LIST;
+
+            }
+        },
+        userLogged(msg){
+//            debugger;
+          console.log('userLogged', msg);
         },
         configSelected(msg){
             debugger;

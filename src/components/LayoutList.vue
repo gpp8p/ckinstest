@@ -26,8 +26,8 @@
         components: { LayoutListLine, layoutListHeader},
         mounted: function() {
             console.log('mounted runs in layout list');
-            axios.get('http://localhost:8000//layoutList')
-//            axios.get('http://localhost:8000/api/shan/layoutList')
+//            axios.get('http://localhost:8000//layoutList')
+            axios.get('http://localhost:8000/api/shan/layoutList')
                 .then(response => {
 // eslint-disable-next-line no-debugger
                     // JSON responses are automatically parsed.
