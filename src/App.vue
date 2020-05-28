@@ -175,7 +175,7 @@
             this.selectedLayoutId=msg[0];
         },
         tokenInstalled(msg){
-//            debugger;
+            debugger;
             this.contentView = this.VIEW_LAYOUT_LIST;
             console.log('token has been installed');
             console.log(msg);
@@ -183,21 +183,29 @@
             this.loggedInUser = msg[0][1];
             this.is_admin = msg[0][2];
             if(this.is_admin==0){
-                axios.get('http://localhost:8000/api/auth/orgHome?XDEBUG_SESSION_START=15022', {
-                    orgName: this.default_org,
+                axios.get('http://localhost:8000/api/shan/orgHome?XDEBUG_SESSION_START=15022', {
+                    params:{
+                        orgName: this.default_org
+                    }
                 }).then(response=>
                 {
                     if(response.data.result=='ok'){
                         this.org_home = response.data.orgHome;
                         this.displayLayoutId = response.data.orgHome;
-                        this.contentView==this.VIEW_DISPLAY_LAYOUT
+                        this.selectedLayoutId = response.data.orgHome;
+                        this.navBarView = this.VIEW_GRID_MENU;
+                        this.contentView = this.VIEW_GRID_MENU;
+                        this.editMenuItems = ['Edit', 'Layout List'];
+                        this.layoutCmd = 'display';
                     }
                 }).catch(function(error) {
                     console.log(error);
                     return('error:');
                 });
             }else{
+                debugger;
                 this.contentView = this.VIEW_LAYOUT_LIST;
+                this.layoutCmd = 'hide';
 
             }
         },

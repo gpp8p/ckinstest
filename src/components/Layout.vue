@@ -51,7 +51,7 @@ export default {
 //      this.reloadLayout(this.layoutId);
 //    },
     layoutCmd: function(){
-//      debugger;
+      debugger;
       var cmd = this.layoutCmd.split(':');
       console.log(cmd);
       switch(cmd[0]){
