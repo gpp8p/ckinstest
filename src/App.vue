@@ -157,6 +157,7 @@
             displayLayoutId: this.$route.params.layoutId,
             bearerToken:'',
             loggedInUser:'',
+            loggedInUserId:0,
             is_admin:0,
 
             default_org:'shannon',
@@ -182,6 +183,7 @@
             this.bearerToken = msg[0][0];
             this.loggedInUser = msg[0][1];
             this.is_admin = msg[0][2];
+            this.loggedInUserId = msg[0][3];
             if(this.is_admin==0){
                 axios.get('http://localhost:8000/api/shan/orgHome?XDEBUG_SESSION_START=15022', {
                     params:{
