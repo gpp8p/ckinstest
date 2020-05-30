@@ -24,6 +24,7 @@
     export default {
         name: "loginComponent",
         mounted(){
+//            debugger;
             this.sendLogin('GuestUser@nomail.com', 'GuestUser');
 /*
             axios.post('http://localhost:8000/api/auth/loggedInUser?XDEBUG_SESSION_START=15022', {

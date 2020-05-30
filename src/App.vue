@@ -92,6 +92,7 @@
     name: 'app',
     components: {Layout, layoutList, CkeditorComponent, menuComponent, configComponent, SimpleNewLayout, SimpleNewCard, SimpleCkEditor, displayLayout, layoutLinksHelper },
     mounted: function() {
+        console.log('app mounted');
           this.navBarView = this.VIEW_TOP_MENU;
           if(typeof(this.displayLayoutId)=='undefined'){
 //              this.contentView = this.VIEW_LAYOUT_LIST;

@@ -65,6 +65,8 @@
         },
         watch: {
             layoutLink: function(){
+  //              debugger;
+
                 this.forwardToUrl = "http://localhost:8080/displayLayout/"+this.layoutLink;
                 this.editorInUse.execute( 'link', this.forwardToUrl );
             }
