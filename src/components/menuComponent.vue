@@ -5,7 +5,7 @@
                    :key="index"
                    @menuSelection="itemSelected"
         ></menu-item>
-        <login-component @tokenInstalled="tokenInstalled" @userLogged="userLogged"></login-component>
+        <login-component :credentials="credentials" @tokenInstalled="tokenInstalled" @userLogged="userLogged"></login-component>
     </span>
 </template>
 
@@ -19,7 +19,12 @@
             items:{
                 type: Array,
                 required: true
+            },
+            credentials:{
+                type: Object,
+                required: true
             }
+
         },
         methods:{
             itemSelected(msg){

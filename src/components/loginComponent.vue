@@ -25,7 +25,16 @@
         name: "loginComponent",
         mounted(){
 //            debugger;
-            this.sendLogin('GuestUser@nomail.com', 'GuestUser');
+            console.log('login component mounted',this.credentials);
+            if(this.credentials.bearerToken.length>0){
+                console.log('setting token from session data');
+                axios.defaults.headers.common['Authorization'] = `Bearer ${this.credentials.bearerToken}`;
+                this.loggedInUser= this.credentials.loggedInUser;
+                this.is_admin = this.credentials.is_admin;
+                this.user_id = this.credentials.loggedInUserId;
+            }else{
+                this.sendLogin('GuestUser@nomail.com', 'GuestUser');
+            }
 /*
             axios.post('http://localhost:8000/api/auth/loggedInUser?XDEBUG_SESSION_START=15022', {
             }).then(response=>
@@ -40,6 +49,12 @@
             });
 
  */
+        },
+        props:{
+          credentials:{
+              type: Object,
+              required: true
+          }
         },
         data(){
             return {
@@ -78,7 +93,8 @@
                 this.logStatus=this.NOT_LOGGED;
             },
             doLogout(){
-
+                sessionStorage.clear();
+                this.sendLogin('GuestUser@nomail.com', 'GuestUser');
             },
             doLogin(){
                 this.sendLogin(this.email, this.password);
@@ -92,18 +108,28 @@
                 }).then(response=>
                 {
                     console.log('login successful');
-                    console.log(response);
+                    console.log(response.data);
                     this.auth_token=response.data.access_token;
                     this.loggedInUser = response.data.userName;
                     this.is_admin = response.data.is_admin;
                     this.user_id = response.data.userId;
-
                     this.$emit('userLogged',[this.auth_token, this.loggedInUser, this.is_admin]);
                 }).catch(function(error) {
                     console.log(error);
                     return('error:');
                 });
             },
+            setCookie(token){
+                axios.post('http://localhost:8000/api/shan/setCookie?XDEBUG_SESSION_START=15022', {
+                    token: token
+                }).then(response=>
+                {
+                    console.log('cookie set',response);
+                }).catch(function(error) {
+                    console.log(error);
+                    return('error:');
+                });
+            }
 
         }
     }

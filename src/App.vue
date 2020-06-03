@@ -41,14 +41,14 @@
 
       <section class="navbar">
         <div v-if="this.navBarView==this.VIEW_TOP_MENU">
-            <menu-component :items="this.topMenuItems" @tokenInstalled="tokenInstalled" @menuSelection="menuSelection" @userLogged="userLogged"></menu-component>
+            <menu-component :credentials = "this.credentials" :items="this.topMenuItems" @tokenInstalled="tokenInstalled" @menuSelection="menuSelection" @userLogged="userLogged"></menu-component>
 
         </div>
         <div v-if="this.navBarView==this.VIEW_GRID_MENU">
-            <menu-component :items="this.editMenuItems" @menuSelection="menuSelection" @tokenInstalled="tokenInstalled" @userLogged="userLogged"></menu-component>
+            <menu-component :credentials = "this.credentials" :items="this.editMenuItems" @menuSelection="menuSelection" @tokenInstalled="tokenInstalled" @userLogged="userLogged"></menu-component>
         </div>
         <div v-if="this.navBarView==this.VIEW_DISPLAY_LAYOUT">
-            <menu-component :items="this.displayMenuItems" @menuSelection="menuSelection" @tokenInstalled="tokenInstalled" @userLogged="userLogged"></menu-component>
+            <menu-component :credentials = "this.credentials" :items="this.displayMenuItems" @menuSelection="menuSelection" @tokenInstalled="tokenInstalled" @userLogged="userLogged"></menu-component>
         </div>
 
       </section>
@@ -100,7 +100,12 @@
               this.contentView = this.VIEW_DISPLAY_LAYOUT;
               this.navBarView = this.VIEW_DISPLAY_LAYOUT;
           }
-
+          if(sessionStorage.length>0){
+              this.credentials.bearerToken= sessionStorage.getItem('bearerToken');
+              this.credentials.loggedInUser=sessionStorage.getItem('loggedInUser');
+              this.credentials.loggedInUserId=sessionStorage.getItem('loggedInUserId');
+              this.credentials.is_admin=sessionStorage.getItem('is_admin');
+          }
           console.log('layoutId='+this.displayLayoutId);
      },
     data () {
@@ -162,7 +167,14 @@
             is_admin:0,
 
             default_org:'shannon',
-            org_home_id:0
+            org_home_id:0,
+
+            credentials:{
+                bearerToken: '',
+                loggedInUserId: '',
+                loggedInUser: '',
+                is_admin: 0
+            }
         }
     },
 
@@ -182,9 +194,17 @@
             console.log('token has been installed');
             console.log(msg);
             this.bearerToken = msg[0][0];
+            this.credentials.bearerToken = msg[0][0];
+            sessionStorage.setItem('bearerToken', this.bearerToken);
             this.loggedInUser = msg[0][1];
+            this.credentials.loggedInUser = msg[0][1];
+            sessionStorage.setItem('loggedInUser', this.loggedInUser);
             this.is_admin = msg[0][2];
+            this.credentials.is_admin = msg[0][2];
+            sessionStorage.setItem('is_admin', this.is_admin);
             this.loggedInUserId = msg[0][3];
+            sessionStorage.setItem('loggeInUserId', this.loggedInUserId);
+            this.credentials.loggedInUserId = msg[0][3];
             if(this.is_admin==0){
                 axios.get('http://localhost:8000/api/shan/orgHome?XDEBUG_SESSION_START=15022', {
                     params:{
