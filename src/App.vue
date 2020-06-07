@@ -81,6 +81,7 @@
   import displayLayout from "./components/displayLayout";
   import layoutLinksHelper from "./components/LayoutLinksHelper.vue";
   import axios from "axios";
+  import store from './store';
 
 
 //  import axios from 'axios';
@@ -90,6 +91,7 @@
 
   export default {
     name: 'app',
+    store,
     components: {Layout, layoutList, CkeditorComponent, menuComponent, configComponent, SimpleNewLayout, SimpleNewCard, SimpleCkEditor, displayLayout, layoutLinksHelper },
     mounted: function() {
         console.log('app mounted');
@@ -168,6 +170,7 @@
 
             default_org:'shannon',
             org_home_id:0,
+            org_id:0,
 
             credentials:{
                 bearerToken: '',
@@ -205,6 +208,12 @@
             this.loggedInUserId = msg[0][3];
             sessionStorage.setItem('loggeInUserId', this.loggedInUserId);
             this.credentials.loggedInUserId = msg[0][3];
+            store.commit('setBearerToken', this.bearerToken);
+            store.commit('setLoggedInUserId', this.loggedInUserId);
+            store.commit('setLoggedInUser', this.loggedInUser);
+            store.commit('setIsAdmin', this.is_admin);
+            store.commit('setDefaultOrg', this.default_org);
+
             if(this.is_admin==0){
                 axios.get('http://localhost:8000/api/shan/orgHome?XDEBUG_SESSION_START=15022', {
                     params:{
@@ -213,7 +222,11 @@
                 }).then(response=>
                 {
                     if(response.data.result=='ok'){
+                        debugger;
                         this.org_home = response.data.orgHome;
+                        this.org_id = response.data.orgId;
+                        store.commit('setOrgHome', this.org_home);
+                        store.commit('setOrgId', this.org_id);
                         this.displayLayoutId = response.data.orgHome;
                         this.selectedLayoutId = response.data.orgHome;
                         this.navBarView = this.VIEW_GRID_MENU;
@@ -225,6 +238,24 @@
                     console.log(error);
                     return('error:');
                 });
+/*
+                console.log('making orgId query');
+                axios.get('http://localhost:8000/api/shan/orgId?XDEBUG_SESSION_START=11264', {
+                    params:{
+                        orgName: this.default_org
+                    }
+                }).then(response=>
+                {
+                    if(response.data.result=='ok'){
+                        this.org_id = response.data.orgId;
+                        store.commit('setOrgId', this.org_id);
+
+                    }
+                }).catch(function(error) {
+                    console.log(error);
+                    return('error:');
+                });
+*/
             }else{
                 debugger;
                 this.contentView = this.VIEW_LAYOUT_LIST;

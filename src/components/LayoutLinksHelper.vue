@@ -57,7 +57,7 @@ import layoutLinks from "../components/LayoutLinks.vue"
 
     .dialogComponent {
         height:250px;
-        width:500px;
+        width:800px;
         background-color: #ab97ff;
         border: 2px solid blue;
         border-radius: 8px;

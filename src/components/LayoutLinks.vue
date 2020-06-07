@@ -27,7 +27,12 @@ import axios from "axios";
         components: { LayoutLinksLine, layoutLinksHeader},
         mounted: function(){
           console.log('mounted runs in layoutLinks');
-            axios.get('http://localhost:8000//layoutList')
+          console.log('orgId - according vuex:', this.$store.getters.getOrgId );
+            axios.get('http://localhost:8000//layoutList', {
+                params:{
+                    orgId:this.$store.getters.getOrgId
+                }
+            })
                 .then(response => {
 // eslint-disable-next-line no-debugger
                     // JSON responses are automatically parsed.
@@ -46,6 +51,7 @@ import axios from "axios";
             layoutSelected(msg){
                 this.$emit('layoutSelected',[msg[0]]);
                 console.log('layoutSelected summoned'+msg);
+//                debugger;
             }
         }
     }

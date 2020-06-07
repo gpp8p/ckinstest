@@ -72,7 +72,8 @@
         },
         watch:{
             auth_token: function(){
-//                debugger;
+                console.log('auth_token installed');
+                debugger;
                 axios.defaults.headers.common['Authorization'] = `Bearer ${this.auth_token}`;
                 this.logStatus = this.LOGGED_IN;
                 this.$emit('tokenInstalled', [this.auth_token, this.loggedInUser, this.is_admin, this.user_id]);

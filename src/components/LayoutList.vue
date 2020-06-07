@@ -32,6 +32,7 @@
 // eslint-disable-next-line no-debugger
                     // JSON responses are automatically parsed.
                     this.allLayouts = response.data;
+                    console.log('successful return from layoutList');
                 })
                 .catch(e => {
                     console.log(e);
