@@ -187,12 +187,13 @@
             console.log('layoutSelected');
             this.navBarView = this.VIEW_GRID_MENU;
             this.contentView = this.VIEW_GRID_MENU;
-            this.editMenuItems = ['Page Preview', 'Layout List'];
-            this.layoutCmd='show:'+msg[0];
+            this.editMenuItems = ['Edit', 'Layout List'];
+//            this.layoutCmd='show:'+msg[0];
+            this.layoutCmd='displayLayout:'+msg[0];
             this.selectedLayoutId=msg[0];
         },
         tokenInstalled(msg){
-            debugger;
+//            debugger;
             this.contentView = this.VIEW_LAYOUT_LIST;
             console.log('token has been installed');
             console.log(msg);
@@ -222,7 +223,7 @@
                 }).then(response=>
                 {
                     if(response.data.result=='ok'){
-                        debugger;
+//                        debugger;
                         this.org_home = response.data.orgHome;
                         this.org_id = response.data.orgId;
                         store.commit('setOrgHome', this.org_home);
@@ -231,7 +232,12 @@
                         this.selectedLayoutId = response.data.orgHome;
                         this.navBarView = this.VIEW_GRID_MENU;
                         this.contentView = this.VIEW_GRID_MENU;
-                        this.editMenuItems = ['Edit', 'Layout List'];
+                        if(this.loggedInUser=='GuestUser'){
+                            this.editMenuItems = [];
+                        }else{
+                            this.editMenuItems = ['My Account'];
+                        }
+
                         this.layoutCmd = 'display';
                     }
                 }).catch(function(error) {
@@ -239,7 +245,7 @@
                     return('error:');
                 });
             }else{
-                debugger;
+//                debugger;
                 this.contentView = this.VIEW_LAYOUT_LIST;
                 this.layoutCmd = 'hide';
 
@@ -318,7 +324,6 @@
                   case 'Go Back':
                       this.$router.go(-1);
                       break;
-
 
 
             }

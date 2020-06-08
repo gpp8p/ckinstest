@@ -51,7 +51,7 @@ export default {
 //      this.reloadLayout(this.layoutId);
 //    },
     layoutCmd: function(){
-      debugger;
+//      debugger;
       var cmd = this.layoutCmd.split(':');
       console.log(cmd);
       switch(cmd[0]){
@@ -73,6 +73,12 @@ export default {
           this.$emit("newLayoutSaved");
           break;
         case 'display':
+          this.reloadLayoutForDisplay(this.layoutId);
+          this.displayGrid=true;
+          this.displayStatus=true;
+          break;
+        case 'displayLayout':
+          this.layoutId = cmd[1];
           this.reloadLayoutForDisplay(this.layoutId);
           this.displayGrid=true;
           this.displayStatus=true;
