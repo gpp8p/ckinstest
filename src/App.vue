@@ -238,24 +238,6 @@
                     console.log(error);
                     return('error:');
                 });
-/*
-                console.log('making orgId query');
-                axios.get('http://localhost:8000/api/shan/orgId?XDEBUG_SESSION_START=11264', {
-                    params:{
-                        orgName: this.default_org
-                    }
-                }).then(response=>
-                {
-                    if(response.data.result=='ok'){
-                        this.org_id = response.data.orgId;
-                        store.commit('setOrgId', this.org_id);
-
-                    }
-                }).catch(function(error) {
-                    console.log(error);
-                    return('error:');
-                });
-*/
             }else{
                 debugger;
                 this.contentView = this.VIEW_LAYOUT_LIST;

@@ -28,7 +28,8 @@ import axios from "axios";
         mounted: function(){
           console.log('mounted runs in layoutLinks');
           console.log('orgId - according vuex:', this.$store.getters.getOrgId );
-            axios.get('http://localhost:8000//layoutList', {
+          debugger;
+            axios.get('http://localhost:8000/api/shan/viewableLayouts', {
                 params:{
                     orgId:this.$store.getters.getOrgId
                 }
@@ -40,6 +41,7 @@ import axios from "axios";
                 })
                 .catch(e => {
                     this.errors.push(e);
+                    console.log('viewableLayouts failed');
                 });
         },
         data(){
