@@ -34,7 +34,11 @@
                     @configSelected="this.configSelected"
             ></simpleCkEditor>
             <div class="linkHelperStyle" >
-                <layout-links-helper v-if="showLinkHelper" @configSelected="configSelected" @layoutSelected="this.layoutLinkSelected"></layout-links-helper>
+                <layout-links-helper
+                        v-if="showLinkHelper"
+                        @configSelected="configSelected"
+                        @layoutSelected="this.layoutLinkSelected">
+                </layout-links-helper>
             </div>
 
         </div>

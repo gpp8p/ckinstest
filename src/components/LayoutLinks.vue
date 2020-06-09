@@ -1,5 +1,5 @@
 <template>
-    <span >
+    <span v-if="status==this.EXISTING_LAYOUTS">
        <layoutLinksHeader></layoutLinksHeader>
                 <LayoutLinksLine v-for="(layout, index) in allLayouts"
                                 :key="index"
@@ -46,7 +46,15 @@ import axios from "axios";
         },
         data(){
             return{
-                allLayouts:[]
+                allLayouts:[],
+                EXISTING_LAYOUTS:0,
+                NEW_LAYOUT:1,
+            }
+        },
+        props:{
+            status:{
+                type: Number,
+                required:true
             }
         },
         methods:{

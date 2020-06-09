@@ -12,6 +12,7 @@
 
 <style scoped>
     .lline {
+        margin-top: 2%;
         display: grid;
         grid-template-columns: 20% 60%;
         font-size: medium;

@@ -1,12 +1,15 @@
 <template>
     <div class="dialogComponent" ref="drg"  draggable="true"  @dragstart="handleDragStart" @dragend="handleDragEnd" >
         <div class="dialogComponentHeader">
-            <span class="headingText">Click on Page Your Wish to Link To:</span><span class="cancelLink"><a href="#" class="linkStyle" v-on:click="cancelClicked" >Cancel</a></span>
+            <span class="headingText">Click on Page Your Wish to Link To:</span>
+            <span class="cancelLink"><a href="#" class="linkStyle" v-on:click="newLayout" >Link to a New Layout</a></span>
+            <span class="cancelLink"><a href="#" class="linkStyle" v-on:click="cancelClicked" >Cancel</a></span>
         </div>
         <br/>
 
         <div class="linkHelperStyle">
-            <layout-links @layoutSelected="layoutSelected"></layout-links>
+            <layout-links :status="linkHelperStatus"  @layoutSelected="layoutSelected"></layout-links>
+            <NewLinkLayout :status="linkHelperStatus"  ></NewLinkLayout>
         </div>
 
     </div>
@@ -18,10 +21,21 @@
 
 //    import axios from "axios";
 import layoutLinks from "../components/LayoutLinks.vue"
+import NewLinkLayout from "../components/NewLinkLayout.vue"
 
     export default {
         name: "LayoutLinksHelper",
-        components: {layoutLinks},
+        components: {layoutLinks, NewLinkLayout},
+        data(){
+            return {
+                EXISTING_LAYOUTS:0,
+                NEW_LAYOUT:1,
+                linkHelperStatus:this.EXISTING_LAYOUTS
+            }
+        },
+        mounted(){
+          this.linkHelperStatus = this.EXISTING_LAYOUTS;
+        },
         methods: {
             handleDragStart(evt){
                 this.firstMouseX = evt.screenX;
@@ -47,6 +61,9 @@ import layoutLinks from "../components/LayoutLinks.vue"
             },
             layoutSelected(msg){
                 this.$emit('layoutSelected', [msg[0]]);
+            },
+            newLayout(){
+                this.linkHelperStatus=this.NEW_LAYOUT;
             }
 
         }
@@ -56,7 +73,7 @@ import layoutLinks from "../components/LayoutLinks.vue"
 <style scoped>
 
     .dialogComponent {
-        height:250px;
+        height:300px;
         width:800px;
         background-color: #ab97ff;
         border: 2px solid blue;
@@ -89,7 +106,7 @@ import layoutLinks from "../components/LayoutLinks.vue"
 
     }
     .dialogComponentFooter {
-        height: 10%;
+        height: 15%;
         margin-left: 10px;
         margin-right: 10px;
     }
@@ -151,7 +168,7 @@ import layoutLinks from "../components/LayoutLinks.vue"
         margin-left: 26px;
     }
     .linkHelperStyle {
-        width: 90%;
+        width: 85%;
         overflow: auto;
         height:75%;
         margin-left: 0px;
