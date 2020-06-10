@@ -20,6 +20,8 @@
 </template>
 
 <script>
+    import axios from "axios";
+
     export default {
         name: "NewLinkLayout",
         props:{
@@ -33,6 +35,83 @@
                 EXISTING_LAYOUTS:0,
                 NEW_LAYOUT:1,
             }
+        },
+        methods: {
+            handleDragStart(evt){
+                this.firstMouseX = evt.screenX;
+                this.firstMouseY = evt.screenY;
+                this.$emit('startDrag', [this.firstMouseX,this.firstMouseY]);
+            },
+            handleDragEnd(evt){
+                // eslint-disable-next-line no-debugger
+                //               debugger;
+                this.lastMouseX = evt.screenX;
+                this.lastMouseY = evt.screenY;
+                this.$emit('newLocation',[this.lastMouseX, this.lastMouseY]);
+                // eslint-disable-next-line no-console
+                console.log(evt);
+            },
+            nameCheck(event) {
+//                debugger;
+                if (this.name.length == 0) {
+                    alert('This field is required');
+                    event.preventDefault();
+                }
+            },
+
+            descriptionCheck(event){
+                if (this.description.length == 0) {
+                    alert('This field is required');
+                    event.preventDefault();
+                }
+            },
+            rowCheck(event){
+                if (this.rows.length == 0) {
+                    alert('This field is required');
+                    event.preventDefault();
+                }
+                if(isNaN(this.rows)){
+                    alert('a number is required');
+                    event.preventDefault();
+                }
+
+            },
+            colsCheck(event){
+                if (this.cols.length == 0) {
+                    alert('This field is required');
+                    event.preventDefault();
+                }
+                if(isNaN(this.cols)){
+                    alert('a number is required');
+                    event.preventDefault();
+                }
+
+            },
+            cancelClicked(){
+                this.$emit('configSelected',['cancel']);
+            },
+            newColor(evt){
+                this.colorVal=evt.target.value;
+            },
+            saveClicked(){
+//        debugger;
+                axios.post('http://localhost:8000/createLayoutNoBlanks?XDEBUG_SESSION_START=17516', {
+                    name: this.name,
+                    description: this.description,
+                    height: this.rows,
+                    width: this.cols,
+                    backgroundColor: this.colorVal
+                }).then(response=>
+                {
+//            debugger;
+                    this.layoutId=response.data;
+                    this.$emit('saveNewLayout', [this.layoutId, this.height, this.width, this.description, this.name, this.backgroundColor]);
+//                this.$refs.editGrid.createBlankLayout(msg[2],msg[3],msg[1],msg[0]);
+                }).catch(function(error) {
+                    console.log(error);
+                });
+            },
+
         }
     }
 </script>

@@ -1,8 +1,12 @@
 <template>
     <div class="dialogComponent" ref="drg"  draggable="true"  @dragstart="handleDragStart" @dragend="handleDragEnd" >
-        <div class="dialogComponentHeader">
+        <div class="dialogComponentHeader" v-if="this.linkHelperStatus==this.EXISTING_LAYOUTS">
             <span class="headingText">Click on Page Your Wish to Link To:</span>
             <span class="cancelLink"><a href="#" class="linkStyle" v-on:click="newLayout" >Link to a New Layout</a></span>
+            <span class="cancelLink"><a href="#" class="linkStyle" v-on:click="cancelClicked" >Cancel</a></span>
+        </div>
+        <div class="dialogComponentHeader" v-if="this.linkHelperStatus==this.NEW_LAYOUT">
+            <span class="headingText">New Layout</span>
             <span class="cancelLink"><a href="#" class="linkStyle" v-on:click="cancelClicked" >Cancel</a></span>
         </div>
         <br/>
