@@ -105,7 +105,7 @@
                 {
 //            debugger;
                     this.layoutId=response.data;
-                    this.$emit('saveNewLayout', [this.layoutId, this.height, this.width, this.description, this.name, this.backgroundColor]);
+                    this.$emit('layoutSelected', [this.layoutId]);
 //                this.$refs.editGrid.createBlankLayout(msg[2],msg[3],msg[1],msg[0]);
                 }).catch(function(error) {
                     console.log(error);

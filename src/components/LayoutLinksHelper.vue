@@ -13,7 +13,7 @@
 
         <div class="linkHelperStyle">
             <layout-links :status="linkHelperStatus"  @layoutSelected="layoutSelected"></layout-links>
-            <NewLinkLayout :status="linkHelperStatus"  ></NewLinkLayout>
+            <NewLinkLayout :status="linkHelperStatus" @layoutSelected="layoutSelected" ></NewLinkLayout>
         </div>
 
     </div>
