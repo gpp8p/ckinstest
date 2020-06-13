@@ -1,9 +1,14 @@
 <template>
     <div class="dialogComponent" ref="drg"  draggable="false"  @dragstart="handleDragStart" @dragend="handleDragEnd" >
         <div class="dialogComponentHeader">
-            <a href="#" class="linkStyle" v-on:click="cancelClicked" >Cancel</a>
-            <a v-if="this.viewStatus==this.VIEW_CKEDITOR" href="#" class="linkStyle" v-on:click="linkClicked" >Link to Another Page</a>
-            <a href="#" class="linkStyle" v-on:click="saveClicked" >Save</a>
+            <span v-if="this.headerStatus==false">
+                <a href="#" class="linkStyle" v-on:click="cancelClicked" >Cancel</a>
+                <a v-if="this.viewStatus==this.VIEW_CKEDITOR" href="#" class="linkStyle" v-on:click="linkClicked" >Link to Another Page</a>
+                <a href="#" class="linkStyle" v-on:click="saveClicked" >Save</a>
+            </span>
+            <span v-if="this.headerStatus==true">
+                You have made changes - do you want to save them ? <a href="#" class="linkStyle" v-on:click="saveClicked" >Yes</a>  <a href="#" class="linkStyle" v-on:click="cancelClicked2" >No</a>
+            </span>
         </div>
         <br/>
 
@@ -70,10 +75,15 @@
                 this.forwardToUrl = "http://localhost:8080/displayLayout/"+this.layoutLink;
                 this.editorInUse.execute( 'link', this.forwardToUrl );
 //                this.saveClicked();
+            },
+            editorData: function(){
+                this.contentChanged = true;
             }
         },
         data() {
             return {
+                contentChanged: false,
+                headerStatus: false,
                 editor: ClassicEditor,
                 editorDisabled: false,
                 editorConfig: {
@@ -176,6 +186,13 @@
                 console.log(evt);
             },
             cancelClicked(){
+                if(this.contentChanged){
+                    this.headerStatus=true;
+                }else{
+                    this.$emit('configSelected',['cancel']);
+                }
+            },
+            cancelClicked2(){
                 this.$emit('configSelected',['cancel']);
             },
             saveClicked(){

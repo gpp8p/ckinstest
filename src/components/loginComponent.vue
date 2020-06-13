@@ -95,6 +95,8 @@
             },
             doLogout(){
                 sessionStorage.clear();
+                this.email='';
+                this.password='';
                 this.sendLogin('GuestUser@nomail.com', 'GuestUser');
             },
             doLogin(){
