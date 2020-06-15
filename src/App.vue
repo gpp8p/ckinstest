@@ -132,7 +132,7 @@
             showCkTest: false,
             allLayouts: [],
             topMenuItems: ['New Layout', 'UserAdministration'],
-            editMenuItems: ['Page Preview', 'Layout List'],
+            editMenuItems: ['Page Preview', 'Layout Permissions', 'Layout List'],
             displayMenuItems: ['Go Back', 'Layout List'],
             selectedLayoutId: '',
             layoutCmd: '',
@@ -327,6 +327,9 @@
                       break;
                   case 'Go Back':
                       this.$router.go(-1);
+                      break;
+                  case 'Layout Permissions':
+
                       break;
 
 
