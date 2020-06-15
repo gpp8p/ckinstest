@@ -95,12 +95,15 @@
             },
             saveClicked(){
 //        debugger;
-                axios.post('http://localhost:8000/createLayoutNoBlanks?XDEBUG_SESSION_START=17516', {
+                axios.post('http://localhost:8000/createLayoutNoBlanks?XDEBUG_SESSION_START=17023', {
                     name: this.name,
                     description: this.description,
                     height: this.rows,
                     width: this.cols,
-                    backgroundColor: this.colorVal
+                    backgroundColor: this.colorVal,
+                    userId: this.$store.getters.getLoggedInUserId,
+                    user: this.$store.getters.getLoggedInUser,
+                    orgId: this.$store.getters.getOrgId
                 }).then(response=>
                 {
 //            debugger;

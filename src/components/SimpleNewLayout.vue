@@ -112,7 +112,10 @@
                     description: this.description,
                     height: this.rows,
                     width: this.cols,
-                    backgroundColor: this.colorVal
+                    backgroundColor: this.colorVal,
+                    userId: this.$store.getters.getLoggedInUserId,
+                    user: this.$store.getters.getLoggedInUser,
+                    orgId: this.$store.getters.getOrgId
                 }).then(response=>
                 {
 //            debugger;
