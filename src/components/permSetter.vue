@@ -4,6 +4,7 @@
             <span class="headingText">Who Can Access This Space ?</span>
         </div>
         <div class="dialogComponentBody">
+            <perm-list :permViewStatus="permViewStatus" ></perm-list>
 
         </div>
         <div class="dialogComponentFooter">
@@ -13,8 +14,21 @@
 </template>
 
 <script>
+    import PermList from "./permList";
     export default {
         name: "permSetter",
+        components: {PermList},
+        mounted(){
+            this.permViewStatus = this.PERMS;
+        },
+        data(){
+            return {
+                PERMS:0,
+                GROUP_INFO:1,
+                NEW_GROUP:2,
+                permViewStatus:this.PERMS
+            }
+        },
         methods:{
             cancelClicked(){
                 this.$emit('configSelected',['permSetterCanceled']);
@@ -61,5 +75,10 @@
         height: 10%;
         margin-left: 10px;
         margin-right: 10px;
+    }
+    .linkStyle{
+        font-family: Arial;
+        font-size: medium;
+        color: #0a3aff;
     }
 </style>
