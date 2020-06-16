@@ -40,6 +40,7 @@
                         @layoutSelected="this.layoutLinkSelected">
                 </layout-links-helper>
             </div>
+            <perm-setter v-if="this.draggedComponent=='permSetter'" @configSelected="configSelected" ></perm-setter>
 
         </div>
 
@@ -84,6 +85,7 @@
   import SimpleCkEditor from "./components/SimpleCkEditor.vue";
   import displayLayout from "./components/displayLayout";
   import layoutLinksHelper from "./components/LayoutLinksHelper.vue";
+  import permSetter from "./components/permSetter.vue";
   import axios from "axios";
   import store from './store';
 
@@ -96,7 +98,7 @@
   export default {
     name: 'app',
     store,
-    components: {Layout, layoutList, CkeditorComponent, menuComponent, configComponent, SimpleNewLayout, SimpleNewCard, SimpleCkEditor, displayLayout, layoutLinksHelper },
+    components: {Layout, layoutList, CkeditorComponent, menuComponent, configComponent, SimpleNewLayout, SimpleNewCard, SimpleCkEditor, displayLayout, layoutLinksHelper, permSetter },
     mounted: function() {
         console.log('app mounted');
           this.navBarView = this.VIEW_TOP_MENU;
@@ -191,7 +193,7 @@
             console.log('layoutSelected');
             this.navBarView = this.VIEW_GRID_MENU;
             this.contentView = this.VIEW_GRID_MENU;
-            this.editMenuItems = ['Edit', 'Layout List'];
+            this.editMenuItems = ['Edit',  'Layout List'];
 //            this.layoutCmd='show:'+msg[0];
             this.layoutCmd='displayLayout:'+msg[0];
             this.selectedLayoutId=msg[0];
@@ -280,6 +282,9 @@
                 case 'layoutLinkHelperCanceled':
                     this.showLinkHelper=false;
                     break;
+                case 'permSetterCanceled':
+                    this.draggedComponent="";
+                    break;
                 default:
                     this.cardDataFunction(msg[1], msg[0]);
                     break;
@@ -305,7 +310,7 @@
                     this.cardCurrentConfigurationValues={};
                     this.cardConfigurationElements = this.newLayoutConfig;
                     this.onePage=true;
-                    this.draggedComponent='newLayout';
+//                    this.draggedComponent='newLayout';
                     this.draggedComponent='simpleNewLayout';
 //                    this.layoutCmd = 'new';
                     break;
@@ -322,14 +327,15 @@
                   case 'Edit':
                       this.navBarView = this.VIEW_GRID_MENU;
                       this.contentView = this.VIEW_GRID_MENU;
-                      this.editMenuItems = ['Page Preview', 'Layout List'];
+                      this.editMenuItems = ['Page Preview','Layout Permissions', 'Layout List'];
                       this.layoutCmd='show:'+this.selectedLayoutId;
                       break;
                   case 'Go Back':
                       this.$router.go(-1);
                       break;
                   case 'Layout Permissions':
-
+                      this.floatingView = this.VIEW_FLOATING_CONFIG;
+                      this.draggedComponent='permSetter';
                       break;
 
 
