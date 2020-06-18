@@ -1,20 +1,30 @@
 <template>
-    <span v-if="permViewStatus==this.PERMS">
+    <span v-if="permViewStatus==this.PERMS" class="permListContainer">
         <perm-list-header></perm-list-header>
-        <perm-list-line></perm-list-line>
+        <perm-list-line v-for="(perm, index) in currentPerms "
+                        :key="index"
+                        :groupId="perm.id"
+                        :groupDescription="perm.description"
+                        :viewValue="perm.view"
+                        :authorValue="perm.author"
+                        :adminValue="perm.admin"
+                        :opt1Value="perm.opt1"
+                        :opt2Value="perm.opt2"
+                        :opt3Value="perm.opt3" ></perm-list-line>
 
     </span>
 </template>
 
 <script>
-    import PermListHeader from "./permListHeader";
-    import PermListLine from "./permListLine";
+    import PermListHeader from "./permListHeader.vue";
     import axios from "axios";
+    import PermListLine from "./permListLine.vue";
     export default {
         name: "permList",
         components: {PermListLine, PermListHeader},
         mounted(){
-            axios.get('http://localhost:8000/api/shan/layoutPerms', {
+            debugger;
+            axios.get('http://localhost:8000/api/shan/layoutPerms?XDEBUG_SESSION_START=14668', {
                 params:{
                     orgId:this.$store.getters.getOrgId,
                     userId:this.$store.getters.getLoggedInUserId,
@@ -24,6 +34,7 @@
                 .then(response => {
 // eslint-disable-next-line no-debugger
                     // JSON responses are automatically parsed.
+                    debugger;
                     this.currentPerms = response.data;
                 })
                 .catch(e => {
@@ -53,5 +64,8 @@
 </script>
 
 <style scoped>
+    .permListContainer {
+        width: 450px;
+    }
 
 </style>

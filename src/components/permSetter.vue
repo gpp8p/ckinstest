@@ -4,7 +4,7 @@
             <span class="headingText">Who Can Access This Space ?</span>
         </div>
         <div class="dialogComponentBody">
-            <perm-list :permViewStatus="permViewStatus" ></perm-list>
+            <perm-list :permViewStatus="this.permViewStatus" :layoutId="layoutId" ></perm-list>
 
         </div>
         <div class="dialogComponentFooter">
@@ -21,12 +21,18 @@
         mounted(){
             this.permViewStatus = this.PERMS;
         },
+        props: {
+          layoutId:{
+              type: Number,
+              required: true
+          }
+        },
         data(){
             return {
                 PERMS:0,
                 GROUP_INFO:1,
                 NEW_GROUP:2,
-                permViewStatus:this.PERMS
+                permViewStatus:0
             }
         },
         methods:{
