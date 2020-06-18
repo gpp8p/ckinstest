@@ -10,10 +10,15 @@
 <script>
     import permListPerm from '../components/permListPerm.vue';
     import permListGroup from '../components/permListGroup.vue';
+    import axios from "axios";
     export default {
         name: "permListLine",
         props:{
           groupId:{
+              type: Number,
+              required: true
+          },
+          layoutId:{
               type: Number,
               required: true
           },
@@ -55,6 +60,29 @@
                 OPT1_TYPE: 'opt1',
                 OPT2_TYPE: 'opt2',
                 OPT3_TYPE: 'opt3'
+            }
+        },
+        methods: {
+            permChanged(msg){
+                console.log(msg);
+                debugger;
+                axios.post('http://localhost:8000/api/shan/setLayoutPerms?XDEBUG_SESSION_START=14668', {
+                    params:{
+                        groupId: this.groupId,
+                        permType: msg[0],
+                        permValue: msg[1],
+                        layoutId:this.layoutId
+                    }
+                })
+                    .then(response => {
+// eslint-disable-next-line no-debugger
+                        // JSON responses are automatically parsed.
+                        console.log(response);
+                    })
+                    .catch(e => {
+                        this.errors.push(e);
+                        console.log('viewableLayouts failed');
+                    });
             }
         }
     }

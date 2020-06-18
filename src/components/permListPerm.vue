@@ -15,6 +15,13 @@
                 required:true
             }
         },
+        mounted(){
+          if(this.permValue>0){
+              this.checked=true;
+          }else{
+              this.checked=false;
+          }
+        },
         data(){
           return{
               checked: false
@@ -24,10 +31,10 @@
             clicked(event){
                 if (event.target.checked){
                     this.checked=true;
-                    this.$emit('permChanged', [this.permType,'activated']);
+                    this.$emit('permChanged', [this.permType, 1]);
                 }else{
                     this.checked=false;
-                    this.$emit('permChanged', [this.permType,'deactivated']);
+                    this.$emit('permChanged', [this.permType,0]);
                 }
             },
         }

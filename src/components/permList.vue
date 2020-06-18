@@ -4,6 +4,7 @@
         <perm-list-line v-for="(perm, index) in currentPerms "
                         :key="index"
                         :groupId="perm.id"
+                        :layoutId="layoutId"
                         :groupDescription="perm.description"
                         :viewValue="perm.view"
                         :authorValue="perm.author"

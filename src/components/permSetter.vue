@@ -8,7 +8,7 @@
 
         </div>
         <div class="dialogComponentFooter">
-            <a href="#" class="linkStyle" v-on:click="cancelClicked" >Cancel</a>
+            <a href="#" class="linkStyle" v-on:click="cancelClicked" >Done</a>
         </div>
     </div>
 </template>
