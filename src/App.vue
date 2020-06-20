@@ -40,7 +40,7 @@
                         @layoutSelected="this.layoutLinkSelected">
                 </layout-links-helper>
             </div>
-            <perm-setter :layoutId="selectedLayoutId" v-if="this.draggedComponent=='permSetter'" @configSelected="configSelected" ></perm-setter>
+            <perm-setter v-if="this.draggedComponent=='permSetter'" @configSelected="configSelected" ></perm-setter>
 
         </div>
 
@@ -64,6 +64,9 @@
         <div v-if="this.contentView==this.VIEW_LAYOUT_LIST">
             <layout-list @layoutSelected="layoutSelected"></layout-list>
         </div>
+        <div v-if="this.contentView==this.VIEW_ORG_LIST">
+            <org-list @orgSelected="orgSelected"></org-list>
+        </div>
         <div v-if="this.contentView==this.VIEW_DISPLAY_LAYOUT">
             <display-layout :layoutId="this.displayLayoutId"></display-layout>
         </div>
@@ -86,6 +89,7 @@
   import displayLayout from "./components/displayLayout";
   import layoutLinksHelper from "./components/LayoutLinksHelper.vue";
   import permSetter from "./components/permSetter.vue";
+  import orgList from "./components/orgList.vue";
   import axios from "axios";
   import store from './store';
 
@@ -98,7 +102,7 @@
   export default {
     name: 'app',
     store,
-    components: {Layout, layoutList, CkeditorComponent, menuComponent, configComponent, SimpleNewLayout, SimpleNewCard, SimpleCkEditor, displayLayout, layoutLinksHelper, permSetter },
+    components: {Layout, layoutList, CkeditorComponent, menuComponent, configComponent, SimpleNewLayout, SimpleNewCard, SimpleCkEditor, displayLayout, layoutLinksHelper, permSetter, orgList },
     mounted: function() {
         console.log('app mounted');
           this.navBarView = this.VIEW_TOP_MENU;
@@ -108,14 +112,18 @@
               this.contentView = this.VIEW_DISPLAY_LAYOUT;
               this.navBarView = this.VIEW_DISPLAY_LAYOUT;
           }
-          if(sessionStorage.length>0){
-              this.credentials.bearerToken= sessionStorage.getItem('bearerToken');
-              this.credentials.loggedInUser=sessionStorage.getItem('loggedInUser');
-              this.credentials.loggedInUserId=sessionStorage.getItem('loggedInUserId');
-              this.credentials.is_admin=sessionStorage.getItem('is_admin');
+          if(sessionStorage.length>0) {
+              this.credentials.bearerToken = sessionStorage.getItem('bearerToken');
+              this.credentials.loggedInUser = sessionStorage.getItem('loggedInUser');
+              this.credentials.loggedInUserId = sessionStorage.getItem('loggedInUserId');
+              this.credentials.is_admin = sessionStorage.getItem('is_admin');
           }
-          console.log('layoutId='+this.displayLayoutId);
+
+            console.log('layoutId='+this.displayLayoutId);
      },
+    created(){
+        this.M_NEW_SPACE = 'Create New Space';
+    },
     data () {
         return {
             VIEW_TOP_MENU: 0,
@@ -133,9 +141,10 @@
             floatingView: this.VIEW_TOP_MENU,
             showCkTest: false,
             allLayouts: [],
-            topMenuItems: ['New Layout', 'UserAdministration'],
-            editMenuItems: ['Page Preview', 'Layout Permissions', 'Layout List'],
+            topMenuItems: ['Create New Space', 'Manage Users'],
+            editMenuItems: ['Preview this Space', 'Layout Permissions', 'Layout List'],
             displayMenuItems: ['Go Back', 'Layout List'],
+            M_NEW_SPACE: '',
             selectedLayoutId: '',
             layoutCmd: '',
 
@@ -193,7 +202,7 @@
             console.log('layoutSelected');
             this.navBarView = this.VIEW_GRID_MENU;
             this.contentView = this.VIEW_GRID_MENU;
-            this.editMenuItems = ['Edit',  'Layout List'];
+            this.editMenuItems = ['Modify this Space',  'Layout List'];
 //            this.layoutCmd='show:'+msg[0];
             this.layoutCmd='displayLayout:'+msg[0];
             this.selectedLayoutId=msg[0];
@@ -260,6 +269,13 @@
         userLogged(msg){
 //            debugger;
           console.log('userLogged', msg);
+          console.log('is_admin:', msg[0][2]);
+          if(msg[0][2]>0){
+              this.navBarView = this.VIEW_TOP_MENU;
+              this.contentView = this.VIEW_LAYOUT_LIST;
+              this.layoutCmd='hide';
+              this.$refs.editGrid.hideGrid();
+          }
         },
         configSelected(msg){
             debugger;
@@ -304,7 +320,7 @@
                     this.layoutCmd='hide';
                     this.$refs.editGrid.hideGrid();
                     break;
-                case 'New Layout':
+                case 'Create New Space':
 
                     this.floatingView = this.VIEW_FLOATING_CONFIG;
                     this.cardCurrentConfigurationValues={};
@@ -318,13 +334,13 @@
                      this.floatingView = this.VIEW_FLOATING_CONFIG;
                      this.draggedComponent='simpleCkEditor';
                      break;
-                  case 'Page Preview':
+                  case 'Preview this Space':
                       this.navBarView = this.VIEW_GRID_MENU;
                       this.contentView = this.VIEW_GRID_MENU;
-                      this.editMenuItems = ['Edit', 'Layout List'];
+                      this.editMenuItems = ['Modify this Space', 'Layout List'];
                       this.layoutCmd = 'display';
                       break;
-                  case 'Edit':
+                  case 'Modify this Space':
                       this.navBarView = this.VIEW_GRID_MENU;
                       this.contentView = this.VIEW_GRID_MENU;
                       this.editMenuItems = ['Page Preview','Layout Permissions', 'Layout List'];
@@ -336,6 +352,11 @@
                   case 'Layout Permissions':
                       this.floatingView = this.VIEW_FLOATING_CONFIG;
                       this.draggedComponent='permSetter';
+                      break;
+                  case 'Manage Users':
+                      this.contentView=this.VIEW_ORG_LIST;
+                      this.layoutCmd='hide';
+                      this.$refs.editGrid.hideGrid();
                       break;
 
 
