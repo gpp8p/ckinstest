@@ -21,10 +21,22 @@
     export default {
         name: "orgUserList",
         components: {orgUserListHeader, orgUserListLine},
+        props:{
+          orgId:{
+              type: Number,
+              required: true
+          }
+        },
         mounted: function() {
             console.log('mounted runs in  orgUserList');
 //            axios.get('http://localhost:8000//layoutList')
-            axios.get('http://localhost:8000/api/shan/orgUsers?XDEBUG_SESSION_START=19181')
+            axios.get('http://localhost:8000/api/shan/orgUsers?XDEBUG_SESSION_START=19181',
+            {
+                params:{
+                    orgId:this.$store.getters.getOrgId
+                }
+            })
+
                 .then(response => {
 // eslint-disable-next-line no-debugger
                     // JSON responses are automatically parsed.

@@ -31,7 +31,7 @@
 <style scoped>
     .lline {
         display: grid;
-        grid-template-columns: 20% 60% 10% 10%;
+        grid-template-columns: 30% 70%;
         font-size: medium;
         font-family: Arial;
         align-items: left;

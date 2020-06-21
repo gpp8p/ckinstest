@@ -70,6 +70,9 @@
         <div v-if="this.contentView==this.VIEW_ORG_LIST">
             <org-list @orgSelected="orgSelected"></org-list>
         </div>
+       <div v-if="this.contentView==this.VIEW_ORG_USER_LIST">
+            <org-user-list @orgUserSelected="orgUserSelected" :orgId="this.selectedOrg"></org-user-list>
+        </div>
         <div v-if="this.contentView==this.VIEW_DISPLAY_LAYOUT">
             <display-layout :layoutId="this.displayLayoutId"></display-layout>
         </div>
@@ -93,6 +96,7 @@
   import layoutLinksHelper from "./components/LayoutLinksHelper.vue";
   import permSetter from "./components/permSetter.vue";
   import orgList from "./components/orgList.vue";
+  import orgUserList from './components/orgUserList.vue';
   import axios from "axios";
   import store from './store';
   import menuMsg from './components/menuMsg.vue';
@@ -106,7 +110,7 @@
   export default {
     name: 'app',
     store,
-    components: {Layout, layoutList, CkeditorComponent, menuComponent, configComponent, SimpleNewLayout, SimpleNewCard, SimpleCkEditor, displayLayout, layoutLinksHelper, permSetter, orgList, menuMsg },
+    components: {Layout, layoutList, CkeditorComponent, menuComponent, configComponent, SimpleNewLayout, SimpleNewCard, SimpleCkEditor, displayLayout, layoutLinksHelper, permSetter, orgList, orgUserList, menuMsg },
     mounted: function() {
         console.log('app mounted');
           this.navBarView = this.VIEW_TOP_MENU;
@@ -140,6 +144,8 @@
             VIEW_TEST_CKEDITOR: 7,
             VIEW_DEBUG: 8,
             VIEW_DISPLAY_LAYOUT: 9,
+            VIEW_ORG_LIST:10,
+            VIEW_ORG_USER_LIST:11,
             contentView: this.VIEW_TOP_MENU,
             navBarView: this.VIEW_TOP_MENU,
             floatingView: this.VIEW_TOP_MENU,
@@ -192,6 +198,8 @@
             default_org:'shannon',
             org_home_id:0,
             org_id:0,
+
+            selectedOrg:0,
 
             credentials:{
                 bearerToken: '',
@@ -287,6 +295,8 @@
         orgSelected(msg){
           console.log('org selected', msg);
           this.menuMsg = 'Organization:'+msg[0][1];
+          this.selectedOrg=msg[0][0];
+          this.contentView = this.VIEW_ORG_USER_LIST;
         },
         configSelected(msg){
             debugger;
