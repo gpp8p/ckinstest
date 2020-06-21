@@ -1,12 +1,12 @@
 <template>
     <span>
        <orgListHeader></orgListHeader>
-                <orgListLine v-for="(org, index) in allLayouts"
+                <orgListLine v-for="(org, index) in allOrgs"
                                 :key="index"
                                 :id="org.id.toString()"
                                 :description="org.description"
                                 :org_label="org.org_label"
-                                @layoutSelected="orgSelected"
+                                @orgSelected="orgSelected"
                 >
                 </orgListLine>
 
@@ -23,7 +23,7 @@
         mounted: function() {
             console.log('mounted runs in  orgList');
 //            axios.get('http://localhost:8000//layoutList')
-            axios.get('http://localhost:8000/api/shan/orgList')
+            axios.get('http://localhost:8000/api/shan/orgList?XDEBUG_SESSION_START=19181')
                 .then(response => {
 // eslint-disable-next-line no-debugger
                     // JSON responses are automatically parsed.
@@ -42,8 +42,8 @@
         },
         methods:{
             orgSelected(msg){
-                this.$emit('orgSelected',[msg[0]]);
-                console.log('orgSelected summoned'+msg);
+                this.$emit('orgSelected',[msg]);
+                console.log('orgSelected summoned:'+msg);
             }
         }
 

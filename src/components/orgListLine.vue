@@ -22,7 +22,7 @@
             },
         methods:{
             orgSelected(){
-                this.$emit('orgSelected', [this.id])
+                this.$emit('orgSelected', [this.id, this.org_label]);
             }
         }
     }

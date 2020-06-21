@@ -52,6 +52,9 @@
         <div v-if="this.navBarView==this.VIEW_GRID_MENU">
             <menu-component :credentials = "this.credentials" :items="this.editMenuItems" @menuSelection="menuSelection" @tokenInstalled="tokenInstalled" @userLogged="userLogged"></menu-component>
         </div>
+        <div v-if="this.navBarView==this.VIEW_ORG_MENU">
+            <menu-msg :msg="this.menuMsg"></menu-msg><menu-component :credentials = "this.credentials" :items="this.orgMenuItems" @menuSelection="menuSelection" @tokenInstalled="tokenInstalled" @userLogged="userLogged"></menu-component>
+        </div>
         <div v-if="this.navBarView==this.VIEW_DISPLAY_LAYOUT">
             <menu-component :credentials = "this.credentials" :items="this.displayMenuItems" @menuSelection="menuSelection" @tokenInstalled="tokenInstalled" @userLogged="userLogged"></menu-component>
         </div>
@@ -92,6 +95,7 @@
   import orgList from "./components/orgList.vue";
   import axios from "axios";
   import store from './store';
+  import menuMsg from './components/menuMsg.vue';
 
 
 //  import axios from 'axios';
@@ -102,7 +106,7 @@
   export default {
     name: 'app',
     store,
-    components: {Layout, layoutList, CkeditorComponent, menuComponent, configComponent, SimpleNewLayout, SimpleNewCard, SimpleCkEditor, displayLayout, layoutLinksHelper, permSetter, orgList },
+    components: {Layout, layoutList, CkeditorComponent, menuComponent, configComponent, SimpleNewLayout, SimpleNewCard, SimpleCkEditor, displayLayout, layoutLinksHelper, permSetter, orgList, menuMsg },
     mounted: function() {
         console.log('app mounted');
           this.navBarView = this.VIEW_TOP_MENU;
@@ -141,12 +145,14 @@
             floatingView: this.VIEW_TOP_MENU,
             showCkTest: false,
             allLayouts: [],
-            topMenuItems: ['Create New Space', 'Manage Users'],
+            topMenuItems: ['Create New Space', 'Manage Organizations'],
             editMenuItems: ['Preview this Space', 'Layout Permissions', 'Layout List'],
             displayMenuItems: ['Go Back', 'Layout List'],
+            orgMenuItems: ['Master List of Spaces','Register New Organization'],
             M_NEW_SPACE: '',
             selectedLayoutId: '',
             layoutCmd: '',
+
 
 
 
@@ -192,7 +198,8 @@
                 loggedInUserId: '',
                 loggedInUser: '',
                 is_admin: 0
-            }
+            },
+            menuMsg:''
         }
     },
 
@@ -277,6 +284,10 @@
               this.$refs.editGrid.hideGrid();
           }
         },
+        orgSelected(msg){
+          console.log('org selected', msg);
+          this.menuMsg = 'Organization:'+msg[0][1];
+        },
         configSelected(msg){
             debugger;
             switch(msg[0]){
@@ -319,6 +330,14 @@
                     this.contentView = this.VIEW_LAYOUT_LIST;
                     this.layoutCmd='hide';
                     this.$refs.editGrid.hideGrid();
+                    this.menuMsg = '';
+                    break;
+                case 'Master List of Spaces':
+                    this.navBarView = this.VIEW_TOP_MENU;
+                    this.contentView = this.VIEW_LAYOUT_LIST;
+                    this.layoutCmd='hide';
+                    this.$refs.editGrid.hideGrid();
+                    this.menuMsg = '';
                     break;
                 case 'Create New Space':
 
@@ -353,8 +372,9 @@
                       this.floatingView = this.VIEW_FLOATING_CONFIG;
                       this.draggedComponent='permSetter';
                       break;
-                  case 'Manage Users':
+                  case 'Manage Organizations':
                       this.contentView=this.VIEW_ORG_LIST;
+                      this.navBarView = this.VIEW_ORG_MENU;
                       this.layoutCmd='hide';
                       this.$refs.editGrid.hideGrid();
                       break;
