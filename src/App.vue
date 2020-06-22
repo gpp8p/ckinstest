@@ -55,6 +55,10 @@
         <div v-if="this.navBarView==this.VIEW_ORG_MENU">
             <menu-msg :msg="this.menuMsg"></menu-msg><menu-component :credentials = "this.credentials" :items="this.orgMenuItems" @menuSelection="menuSelection" @tokenInstalled="tokenInstalled" @userLogged="userLogged"></menu-component>
         </div>
+        <div v-if="this.navBarView==this.VIEW_ORG_USER_LIST">
+            <menu-msg :msg="this.menuMsg"></menu-msg><menu-component :credentials = "this.credentials" :items="this.oneOrgMenuItems1" @menuSelection="menuSelection" @tokenInstalled="tokenInstalled" @userLogged="userLogged"></menu-component>
+        </div>
+
         <div v-if="this.navBarView==this.VIEW_DISPLAY_LAYOUT">
             <menu-component :credentials = "this.credentials" :items="this.displayMenuItems" @menuSelection="menuSelection" @tokenInstalled="tokenInstalled" @userLogged="userLogged"></menu-component>
         </div>
@@ -155,6 +159,8 @@
             editMenuItems: ['Preview this Space', 'Layout Permissions', 'Layout List'],
             displayMenuItems: ['Go Back', 'Layout List'],
             orgMenuItems: ['Master List of Spaces','Register New Organization'],
+            oneOrgMenuItems1:['Organization Spaces', 'Organizations'],
+            oneOrgMenuItems2:['Organization Users', 'Organizations'],
             M_NEW_SPACE: '',
             selectedLayoutId: '',
             layoutCmd: '',
@@ -297,6 +303,7 @@
           this.menuMsg = 'Organization:'+msg[0][1];
           this.selectedOrg=msg[0][0];
           this.contentView = this.VIEW_ORG_USER_LIST;
+          this.navBarView=this.VIEW_ORG_USER_LIST;
         },
         configSelected(msg){
             debugger;
