@@ -69,7 +69,7 @@
           <ckeditor-component></ckeditor-component>
         </span>
         <div v-if="this.contentView==this.VIEW_LAYOUT_LIST">
-            <layout-list @layoutSelected="layoutSelected"></layout-list>
+            <layout-list @layoutSelected="layoutSelected" :orgId=-1></layout-list>
         </div>
         <div v-if="this.contentView==this.VIEW_ORG_LIST">
             <org-list @orgSelected="orgSelected"></org-list>
