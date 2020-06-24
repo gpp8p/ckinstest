@@ -10,10 +10,17 @@
             <span class="inputPrompt">Organization Description:</span><span><input ref="description" type="text" size="50" v-model="description" @keydown.tab.exact = "descriptionCheck"/></span>
             <span class="inputPrompt">Rows:</span><span><input ref="rows" type="text" size="5" v-model="rows" @keydown.tab.exact = "rowCheck"/></span>
             <span class="inputPrompt">Columns:</span><span><input ref="cols" type="text" size="5" v-model="cols" @keydown.tab.exact = "colsCheck"/></span>
-            <span class="inputPrompt">Homepage Background Color:</span>
-            <span class="input-color-container">
-                    <input  id="input-color" type="color" class="input-color" @change="newColor" :value="colorVal"/>
+            <span class="inputPrompt">Homepage</span>
+            <span class="inputPrompt selectAdminUser">
+                <span class="cinput">
+                    <span class="inputPrompt">Color:</span>
+                    <span class="input-color-container">
+                        <input  id="input-color" type="color" class="input-color" @change="newColor" :value="colorVal"/>
+                    </span>
+                </span>
+
             </span>
+            <span class="inputPrompt selectAdminUser">Image:</span>
             <div class="selectAdminUser">
                 <span class="inputPrompt"><input type="radio" name="adminUserSelectType" value="select" checked="true" @click="selectAdmin">Select Space Admin<input type="radio" name="adminUserSelectType" value="new" @click="newAdmin">Admin is New User</span>
                 <new-user-entry :adminUserSelect="this.adminUserSelect"></new-user-entry>
@@ -150,7 +157,7 @@
 <style scoped>
 
     .dialogComponent {
-        height:450px;
+        height:550px;
         width:500px;
         background-color: #ab97ff;
         border: 2px solid blue;
@@ -178,7 +185,7 @@
         margin-right: 10px;
         display: grid;
         grid-template-columns: 30% 70%;
-        grid-template-rows: 10% 10% 10% 10% 10%
+        grid-template-rows: 10% 10% 10% 10% 5% 5% 5%
 
 
     }
@@ -221,7 +228,6 @@
         width: 15px;
         height: 20px;
         top: 2px;
-        margin-right: 5px;
         border: solid 2px #ddd;
         border-radius: 5px;
     }
@@ -241,8 +247,12 @@
         color: #dbd50c;
         margin-right: 30px;
     }
+    .cinput {
+        display: grid;
+        grid-template-columns: 30% 70%;
+    }
     .colorSpan{
-        margin-left: 26px;
+        margin-right: 26px;
     }
     .selectAdminUser {
         grid-column: 1/-1;

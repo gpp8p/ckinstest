@@ -1,10 +1,10 @@
 <template>
-    <div v-if="adminUserSelect==this.SELECT_USER">
+    <div v-if="adminUserSelect==this.NEW_USER">
         <span class="newUserBody">
-            <span class="inputPrompt">User Name:</span><span><input ref="name" type="text" size="50" v-model="name" @keydown.tab.exact = "nameCheck" required = true /></span>
-            <span class="inputPrompt">User Email:</span><span><input ref="email" type="text" size="60" v-model="name" @keydown.tab.exact = "emailCheck" required = true /></span>
-            <span class="inputPrompt">User Password:</span><span><input ref="email" type="text" size="60" v-model="name" @keydown.tab.exact = "pwCheck" required = true /></span>
-            <span class="inputPrompt">Password Repeat:</span><span><input ref="email" type="text" size="60" v-model="name" @keydown.tab.exact = "pwrCheck" required = true /></span>
+            <span class="inputPrompt">User Name:</span><span><input ref="name" type="text" size="40" v-model="name" @keydown.tab.exact = "nameCheck" required = true /></span>
+            <span class="inputPrompt">User Email:</span><span><input ref="email" type="text" size="50" v-model="name" @keydown.tab.exact = "emailCheck" required = true /></span>
+            <span class="inputPrompt">User Password:</span><span><input ref="email" type="text" size="40" v-model="name" @keydown.tab.exact = "pwCheck" required = true /></span>
+            <span class="inputPrompt">Password Repeat:</span><span><input ref="email" type="text" size="40" v-model="name" @keydown.tab.exact = "pwrCheck" required = true /></span>
         </span>
         <span class="newUserFooter">
             <a href="#" class="linkStyle" v-on:click="newUserSave" >Create This User</a>
@@ -20,7 +20,13 @@
                 type:Number,
                 required:true
             }
-        }
+        },
+        data(){
+            return{
+                NEW_USER:1,
+                SELECT_USER:0
+            }
+        },
     }
 </script>
 
