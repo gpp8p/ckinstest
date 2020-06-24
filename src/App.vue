@@ -40,7 +40,7 @@
                         @layoutSelected="this.layoutLinkSelected">
                 </layout-links-helper>
             </div>
-            <perm-setter v-if="this.draggedComponent=='permSetter'" @configSelected="configSelected" ></perm-setter>
+            <perm-setter v-if="this.draggedComponent=='permSetter'" :layoutId="this.selectedLayoutId" @configSelected="configSelected" ></perm-setter>
 
         </div>
 
@@ -69,7 +69,7 @@
           <ckeditor-component></ckeditor-component>
         </span>
         <div v-if="this.contentView==this.VIEW_LAYOUT_LIST">
-            <layout-list @layoutSelected="layoutSelected" :orgId=-1></layout-list>
+            <layout-list @layoutSelected="layoutSelected" :orgId="this.selectedOrg"></layout-list>
         </div>
         <div v-if="this.contentView==this.VIEW_ORG_LIST">
             <org-list @orgSelected="orgSelected"></org-list>
@@ -159,8 +159,8 @@
             editMenuItems: ['Preview this Space', 'Layout Permissions', 'Layout List'],
             displayMenuItems: ['Go Back', 'Layout List'],
             orgMenuItems: ['Master List of Spaces','Register New Organization'],
-            oneOrgMenuItems1:['Organization Spaces', 'Organizations'],
-            oneOrgMenuItems2:['Organization Users', 'Organizations'],
+            oneOrgMenuItems1:['Organization Spaces', 'Manage Organizations'],
+            oneOrgMenuItems2:['Organization Users', 'Manage Organizations'],
             M_NEW_SPACE: '',
             selectedLayoutId: '',
             layoutCmd: '',
@@ -282,7 +282,9 @@
                 });
             }else{
 //                debugger;
-                this.contentView = this.VIEW_LAYOUT_LIST;
+//                this.contentView = this.VIEW_LAYOUT_LIST;
+                this.contentView = this.VIEW_ORG_LIST;
+                this.navBarView=this.VIEW_ORG_MENU;
                 this.layoutCmd = 'hide';
 
             }
@@ -354,6 +356,7 @@
                     this.contentView = this.VIEW_LAYOUT_LIST;
                     this.layoutCmd='hide';
                     this.$refs.editGrid.hideGrid();
+                    this.selectedOrg=-1;
                     this.menuMsg = '';
                     break;
                 case 'Create New Space':
@@ -392,6 +395,11 @@
                   case 'Manage Organizations':
                       this.contentView=this.VIEW_ORG_LIST;
                       this.navBarView = this.VIEW_ORG_MENU;
+                      this.layoutCmd='hide';
+                      this.$refs.editGrid.hideGrid();
+                      break;
+                  case 'Organization Spaces':
+                      this.contentView = this.VIEW_LAYOUT_LIST;
                       this.layoutCmd='hide';
                       this.$refs.editGrid.hideGrid();
                       break;
