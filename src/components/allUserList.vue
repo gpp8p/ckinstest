@@ -1,11 +1,11 @@
 <template>
-        <span v-if="adminUserSelect==this.SELECT_USER">
-       <allUserHeader></allUserHeader>
-                <allUserLine v-for="(orgUser, index) in allOrgUsers"
+        <span v-if="adminUserSelect==this.SELECT_USER" class="allUserContainer">
+            <allUserHeader></allUserHeader>
+                <allUserLine v-for="(user, index) in this.users"
                                  :key="index"
                                  :id="user.id"
                                  :name="user.name"
-                                 :email="userser.email"
+                                 :email="user.email"
                                  @orgUserSelected="userSelected"
                 >
                 </allUserLine>
@@ -65,6 +65,9 @@
 </script>
 
 <style scoped>
+    .allUserContainer {
+        width: 100%;
+    }
 
 </style>
 

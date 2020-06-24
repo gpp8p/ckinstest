@@ -1,5 +1,5 @@
 <template>
-    <span class="lline" v-on:click="this.orgUserSelected"><span class="gitem">{{email}}</span><span class="gitem">{{name}}</span></span>
+    <span class="lline" v-on:click="this.orgUserSelected"><span class="gitem">{{name}}</span><span class="gitem">{{email}}</span></span>
 </template>
 
 <script>

@@ -1,7 +1,7 @@
 <template>
     <div class="dialogComponent" ref="drg"  draggable="true"  @dragstart="handleDragStart" @dragend="handleDragEnd" >
         <div class="dialogComponentHeader">
-            <span class="headingText">New Layout</span>
+            <span class="headingText">New Organization</span>
         </div>
         <br/>
 
@@ -14,12 +14,13 @@
             <span class="input-color-container">
                     <input  id="input-color" type="color" class="input-color" @change="newColor" :value="colorVal"/>
             </span>
+            <div class="selectAdminUser">
+                <span class="inputPrompt"><input type="radio" name="adminUserSelectType" value="select" checked="true" @click="selectAdmin">Select Space Admin<input type="radio" name="adminUserSelectType" value="new" @click="newAdmin">Admin is New User</span>
+                <new-user-entry :adminUserSelect="this.adminUserSelect"></new-user-entry>
+                <all-user-list :adminUserSelect="this.adminUserSelect"></all-user-list>
+            </div>
+        </div>
 
-        </div>
-        <div>
-            <new-user-entry :adminUserSelect="this.adminUserSelect"></new-user-entry>
-            <all-user-list :adminUserSelect="this.adminUserSelect"></all-user-list>
-        </div>
         <div class="dialogComponentFooter">
             <a href="#" class="linkStyle" v-on:click="saveClicked" >Save</a>
             <a href="#" class="linkStyle" v-on:click="cancelClicked" >Cancel</a>
@@ -110,6 +111,12 @@
                 }
 
             },
+            selectAdmin(){
+              this.adminUserSelect = this.SELECT_USER;
+            },
+            newAdmin(){
+                this.adminUserSelect = this.NEW_USER;
+            },
             cancelClicked(){
                 this.$emit('configSelected',['cancel']);
             },
@@ -143,7 +150,7 @@
 <style scoped>
 
     .dialogComponent {
-        height:250px;
+        height:450px;
         width:500px;
         background-color: #ab97ff;
         border: 2px solid blue;
@@ -151,7 +158,7 @@
         box-shadow: 10px 10px 5px grey;
     }
     .dialogComponentHeader {
-        height:10%;
+        height:8%;
         background-color: #fff722;
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
@@ -171,7 +178,7 @@
         margin-right: 10px;
         display: grid;
         grid-template-columns: 30% 70%;
-        grid-template-rows: 15% 15% 15% 15%
+        grid-template-rows: 10% 10% 10% 10% 10%
 
 
     }
@@ -236,6 +243,9 @@
     }
     .colorSpan{
         margin-left: 26px;
+    }
+    .selectAdminUser {
+        grid-column: 1/-1;
     }
 
 </style>

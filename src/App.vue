@@ -24,6 +24,7 @@
                     @configSelected="this.configSelected"
                     @saveNewLayout="this.saveBlankLayout"
             ></SimpleNewLayout>
+            <simple-new-org v-if="this.draggedComponent=='simpleNewOrg'" @configSelected="this.configSelected"></simple-new-org>
             <simpleCkEditor
                     v-if="this.draggedComponent=='simpleCkEditor'"
                     :updateCallback="this.updateCallback"
@@ -104,6 +105,7 @@
   import axios from "axios";
   import store from './store';
   import menuMsg from './components/menuMsg.vue';
+  import SimpleNewOrg from "./components/SimpleNewOrg";
 
 
 //  import axios from 'axios';
@@ -114,7 +116,9 @@
   export default {
     name: 'app',
     store,
-    components: {Layout, layoutList, CkeditorComponent, menuComponent, configComponent, SimpleNewLayout, SimpleNewCard, SimpleCkEditor, displayLayout, layoutLinksHelper, permSetter, orgList, orgUserList, menuMsg },
+    components: {
+        SimpleNewOrg,
+        Layout, layoutList, CkeditorComponent, menuComponent, configComponent, SimpleNewLayout, SimpleNewCard, SimpleCkEditor, displayLayout, layoutLinksHelper, permSetter, orgList, orgUserList, menuMsg },
     mounted: function() {
         console.log('app mounted');
           this.navBarView = this.VIEW_TOP_MENU;
@@ -311,8 +315,8 @@
             debugger;
             switch(msg[0]){
                 case 'cancel':
-                    this.navBarView = this.VIEW_TOP_MENU;
-                    this.contentView = this.VIEW_LAYOUT_LIST;
+                    this.contentView = this.VIEW_ORG_LIST;
+                    this.navBarView=this.VIEW_ORG_MENU;
                     this.draggedComponent="";
                     this.layoutCmd = 'hide';
                     break;
@@ -403,6 +407,11 @@
                       this.layoutCmd='hide';
                       this.$refs.editGrid.hideGrid();
                       break;
+                  case 'Register New Organization':
+                      this.floatingView = this.VIEW_FLOATING_CONFIG;
+                      this.draggedComponent='simpleNewOrg';
+                      break;
+
 
 
             }

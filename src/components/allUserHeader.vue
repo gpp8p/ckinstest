@@ -1,6 +1,6 @@
 <template>
     <span class="lline">
-        <span class="gitem">Email</span><span class="gitem">Name</span>
+        <span class="gitem">Name</span><span class="gitem">Email</span>
     </span>
 
 </template>
