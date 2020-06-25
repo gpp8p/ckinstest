@@ -6,7 +6,8 @@
                                  :id="user.id"
                                  :name="user.name"
                                  :email="user.email"
-                                 @orgUserSelected="userSelected"
+                                 @userSelected="userSelected"
+                                 @userUnselected="userUnSelected"
                 >
                 </allUserLine>
 
@@ -55,7 +56,7 @@
             }
         },
         methods:{
-            orgSelected(msg){
+            userSelected(msg){
                 this.$emit('userSelected',[msg]);
             }
         }

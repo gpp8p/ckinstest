@@ -8,23 +8,25 @@
         <div class="dialogComponentBody">
             <span class="inputPrompt">Organization Name:</span><span><input ref="name" type="text" size="30" v-model="name" @keydown.tab.exact = "nameCheck" required = true /></span>
             <span class="inputPrompt">Organization Description:</span><span><input ref="description" type="text" size="50" v-model="description" @keydown.tab.exact = "descriptionCheck"/></span>
+            <span class="inputPrompt selectAdminUser">Homepage</span>
             <span class="inputPrompt">Rows:</span><span><input ref="rows" type="text" size="5" v-model="rows" @keydown.tab.exact = "rowCheck"/></span>
             <span class="inputPrompt">Columns:</span><span><input ref="cols" type="text" size="5" v-model="cols" @keydown.tab.exact = "colsCheck"/></span>
-            <span class="inputPrompt">Homepage</span>
+
             <span class="inputPrompt selectAdminUser">
                 <span class="cinput">
-                    <span class="inputPrompt"><input type="radio" name="backgroundType" value="color" checked="true"/>Color:</span>
-                    <span class="input-color-container">
-                        <input  id="input-color" type="color" class="input-color" @change="newColor" :value="colorVal"/>
+                    <span class="inputPrompt"><input type="radio" name="backgroundType" value="color"  @change="colorSelected"  checked="true"/>Color:</span>
+                    <span class="input-color-container" v-if="this.showBack==this.SHOW_COLOR">
+                        <input id="input-color" type="color" class="input-color" @change="newColor" :value="colorVal"/>
                     </span>
                 </span>
 
             </span>
             <span class="inputPrompt selectAdminUser">
                 <span class="fileUpload">
-                     <span><input type="radio" name="backgroundType" value="image"/>Image:</span>
-                    <span>
-                        <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+                     <span><input type="radio" name="backgroundType" value="image"  @change="imageSelected"/>Image:</span>
+                    <span v-if="this.showBack==this.SHOW_IMAGE">
+                        <input  type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+                        <a v-if="this.imageIdentified==true" href="#" @click="uploadImageFile">Upload this image</a>
                     </span>
                 </span>
             </span>
@@ -63,7 +65,12 @@
                 adminUserId:0,
                 adminUserSelect:0,
                 NEW_USER:1,
-                SELECT_USER:0
+                SELECT_USER:0,
+                backType:'',
+                showBack:0,
+                SHOW_COLOR:0,
+                SHOW_IMAGE:1,
+                imageIdentified: false
 
 
             }
@@ -88,6 +95,17 @@
                 this.$emit('newLocation',[this.lastMouseX, this.lastMouseY]);
                 // eslint-disable-next-line no-console
                 console.log(evt);
+            },
+            colorSelected(){
+                console.log('color selected');
+              this.showBack=this.SHOW_COLOR;
+            },
+            imageSelected(){
+                console.log('image selected');
+                this.showBack=this.SHOW_IMAGE;
+            },
+            handleFileUpload(){
+                this.imageIdentified=true;
             },
             nameCheck(event) {
 //                debugger;
@@ -192,7 +210,7 @@
         margin-right: 10px;
         display: grid;
         grid-template-columns: 30% 70%;
-        grid-template-rows: 10% 10% 10% 10% 5% 8% 8%
+        grid-template-rows: 10% 12% 8% 8% 8% 8% 8%
 
 
     }

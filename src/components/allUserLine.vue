@@ -24,13 +24,15 @@
                 if(this.isSelected){
                     this.isSelected=false;
                     this.lineClass='lline';
+                    this.$emit('userUnSelected', [this.id, this.email, this.name]);
                 }else{
                     this.isSelected=true;
                     this.lineClass='llineSelected';
+                    this.$emit('userSelected', [this.id, this.email, this.name]);
                 }
 
 
-                this.$emit('userSelected', [this.id, this.email, this.name]);
+
             }
         },
         data(){
