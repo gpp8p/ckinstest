@@ -13,14 +13,21 @@
             <span class="inputPrompt">Homepage</span>
             <span class="inputPrompt selectAdminUser">
                 <span class="cinput">
-                    <span class="inputPrompt">Color:</span>
+                    <span class="inputPrompt"><input type="radio" name="backgroundType" value="color" checked="true"/>Color:</span>
                     <span class="input-color-container">
                         <input  id="input-color" type="color" class="input-color" @change="newColor" :value="colorVal"/>
                     </span>
                 </span>
 
             </span>
-            <span class="inputPrompt selectAdminUser">Image:</span>
+            <span class="inputPrompt selectAdminUser">
+                <span class="fileUpload">
+                     <span><input type="radio" name="backgroundType" value="image"/>Image:</span>
+                    <span>
+                        <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+                    </span>
+                </span>
+            </span>
             <div class="selectAdminUser">
                 <span class="inputPrompt"><input type="radio" name="adminUserSelectType" value="select" checked="true" @click="selectAdmin">Select Space Admin<input type="radio" name="adminUserSelectType" value="new" @click="newAdmin">Admin is New User</span>
                 <new-user-entry :adminUserSelect="this.adminUserSelect"></new-user-entry>
@@ -185,7 +192,7 @@
         margin-right: 10px;
         display: grid;
         grid-template-columns: 30% 70%;
-        grid-template-rows: 10% 10% 10% 10% 5% 5% 5%
+        grid-template-rows: 10% 10% 10% 10% 5% 8% 8%
 
 
     }
@@ -256,6 +263,10 @@
     }
     .selectAdminUser {
         grid-column: 1/-1;
+    }
+    .fileUpload {
+        display: grid;
+        grid-template-columns: 30% 70%;
     }
 
 </style>
