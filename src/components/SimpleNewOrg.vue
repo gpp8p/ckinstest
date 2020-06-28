@@ -33,7 +33,7 @@
             <div class="selectAdminUser">
                 <span class="inputPrompt"><input type="radio" name="adminUserSelectType" value="select" checked="true" @click="selectAdmin">Select Space Admin<input type="radio" name="adminUserSelectType" value="new" @click="newAdmin">Admin is New User</span>
                 <new-user-entry :adminUserSelect="this.adminUserSelect"></new-user-entry>
-                <all-user-list :adminUserSelect="this.adminUserSelect"></all-user-list>
+                <all-user-list :adminUserSelect="this.adminUserSelect" @userSelected="userSelected" @userUnSelected="userUnSelected"></all-user-list>
             </div>
         </div>
 
@@ -70,7 +70,10 @@
                 showBack:0,
                 SHOW_COLOR:0,
                 SHOW_IMAGE:1,
-                imageIdentified: false
+                imageIdentified: false,
+                selectedUserId:0,
+                selectedUserEmail:'',
+                selectedUserName:'',
 
 
             }
@@ -155,15 +158,28 @@
             newColor(evt){
                 this.colorVal=evt.target.value;
             },
+            userSelected(msg){
+                this.selectedUserId = msg[0][0];
+                this.selectedUserEmail = msg[0][1];
+                this.selectedUserName = msg[0][2];
+
+            },
+            userUnSelected(){
+                this.selectedUserId=0;
+                this.selectedUserEmail='';
+                this.selectedUserName='';
+            },
             saveClicked(){
-//        debugger;
-                axios.post('http://localhost:8000/api/newOrg?XDEBUG_SESSION_START=17516', {
+                debugger;
+                axios.post('http://localhost:8000/api/shan/newOrg?XDEBUG_SESSION_START=19311', {
                     name: this.name,
                     description: this.description,
                     height: this.rows,
                     width: this.cols,
                     backgroundColor: this.colorVal,
-                    adminUserId:this.adminUserId
+                    adminUserId:this.selectedUserId,
+                    adminUserEmail: this.selectedUserEmail,
+                    adminUserName: this.selectedUserName
                 }).then(response=>
                 {
 //            debugger;

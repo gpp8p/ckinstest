@@ -7,7 +7,7 @@
                                  :name="user.name"
                                  :email="user.email"
                                  @userSelected="userSelected"
-                                 @userUnselected="userUnSelected"
+                                 @userUnSelected="userUnSelected"
                 >
                 </allUserLine>
 
@@ -58,6 +58,10 @@
         methods:{
             userSelected(msg){
                 this.$emit('userSelected',[msg]);
+            },
+            userUnSelected(msg){
+//                debugger;
+                this.$emit('userUnSelected',[msg]);
             }
         }
 
