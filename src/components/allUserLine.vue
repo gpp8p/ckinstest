@@ -17,22 +17,38 @@
             email: {
                 type: String,
                 required: true
+            },
+            selectedId:{
+                type: Number,
+                required: true
             }
+        },
+        watch: {
+            selectedId: function(){
+                this.showSelected();
+            }
+        },
+        mounted(){
+            this.showSelected();
         },
         methods:{
             orgUserSelected(){
                 if(this.isSelected){
                     this.isSelected=false;
-                    this.lineClass='lline';
+//                    this.lineClass='lline';
                     this.$emit('userUnSelected', [this.id, this.email, this.name]);
                 }else{
                     this.isSelected=true;
-                    this.lineClass='llineSelected';
+//                    this.lineClass='llineSelected';
                     this.$emit('userSelected', [this.id, this.email, this.name]);
                 }
-
-
-
+            },
+            showSelected(){
+                if(this.id==this.selectedId){
+                    this.lineClass='llineSelected';
+                }else{
+                    this.lineClass='lline';
+                }
             }
         },
         data(){

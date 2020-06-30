@@ -21,10 +21,6 @@
             adminUserSelect:{
                 type:Number,
                 required:true
-            },
-            orgId:{
-                type:Number,
-                required: true
             }
         },
         data(){
@@ -39,17 +35,25 @@
         },
         methods: {
             newUserSave(){
-                axios.post('http://localhost:8000/api/shan/createUser?XDEBUG_SESSION_START=19311', {
-
-                }).then(response=>
-                {
+ //               debugger;
+                if(this.password==this.password2){
+                    axios.post('http://localhost:8000/api/shan/createUser?XDEBUG_SESSION_START=19311', {
+                        name: this.name,
+                        email: this.email,
+                        password: this.password,
+                    }).then(response=>
+                    {
 //            debugger;
-                    console.log(response);
-                    this.$emit('userSaved');
+                        console.log(response);
+                        this.$emit('userSaved',[response.data.description, response.data.userId, response.data.userName]);
 //                this.$refs.editGrid.createBlankLayout(msg[2],msg[3],msg[1],msg[0]);
-                }).catch(function(error) {
-                    console.log(error);
-                });
+                    }).catch(function(error) {
+                        console.log(error);
+                    });
+
+                }else{
+                    alert('Passwords must match!');
+                }
             }
         }
     }
@@ -77,7 +81,15 @@
         font-size: 12px;
         font-style: normal;
         font-weight: bold;
-
+    }
+    .inputPrompt {
+        margin-left: 10px;
+        margin-right: 10px;
+        color: black;
+        font-family: Geneva;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: bold;
     }
 
 </style>

@@ -32,8 +32,8 @@
             </span>
             <div class="selectAdminUser">
                 <span class="inputPrompt"><input type="radio" name="adminUserSelectType" value="select" checked="true" @click="selectAdmin">Select Space Admin<input type="radio" name="adminUserSelectType" value="new" @click="newAdmin">Admin is New User</span>
-                <new-user-entry :adminUserSelect="this.adminUserSelect"></new-user-entry>
-                <all-user-list :adminUserSelect="this.adminUserSelect" @userSelected="userSelected" @userUnSelected="userUnSelected"></all-user-list>
+                <new-user-entry :adminUserSelect="this.adminUserSelect" @userSaved="userSaved"></new-user-entry>
+                <all-user-list :adminUserSelect="this.adminUserSelect" :allUserRefresh="this.allUserRefresh" :selectedId="this.selectedUserId" @userSelected="userSelected" @userUnSelected="userUnSelected"></all-user-list>
             </div>
         </div>
 
@@ -74,6 +74,8 @@
                 selectedUserId:0,
                 selectedUserEmail:'',
                 selectedUserName:'',
+                allUserRefresh:0
+
 
 
             }
@@ -162,12 +164,25 @@
                 this.selectedUserId = msg[0][0];
                 this.selectedUserEmail = msg[0][1];
                 this.selectedUserName = msg[0][2];
+                this.adminUserSelect = this.SELECT_USER;
+
 
             },
             userUnSelected(){
                 this.selectedUserId=0;
                 this.selectedUserEmail='';
                 this.selectedUserName='';
+            },
+            userSaved(msg){
+                console.log(msg);
+                debugger;
+                this.selectedUserId = msg[1];
+                this.selectedUserEmail=msg[0];
+                this.selectedUserName = msg[2];
+                this.allUserRefresh++;
+                this.adminUserSelect = this.SELECT_USER;
+
+
             },
             saveClicked(){
                 debugger;
@@ -221,7 +236,7 @@
         margin-top: 5px;
     }
     .dialogComponentBody {
-        height: 72%;
+        height: 85%;
         margin-left: 10px;
         margin-right: 10px;
         display: grid;

@@ -1,17 +1,20 @@
 <template>
-        <span v-if="adminUserSelect==this.SELECT_USER" class="allUserContainer">
+        <div v-if="adminUserSelect==this.SELECT_USER" >
             <allUserHeader></allUserHeader>
+            <div class="allUserContainer">
                 <allUserLine v-for="(user, index) in this.users"
-                                 :key="index"
-                                 :id="user.id"
-                                 :name="user.name"
-                                 :email="user.email"
-                                 @userSelected="userSelected"
-                                 @userUnSelected="userUnSelected"
+                             :key="index"
+                             :id="user.id"
+                             :name="user.name"
+                             :email="user.email"
+                             :selectedId="selectedId"
+                             @userSelected="userSelected"
+                             @userUnSelected="userUnSelected"
                 >
                 </allUserLine>
+            </div>
 
-    </span>
+    </div>
 </template>
 
 <script>
@@ -26,27 +29,27 @@
             adminUserSelect:{
                 type:Number,
                 required:true
+            },
+            allUserRefresh:{
+                type: Number,
+                required: true
+            },
+            selectedId:{
+                type: Number,
+                required: true
             }
         },
 
         mounted: function() {
             console.log('mounted runs in  orgUserList');
 //            axios.get('http://localhost:8000//layoutList')
-            axios.get('http://localhost:8000/api/shan/allUsers?XDEBUG_SESSION_START=19181',
-                {
+            this.getAllUsers();
 
-                })
-
-                .then(response => {
-// eslint-disable-next-line no-debugger
-                    // JSON responses are automatically parsed.
-                    this.users = response.data;
-                    console.log('successful return from orgUsers');
-                })
-                .catch(e => {
-                    console.log(e);
-                    this.errors.push(e);
-                });
+        },
+        watch:{
+            allUserRefresh: function(){
+                this.getAllUsers();
+            }
         },
         data(){
             return{
@@ -62,6 +65,23 @@
             userUnSelected(msg){
 //                debugger;
                 this.$emit('userUnSelected',[msg]);
+            },
+            getAllUsers(){
+                axios.get('http://localhost:8000/api/shan/allUsers?XDEBUG_SESSION_START=19181',
+                    {
+
+                    })
+
+                    .then(response => {
+// eslint-disable-next-line no-debugger
+                        // JSON responses are automatically parsed.
+                        this.users = response.data;
+                        console.log('successful return from orgUsers');
+                    })
+                    .catch(e => {
+                        console.log(e);
+                        this.errors.push(e);
+                    });
             }
         }
 
@@ -72,6 +92,8 @@
 <style scoped>
     .allUserContainer {
         width: 100%;
+        height:135px;
+        overflow: auto;
     }
 
 </style>
