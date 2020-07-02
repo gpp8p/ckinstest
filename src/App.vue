@@ -121,6 +121,9 @@
         Layout, layoutList, CkeditorComponent, menuComponent, configComponent, SimpleNewLayout, SimpleNewCard, SimpleCkEditor, displayLayout, layoutLinksHelper, permSetter, orgList, orgUserList, menuMsg },
     mounted: function() {
         console.log('app mounted');
+        console.log(this.$route.path);
+        this.default_org=this.$route.path.substring(1);
+        console.log('default org is:', this.default_org);
           this.navBarView = this.VIEW_TOP_MENU;
           if(typeof(this.displayLayoutId)=='undefined'){
 //              this.contentView = this.VIEW_LAYOUT_LIST;
@@ -205,7 +208,7 @@
             loggedInUserId:0,
             is_admin:0,
 
-            default_org:'shannon',
+            default_org:'',
             org_home_id:0,
             org_id:0,
 
