@@ -33,7 +33,7 @@
             axios.get('http://localhost:8000/api/shan/orgUsers?XDEBUG_SESSION_START=19181',
             {
                 params:{
-                    orgId:this.$store.getters.getOrgId
+                    orgId:this.orgId
                 }
             })
 
