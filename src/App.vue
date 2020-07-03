@@ -311,6 +311,7 @@
           console.log('org selected', msg);
           this.menuMsg = 'Organization:'+msg[0][1];
           this.selectedOrg=msg[0][0];
+          store.commit('setOrgSelectedId', msg[0][0]);
           this.contentView = this.VIEW_ORG_USER_LIST;
           this.navBarView=this.VIEW_ORG_USER_LIST;
         },

@@ -11,7 +11,8 @@
                         :adminValue="perm.admin"
                         :opt1Value="perm.opt1"
                         :opt2Value="perm.opt2"
-                        :opt3Value="perm.opt3" ></perm-list-line>
+                        :opt3Value="perm.opt3"
+                        @groupClicked="groupClicked"></perm-list-line>
 
     </span>
 </template>
@@ -52,6 +53,11 @@
                 type: Number,
                 required: true
             }
+        },
+        methods:{
+          groupClicked(){
+              console.log('group clicked');
+          }
         },
         data (){
             return {
