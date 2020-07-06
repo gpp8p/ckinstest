@@ -4,11 +4,11 @@
             <span class="headingText">Who Can Access This Space ?</span>
         </div>
         <div class="dialogComponentBody">
-            <perm-list :layoutId="layoutId" @showGroupMembers="showGroupMembers" ></perm-list>
-
+            <perm-list :layoutId="layoutId" ref="permList" @cancelClicked="cancelClicked" @showGroupMembers="showGroupMembers" @showPerms="showPerms" @showNewGroup="showNewGroup" ></perm-list>
         </div>
         <div class="dialogComponentFooter">
             <a href="#" class="linkStyle" v-on:click="cancelClicked" >Done</a>
+            <a href="#" class="linkStyle" v-on:click="showPerms">Permissions</a>
         </div>
     </div>
 </template>
@@ -29,12 +29,26 @@
         },
         data(){
             return {
+                view:0,
+                PERMS:0,
+                GROUP_INFO:1,
+                NEW_GROUP:2,
 
             }
         },
         methods:{
             cancelClicked(){
                 this.$emit('configSelected',['permSetterCanceled']);
+            },
+            showGroupMembers(){
+//                this.view = this.GROUP_INFO;
+            },
+            showPerms(){
+                    this.view = this.PERMS;
+                    this.$refs.permList.setToPerms();
+            },
+            showNewGroup(){
+
             }
         }
     }

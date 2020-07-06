@@ -16,7 +16,7 @@
                         @groupClicked="groupClicked"></perm-list-line>
 
     </span>
-    <span v-if="this.view==this.GROUP_INFO">
+        <span v-if="this.view==this.GROUP_INFO">
         <group-member-header></group-member-header>
         <group-member-line v-for="(member, index) in  groupMembers"
                            :key="index"
@@ -27,6 +27,7 @@
 
         ></group-member-line>
     </span>
+
     </span>
 
 </template>
@@ -41,7 +42,7 @@
         name: "permList",
         components: {GroupMemberHeader, PermListLine, PermListHeader, GroupMemberLine},
         mounted(){
-            debugger;
+//            debugger;
             axios.get('http://localhost:8000/api/shan/layoutPerms?XDEBUG_SESSION_START=14668', {
                 params:{
                     orgId:this.$store.getters.getOrgId,
@@ -52,7 +53,7 @@
                 .then(response => {
 // eslint-disable-next-line no-debugger
                     // JSON responses are automatically parsed.
-                    debugger;
+ //                   debugger;
                     this.currentPerms = response.data;
                 })
                 .catch(e => {
@@ -64,22 +65,29 @@
             layoutId:{
                 type: Number,
                 required: true
-            }
+            },
         },
         methods:{
+          setToPerms(){
+            this.view=this.PERMS;
+          },
+          setToMembers(){
+              this.view=this.GROUP_INFO;
+          },
           groupClicked(msg){
               console.log('group clicked', msg);
+              this.$emit('showGroupMembers');
+              console.log('got past the event');
               this.groupMembers = this.getGroupMembers(msg[0], this.setGroupMembers);
 
           },
           setGroupMembers(groupMembers){
-              debugger;
+//              debugger;
               this.groupMembers=groupMembers;
-              this.view=this.GROUP_INFO;
-//              this.$emit('showGroupMembers');
+              this.setToMembers();
           },
           getGroupMembers(groupId, setGm){
-              debugger;
+//              debugger;
               axios.get('http://localhost:8000/api/shan/groupMembers?XDEBUG_SESSION_START=14668', {
                   params:{
                       groupId: groupId
@@ -88,8 +96,9 @@
                   .then(response => {
 // eslint-disable-next-line no-debugger
                       // JSON responses are automatically parsed.
-                      debugger;
+//                      debugger;
                       setGm(response.data);
+
 
                   })
                   .catch(e => {
@@ -99,6 +108,10 @@
           },
           memberSelected(msg){
               console.log("member selected", msg);
+          },
+          showPerms(){
+              this.view=this.PERMS;
+ //             this.$emit("showPerms");
           }
         },
         data (){

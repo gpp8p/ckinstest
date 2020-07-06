@@ -316,7 +316,7 @@
           this.navBarView=this.VIEW_ORG_USER_LIST;
         },
         configSelected(msg){
-            debugger;
+//            debugger;
             switch(msg[0]){
                 case 'cancel':
                     this.contentView = this.VIEW_ORG_LIST;
