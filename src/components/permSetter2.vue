@@ -4,7 +4,8 @@
             <span class="headingText">Who Can Access This Space ?</span>
         </div>
         <div class="dialogComponentBody">
-            <perm-list :layoutId="layoutId" ref="permList" @cancelClicked="cancelClicked" @showGroupMembers="showGroupMembers" @showPerms="showPerms" @showNewGroup="showNewGroup" @groupMembersLoaded="groupMembersLoaded" ></perm-list>
+            <perm-list :permView="this.permView" :layoutId="this.layoutId" :selectedId="groupId" @groupClicked="groupClicked"></perm-list>
+            <group-member-list v-if="this.permView==this.GROUP_INFO" ref="memberList" v-bind:groupId="this.groupId" v-bind:permView="this.permView" ></group-member-list>
         </div>
         <div class="dialogComponentFooter">
             <a href="#" class="linkStyle" v-on:click="cancelClicked" >Done</a>
@@ -15,59 +16,39 @@
 </template>
 
 <script>
-    import PermList from "./permList";
+    import PermList from "./permList2.vue"
+    import GroupMemberList from "./groupMemberList.vue";
     export default {
-        name: "permSetter",
-        components: {PermList},
-        watch:{
-           selectedGroup: function(){
-              console.log('selected group hasw changed');
-//              this.addMemberShow=true;
-           }
+        name: "permSetter2",
+        components:{PermList, GroupMemberList},
+        mounted(){
+          this.permView=this.PERMS;
         },
-        props: {
-          layoutId:{
-              type: Number,
-              required: true
-          }
+        props:{
+            layoutId:{
+                type: Number,
+                required: true
+            }
+        },
+        methods:{
+            groupClicked(msg){
+ //               debugger;
+                console.log('groupClicked', msg[0]);
+//                this.groupId=msg[0];
+                this.groupId=msg[0];
+                debugger;
+                this.permView=this.GROUP_INFO;
+//                debugger;
+//                this.$refs.memberList.loadMembers(this.groupId);
+            }
         },
         data(){
             return {
-                view:0,
+                permView:0,
                 PERMS:0,
                 GROUP_INFO:1,
-                NEW_GROUP:2,
-                ADD_MEMBER_TO_GROUP:3,
-                ADD_NEW_MEMBER:4,
-                selectedGroup:0,
-                addMemberShow: false
-
-
-            }
-        },
-
-        methods:{
-            cancelClicked(){
-                this.$emit('configSelected',['permSetterCanceled']);
-            },
-            showGroupMembers(msg){
-//                this.view = this.GROUP_INFO;
-                this.selectedGroup=msg[0];
-            },
-            groupMembersLoaded(){
-                console.log('group members loaded');
-//                this.addMemberShow=true;
-            },
-            showPerms(){
-                    this.view = this.PERMS;
-                    this.$refs.permList.setToPerms();
-            },
-            showNewGroup(){
-
-            },
-            showAllUsers(){
-                this.view=this.ADD_MEMBER_TO_GROUP;
-                this.$refs.permList.showAllUsers();
+                groupId:45,
+                selectedGroupId:0
             }
         }
     }
@@ -117,4 +98,5 @@
         font-size: medium;
         color: #0a3aff;
     }
+
 </style>

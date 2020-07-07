@@ -1,6 +1,6 @@
 <template>
         <div v-if="adminUserSelect==this.SELECT_USER" >
-            <allUserHeader></allUserHeader>
+            <allUserHeader @userFound="userFound" @userNotFound="userNotFound"></allUserHeader>
             <div class="allUserContainer">
                 <allUserLine v-for="(user, index) in this.users"
                              :key="index"
@@ -59,6 +59,13 @@
             }
         },
         methods:{
+            userFound(msg){
+              console.log(msg);
+              this.$emit('userFound', msg);
+            },
+            userNotFound(){
+              alert('this user not found');
+            },
             userSelected(msg){
                 this.$emit('userSelected',[msg]);
             },

@@ -13,22 +13,30 @@
                         :opt1Value="perm.opt1"
                         :opt2Value="perm.opt2"
                         :opt3Value="perm.opt3"
+                        :selectedId="selectedGroupId"
                         @groupClicked="groupClicked"></perm-list-line>
 
-    </span>
+        </span>
         <span v-if="this.view==this.GROUP_INFO">
-        <group-member-header></group-member-header>
-        <group-member-line v-for="(member, index) in  groupMembers"
+            <group-member-header></group-member-header>
+            <group-member-line v-for="(member, index) in  groupMembers"
                            :key="index"
                            :name="member.name"
                            :email="member.email"
                            :id="member.id"
                            @memberSelected="memberSelected"
 
-        ></group-member-line>
-    </span>
+            ></group-member-line>
+        </span>
+        <span v-if="this.view==this.FIND_MEMBER">
+            <all-user-list :adminUserSelect="this.adminUserSelect" :allUserRefresh="this.allUserRefresh" :selectedId="this.selectedUserId" @userSelected="userSelected" @userUnSelected="userUnSelected" @userFound="userFound"></all-user-list>
+        </span>
+        <span v-if="this.view==this.ADD_MEMBER_TO_GROUP">
+
+        </span>
 
     </span>
+
 
 </template>
 
@@ -38,11 +46,13 @@
     import PermListLine from "./permListLine.vue";
     import GroupMemberLine from "./GroupMemberLine.vue";
     import GroupMemberHeader from "./GroupMemberHeader";
+    import allUserList from "./allUserList";
     export default {
         name: "permList",
-        components: {GroupMemberHeader, PermListLine, PermListHeader, GroupMemberLine},
+        components: {GroupMemberHeader, PermListLine, PermListHeader, GroupMemberLine, allUserList},
         mounted(){
 //            debugger;
+            this.adminUserSelect = this.SELECT_USER;
             axios.get('http://localhost:8000/api/shan/layoutPerms?XDEBUG_SESSION_START=14668', {
                 params:{
                     orgId:this.$store.getters.getOrgId,
@@ -73,12 +83,14 @@
           },
           setToMembers(){
               this.view=this.GROUP_INFO;
+              this.$emit('groupMembersLoaded');
           },
           groupClicked(msg){
               console.log('group clicked', msg);
-              this.$emit('showGroupMembers');
+              this.$emit('showGroupMembers', [msg[0][0]]);
               console.log('got past the event');
-              this.groupMembers = this.getGroupMembers(msg[0], this.setGroupMembers);
+              this.selectedGroupId=msg[0][0];
+//              this.groupMembers = this.getGroupMembers(msg[0], this.setGroupMembers);
 
           },
           setGroupMembers(groupMembers){
@@ -103,7 +115,7 @@
                   })
                   .catch(e => {
                       this.errors.push(e);
-                      console.log('groujpMembers failed');
+                      console.log('groupMembers failed');
                   });
           },
           memberSelected(msg){
@@ -112,6 +124,9 @@
           showPerms(){
               this.view=this.PERMS;
  //             this.$emit("showPerms");
+          },
+          showAllUsers(){
+              this.view=this.ADD_MEMBER_TO_GROUP;
           }
         },
         data (){
@@ -119,9 +134,19 @@
                 PERMS:0,
                 GROUP_INFO:1,
                 NEW_GROUP:2,
+                FIND_MEMBER:3,
+                ADD_NEW_MEMBER:4,
+                ADD_USER_TO_GROUP:5,
+
+                NEW_USER:1,
+                SELECT_USER:0,
+
                 currentPerms: [],
                 groupMembers: [],
-                view:0
+                view:0,
+                adminUserSelect:0,
+                allUserRefresh:0,
+                selectedGroupId:0
             }
         }
     }
