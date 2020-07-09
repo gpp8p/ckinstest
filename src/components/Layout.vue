@@ -121,6 +121,7 @@ export default {
       scolor: '',
       layoutConfigurationValues: {},
       displayStatus: false,
+      LayoutPermissions:{},
 
       newLayoutConfig: [
         {
@@ -287,10 +288,15 @@ export default {
       this.displayGrid=true;
       this.layoutId = msg;
       this.cancelLayoutEdit();
+
 //      console.log("reloading" + msg);
-      axios
-        .get("http://localhost:8000/getLayout?layoutId=" + this.layoutId+"&&XDEBUG_SESSION_START=15122")
-        .then(response => {
+      axios.get('http://localhost:8000/getLayout?XDEBUG_SESSION_START=15122"', {
+        params:{
+          orgId:this.$store.getters.getOrgId,
+          userId:this.$store.getters.getLoggedInUserId,
+          layoutId:this.layoutId
+        }
+      }).then(response => {
           // JSON responses are automatically parsed.
 //          debugger;
           this.cardInstances = response.data.cards;
@@ -299,6 +305,7 @@ export default {
             response.data.layout.width,
             response.data.layout.backgroundColor
           );
+          this.LayoutPermissions = response.data.perms;
         })
         .catch(e => {
           console.log(e);
