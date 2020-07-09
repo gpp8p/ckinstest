@@ -220,6 +220,8 @@
                 loggedInUser: '',
                 is_admin: 0
             },
+            perms: {
+            },
             menuMsg:''
         }
     },
@@ -261,16 +263,19 @@
             if(this.is_admin==0){
                 axios.get('http://localhost:8000/api/shan/orgHome?XDEBUG_SESSION_START=15022', {
                     params:{
-                        orgName: this.default_org
+                        orgName: this.default_org,
+                        userId: this.loggedInUserId
                     }
                 }).then(response=>
                 {
                     if(response.data.result=='ok'){
-//                        debugger;
+                        debugger;
                         this.org_home = response.data.orgHome;
                         this.org_id = response.data.orgId;
+                        this.perms = response.data.perms;
                         store.commit('setOrgHome', this.org_home);
                         store.commit('setOrgId', this.org_id);
+                        store.commit('setPerms', this.perms);
                         this.displayLayoutId = response.data.orgHome;
                         this.selectedLayoutId = response.data.orgHome;
                         this.navBarView = this.VIEW_GRID_MENU;

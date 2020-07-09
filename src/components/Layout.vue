@@ -29,6 +29,7 @@
 import axios from "axios";
 import EventBus from '../main.js';
 import genericCard from '../components/genericCard.vue';
+  import store from "../store";
 
 
 export default {
@@ -306,6 +307,7 @@ export default {
             response.data.layout.backgroundColor
           );
           this.LayoutPermissions = response.data.perms;
+        store.commit('setPerms', this.LayoutPermissions);
         })
         .catch(e => {
           console.log(e);
