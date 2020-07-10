@@ -214,7 +214,13 @@ export default {
       this.cancelLayoutEdit();
 //      console.log("reloading" + msg);
       axios
-              .get("http://localhost:8000/getLayout?layoutId=" + this.layoutId+"&&XDEBUG_SESSION_START=15122")
+              .get("http://localhost:8000/getLayout?layoutId=XDEBUG_SESSION_START=15122",{
+                params:{
+                  orgId:this.$store.getters.getOrgId,
+                  userId:this.$store.getters.getLoggedInUserId,
+                  layoutId:this.layoutId
+                }
+              })
               .then(response => {
                 // JSON responses are automatically parsed.
 //          debugger;
@@ -274,6 +280,7 @@ export default {
 
               })
               .catch(e => {
+                debugger;
                 console.log(e);
                 this.errors.push(e);
               });
