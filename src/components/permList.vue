@@ -75,7 +75,7 @@
             layoutId:{
                 type: Number,
                 required: true
-            },
+            }
         },
         methods:{
           setToPerms(){
@@ -90,7 +90,7 @@
               this.$emit('showGroupMembers', [msg[0][0]]);
               console.log('got past the event');
               this.selectedGroupId=msg[0][0];
-//              this.groupMembers = this.getGroupMembers(msg[0], this.setGroupMembers);
+              this.groupMembers = this.getGroupMembers(msg[0], this.setGroupMembers);
 
           },
           setGroupMembers(groupMembers){
@@ -143,10 +143,10 @@
 
                 currentPerms: [],
                 groupMembers: [],
-                view:0,
                 adminUserSelect:0,
                 allUserRefresh:0,
-                selectedGroupId:0
+                selectedGroupId:0,
+                view:0
             }
         }
     }

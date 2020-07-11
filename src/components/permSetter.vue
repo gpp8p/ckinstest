@@ -4,21 +4,21 @@
             <span class="headingText">Who Can Access This Space ?</span>
         </div>
         <div class="dialogComponentBody">
-            <perm-list :layoutId="layoutId" ref="permList" @cancelClicked="cancelClicked" @showGroupMembers="showGroupMembers" @showPerms="showPerms" @showNewGroup="showNewGroup" @groupMembersLoaded="groupMembersLoaded" ></perm-list>
+            <perm-list :layoutId="layoutId" ref="permlist" @cancelClicked="cancelClicked" @showGroupMembers="showGroupMembers" @showPerms="showPerms" @showNewGroup="showNewGroup" @groupMembersLoaded="groupMembersLoaded" ></perm-list>
         </div>
-        <div class="dialogComponentFooter">
-            <a href="#" class="linkStyle" v-on:click="cancelClicked" >Done</a>
-            <a href="#" class="linkStyle" v-on:click="showPerms">Permissions</a>
-            <a href="#" v-if="addMemberShow" class="linkStyle" v-on:click="showAllUsers">Add Member</a>
+        <div>
+            <perm-setter-options :permSetterViews="permSetterViews" @permOptionClicked="permOptionClicked"></perm-setter-options>
         </div>
+
     </div>
 </template>
 
 <script>
     import PermList from "./permList";
+    import permSetterOptions from "./permSetterOptions.vue";
     export default {
         name: "permSetter",
-        components: {PermList},
+        components: {PermList, permSetterOptions},
         watch:{
            selectedGroup: function(){
               console.log('selected group hasw changed');
@@ -33,14 +33,24 @@
         },
         data(){
             return {
-                view:0,
+                pview:0,
                 PERMS:0,
                 GROUP_INFO:1,
                 NEW_GROUP:2,
                 ADD_MEMBER_TO_GROUP:3,
                 ADD_NEW_MEMBER:4,
                 selectedGroup:0,
-                addMemberShow: false
+                addMemberShow: false,
+                showPermsShow:true,
+                showGroupMembersShow:false,
+                permSetterViews:{
+                    showPermsShow: false,
+                    showDoneShow:true,
+                    showMemberInfoShow:false,
+                    showSelectNewGroupShow:true,
+                    addNewGroupShow:true,
+                    addMemberShow:false
+                }
 
 
             }
@@ -48,19 +58,39 @@
 
         methods:{
             cancelClicked(){
+ //               debugger;
                 this.$emit('configSelected',['permSetterCanceled']);
             },
             showGroupMembers(msg){
+                console.log('showGroupMembers',msg);
+                this.permSetterViews.showMemberInfoShow=false;
+                this.permSetterViews.showPermsShow=true;
+                this.permSetterViews.addNewGroupShow=false;
+                this.permSetterViews.addMemberShow=true;
+//                  this.$emit('permSetterOptionChange', 'showGroupMembers' );
 //                this.view = this.GROUP_INFO;
-                this.selectedGroup=msg[0];
+//                this.showGroupMembersShow=true;
+//                this.selectedGroup=msg[0];
             },
             groupMembersLoaded(){
                 console.log('group members loaded');
 //                this.addMemberShow=true;
             },
-            showPerms(){
-                    this.view = this.PERMS;
-                    this.$refs.permList.setToPerms();
+            permOptionClicked(msg){
+                debugger;
+                switch(msg){
+                    case 'Done':
+                        this.cancelClicked();
+                        break;
+                    case 'Permissions':
+                        this.$refs.permlist. setToPerms();
+//                        this.pview = this.PERMS;
+                        this.permSetterViews.showPermsShow=false;
+                        this.permSetterViews.addMemberShow=false;
+                        this.permSetterViews.addNewGroupShow=true;
+                        break;
+
+                }
             },
             showNewGroup(){
 
@@ -107,14 +137,6 @@
 
 
     }
-    .dialogComponentFooter {
-        height: 10%;
-        margin-left: 10px;
-        margin-right: 10px;
-    }
-    .linkStyle{
-        font-family: Arial;
-        font-size: medium;
-        color: #0a3aff;
-    }
+
+
 </style>

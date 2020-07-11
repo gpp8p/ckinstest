@@ -41,7 +41,7 @@
                         @layoutSelected="this.layoutLinkSelected">
                 </layout-links-helper>
             </div>
-            <perm-setter v-if="this.draggedComponent=='permSetter'" :layoutId="this.selectedLayoutId" @configSelected="configSelected" ></perm-setter>
+            <perm-setter v-if="this.draggedComponent=='permSetter'"  :layoutId="this.selectedLayoutId" @configSelected="configSelected" @permSetterOptionChange="permSetterOptionChange"></perm-setter>
 
         </div>
 
