@@ -83,7 +83,7 @@
                         this.cancelClicked();
                         break;
                     case 'Permissions':
-                        this.$refs.permlist. setToPerms();
+                        this.$refs.permlist. setView(this.PERMS);
 //                        this.pview = this.PERMS;
                         this.permSetterViews.showPermsShow=false;
                         this.permSetterViews.addMemberShow=false;

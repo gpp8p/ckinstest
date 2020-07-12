@@ -78,8 +78,8 @@
             }
         },
         methods:{
-          setToPerms(){
-            this.view=this.PERMS;
+          setView(v){
+            this.view=v;
           },
           setToMembers(){
               this.view=this.GROUP_INFO;
@@ -118,6 +118,32 @@
                       console.log('groupMembers failed');
                   });
           },
+          showOrganizationGroups(orgId){
+              this.getOrgGroups(orgId, this.setOrgGroups);
+          },
+          setOrgGroups(orgGroups){
+            this.OrganizationGroups = orgGroups;
+            this.setView(this.ORGANIZATION_GROUPS);
+          },
+          getOrgGroups(orgId, setOg){
+              axios.get('http://localhost:8000/api/shan/groupMembers?XDEBUG_SESSION_START=14668', {
+                  params:{
+                      orgId: orgId
+                  }
+              })
+                  .then(response => {
+// eslint-disable-next-line no-debugger
+                      // JSON responses are automatically parsed.
+//                      debugger;
+                      setOg(response.data);
+
+
+                  })
+                  .catch(e => {
+                      this.errors.push(e);
+                      console.log('groupMembers failed');
+                  });
+          },
           memberSelected(msg){
               console.log("member selected", msg);
           },
@@ -137,6 +163,7 @@
                 FIND_MEMBER:3,
                 ADD_NEW_MEMBER:4,
                 ADD_USER_TO_GROUP:5,
+                ORGANIZATION_GROUPS:6,
 
                 NEW_USER:1,
                 SELECT_USER:0,
