@@ -12,7 +12,7 @@
         <span v-if="this.permSetterViews.showMemberInfoShow==true" @click="showMemberInfo" class="linkStyle">
             Group Members
         </span>
-        <span v-if="this.permSetterViews.addNewGroupShow==true" @click="showMemberInfo" class="linkStyle">
+        <span v-if="this.permSetterViews.addNewGroupShow==true" @click="showAddGroup" class="linkStyle">
             Add Group
         </span>
     </div>
@@ -39,6 +39,9 @@
             },
             showMemberInfo(){
                 this.$emit('permOptionClicked', 'Group Members');
+            },
+            showAddGroup(){
+                this.$emit('permOptionClicked', 'Add Group');
             }
         }
     }

@@ -39,6 +39,7 @@
                 NEW_GROUP:2,
                 ADD_MEMBER_TO_GROUP:3,
                 ADD_NEW_MEMBER:4,
+                ORGANIZATION_GROUPS:6,
                 selectedGroup:0,
                 addMemberShow: false,
                 showPermsShow:true,
@@ -89,7 +90,12 @@
                         this.permSetterViews.addMemberShow=false;
                         this.permSetterViews.addNewGroupShow=true;
                         break;
-
+                    case 'Add Group':
+                        this.$refs.permlist.setView(this.ORGANIZATION_GROUPS);
+                        this.permSetterViews.showPermsShow=true;
+                        this.permSetterViews.addNewGroupShow=false;
+                        this.$refs.permlist.showOrganizationGroups(this.$store.getters.getOrgId);
+                        break;
                 }
             },
             showNewGroup(){
