@@ -15,6 +15,10 @@
         <span v-if="this.permSetterViews.addNewGroupShow==true" @click="showAddGroup" class="linkStyle">
             Add Group
         </span>
+        <span v-if="this.permSetterViews.showInsertGroup==true" @click="saveAddGroup" class="linkStyle">
+            Admit This Group
+        </span>
+
     </div>
 </template>
 
@@ -42,6 +46,9 @@
             },
             showAddGroup(){
                 this.$emit('permOptionClicked', 'Add Group');
+            },
+            saveAddGroup(){
+                this.$emit('permOptionClicked', 'Save Add Group');
             }
         }
     }

@@ -1,6 +1,6 @@
 <template>
     <span class="plline">
-        <perm-list-group :groupId="groupId" :currentlySelectedGroupId="selectedId" :groupDescription="groupDescription" @groupClicked="groupClicked"></perm-list-group>
+        <perm-list-group :groupId="groupId" :currentlySelectedGroupId="selectedId" :groupDescription="groupDescription" :displayAsRow="false" @groupClicked="groupClicked"></perm-list-group>
         <perm-list-perm :perm-type="this.VIEW_TYPE" :permValue="viewValue" @permChanged="permChanged"></perm-list-perm>
         <perm-list-perm :perm-type="this.AUTHOR_TYPE" :permValue="authorValue" @permChanged="permChanged"></perm-list-perm>
         <perm-list-perm :perm-type="this.ADMIN_TYPE" :permValue="adminValue" @permChanged="permChanged"></perm-list-perm>

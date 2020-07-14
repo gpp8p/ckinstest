@@ -1,7 +1,13 @@
 <template>
-    <span v-on:click="groupClicked" :class="this.lineClass">
-        {{this.groupDescription}}
+    <span>
+        <span v-if="displayAsRow==false" v-on:click="groupClicked" :class="this.lineClass">
+            {{this.groupDescription}}
+        </span>
+        <div v-if="displayAsRow==true" v-on:click="orgGroupClicked" :class="this.lineClass">
+            {{this.groupDescription}}
+        </div>
     </span>
+
 </template>
 
 <script>
@@ -19,6 +25,10 @@
             currentlySelectedGroupId:{
                 type: Number,
                 required: true
+            },
+            displayAsRow:{
+                type: Boolean,
+                required: false
             }
         },
         watch: {
@@ -30,6 +40,9 @@
         methods:{
             groupClicked(){
                 this.$emit('groupClicked',[this.groupId])
+            },
+            orgGroupClicked(){
+                this.$emit('groupClicked',[this.groupId]);
             },
             showSelected(){
                 if(this.groupId==this.currentlySelectedGroupId){

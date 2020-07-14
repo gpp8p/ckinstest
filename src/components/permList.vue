@@ -42,6 +42,7 @@
                              :groupDescription="org.description"
                              :groupId="org.id"
                              :currentlySelectedGroupId="selectedGroupId"
+                             :displayAsRow="true"
                              @groupClicked="orgGroupClicked"
             ></perm-list-group>
             </div>
@@ -68,23 +69,7 @@
         mounted(){
 //            debugger;
             this.adminUserSelect = this.SELECT_USER;
-            axios.get('http://localhost:8000/api/shan/layoutPerms?XDEBUG_SESSION_START=14668', {
-                params:{
-                    orgId:this.$store.getters.getOrgId,
-                    userId:this.$store.getters.getLoggedInUserId,
-                    layoutId:this.layoutId
-                }
-            })
-                .then(response => {
-// eslint-disable-next-line no-debugger
-                    // JSON responses are automatically parsed.
- //                   debugger;
-                    this.currentPerms = response.data;
-                })
-                .catch(e => {
-                    this.errors.push(e);
-                    console.log('viewableLayouts failed');
-                });
+            this.reloadLayoutPerms();
         },
         props:{
             layoutId:{
@@ -100,6 +85,25 @@
               this.view=this.GROUP_INFO;
               this.$emit('groupMembersLoaded');
           },
+          reloadLayoutPerms(){
+              axios.get('http://localhost:8000/api/shan/layoutPerms?XDEBUG_SESSION_START=14668', {
+                  params:{
+                      orgId:this.$store.getters.getOrgId,
+                      userId:this.$store.getters.getLoggedInUserId,
+                      layoutId:this.layoutId
+                  }
+              })
+                  .then(response => {
+// eslint-disable-next-line no-debugger
+                      // JSON responses are automatically parsed.
+                      //                   debugger;
+                      this.currentPerms = response.data;
+                  })
+                  .catch(e => {
+                      this.errors.push(e);
+                      console.log('viewableLayouts failed');
+                  });
+          },
           groupClicked(msg){
               console.log('group clicked', msg);
               this.$emit('showGroupMembers', [msg[0][0]]);
@@ -109,7 +113,9 @@
 
           },
           orgGroupClicked(msg){
-              this.selectedGroupId=msg[0][0];
+//              debugger;
+              this.selectedGroupId=msg[0];
+              this.$emit('orgGroupSelected', this.selectedGroupId );
           },
           setGroupMembers(groupMembers){
 //              debugger;
@@ -148,7 +154,8 @@
               debugger;
               axios.get('http://localhost:8000/api/shan/orgGroups?XDEBUG_SESSION_START=14668', {
                   params:{
-                      orgId: orgId
+                      orgId: orgId,
+                      layoutId:this.layoutId
                   }
               })
                   .then(response => {

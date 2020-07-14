@@ -4,7 +4,7 @@
             <span class="headingText">Who Can Access This Space ?</span>
         </div>
         <div class="dialogComponentBody">
-            <perm-list :layoutId="layoutId" ref="permlist" @cancelClicked="cancelClicked" @showGroupMembers="showGroupMembers" @showPerms="showPerms" @showNewGroup="showNewGroup" @groupMembersLoaded="groupMembersLoaded" ></perm-list>
+            <perm-list :layoutId="layoutId" ref="permlist" @cancelClicked="cancelClicked" @showGroupMembers="showGroupMembers" @showPerms="showPerms" @showNewGroup="showNewGroup" @groupMembersLoaded="groupMembersLoaded" @orgGroupSelected="orgGroupSelected"></perm-list>
         </div>
         <div>
             <perm-setter-options :permSetterViews="permSetterViews" @permOptionClicked="permOptionClicked"></perm-setter-options>
@@ -16,6 +16,7 @@
 <script>
     import PermList from "./permList";
     import permSetterOptions from "./permSetterOptions.vue";
+    import axios from "axios";
     export default {
         name: "permSetter",
         components: {PermList, permSetterOptions},
@@ -50,7 +51,8 @@
                     showMemberInfoShow:false,
                     showSelectNewGroupShow:true,
                     addNewGroupShow:true,
-                    addMemberShow:false
+                    addMemberShow:false,
+                    showInsertGroup:false
                 }
 
 
@@ -96,7 +98,35 @@
                         this.permSetterViews.addNewGroupShow=false;
                         this.$refs.permlist.showOrganizationGroups(this.$store.getters.getOrgId);
                         break;
+                    case 'Save Add Group':
+                        axios.post('http://localhost:8000/api/shan/setLayoutPerms?XDEBUG_SESSION_START=14668', {
+                            params:{
+                                groupId: this.selectedGroup,
+                                permType: 'view',
+                                permValue: 1,
+                                layoutId:this.layoutId
+                            }
+                        }).then(response => {
+// eslint-disable-next-line no-debugger
+                                this.$refs.permlist. setView(this.PERMS);
+                                this.permSetterViews.showPermsShow=false;
+                                this.permSetterViews.addMemberShow=false;
+                                this.permSetterViews.addNewGroupShow=true;
+                                this.permSetterViews.showInsertGroup=false;
+                                this.$refs.permlist.reloadLayoutPerms();
+                                console.log(response);
+                            })
+                            .catch(e => {
+                                this.errors.push(e);
+                                console.log('viewableLayouts failed');
+                            });
+                        break;
                 }
+            },
+            orgGroupSelected(msg){
+                this.permSetterViews.showInsertGroup=true;
+                console.log(msg);
+                this.selectedGroup = msg;
             },
             showNewGroup(){
 
