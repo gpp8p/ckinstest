@@ -168,10 +168,11 @@
             orgMenuItems: ['Master List of Spaces','Register New Organization'],
             oneOrgMenuItems1:['Organization Spaces', 'Manage Organizations'],
             oneOrgMenuItems2:['Organization Users', 'Manage Organizations'],
+            currentMenuItems: [],
             M_NEW_SPACE: '',
             selectedLayoutId: '',
             layoutCmd: '',
-
+            superAdmin:'George Pipkin',
 
 
 
@@ -222,7 +223,8 @@
             },
             perms: {
             },
-            menuMsg:''
+            menuMsg:'',
+            currentPerms:{}
         }
     },
 
@@ -280,10 +282,15 @@
                         this.selectedLayoutId = response.data.orgHome;
                         this.navBarView = this.VIEW_GRID_MENU;
                         this.contentView = this.VIEW_GRID_MENU;
-                        if(this.loggedInUser=='GuestUser'){
+                        if(this.loggedInUser=='GuestUser') {
                             this.editMenuItems = [];
+                        }else if(this.loggedInUser==this.superAdmin) {
+                            this.editMenuItems = ['Master List of Spaces',  'Organization Spaces'];
                         }else{
-                            this.editMenuItems = ['My Account'];
+                            this.currentPerms=this.$store.getters.getPerms;
+                            if(this.currentPerms.admin==true){
+                                this.editMenuItems = ['Layout List', 'Create New Space', 'Modify this Space', 'Layout Permissions', 'Organization Spaces'];
+                            }
                         }
 
                         this.layoutCmd = 'display';
