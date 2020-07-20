@@ -28,6 +28,7 @@
 
 import axios from "axios";
 import genericCard from '../components/genericCard.vue';
+  import store from "../store";
 
 
 export default {
@@ -54,7 +55,7 @@ export default {
   },
   mounted () {
 //    debugger;
-    this.reloadLayoutForDisplay(this.layoutId)
+    this.reloadLayoutForDisplay(this.layoutId,sessionStorage.getItem('loggedInUserId'),sessionStorage.getItem('default_org'));
   },
   props:{
     layoutId:{
@@ -90,27 +91,34 @@ export default {
 
 
 
-    reloadLayoutForDisplay: function(layoutId) {
+    reloadLayoutForDisplay: function(layoutId, userId, orgId) {
       this.cardInstances = [];
       this.displayGrid=true;
       this.layoutId = layoutId;
 //      this.cancelLayoutEdit();
 //      console.log("reloading" + msg);
-      axios
-        .get("http://localhost:8000/getLayout?layoutId=" + this.layoutId+"&&XDEBUG_SESSION_START=15122")
-        .then(response => {
+      debugger;
+      axios.get('http://localhost:8000/getLayout?XDEBUG_SESSION_START=15122"', {
+        params:{
+          orgId:orgId,
+          userId:userId,
+          layoutId:this.layoutId
+        }
+        }).then(response => {
           // JSON responses are automatically parsed.
-//          debugger;
+          debugger;
           this.cardInstances = response.data.cards;
           this.gridParamDefinition = this.layoutGridParameters(
-            response.data.layout.height,
-            response.data.layout.width,
-            response.data.layout.backgroundColor
+                  response.data.layout.height,
+                  response.data.layout.width,
+                  response.data.layout.backgroundColor
           );
-        })
-        .catch(e => {
-          console.log(e);
-          this.errors.push(e);
+          this.LayoutPermissions = response.data.perms;
+          store.commit('setPerms', this.LayoutPermissions);
+          this.$emit('layoutChanged');
+        }).catch(e => {
+                console.log(e);
+                this.errors.push(e);
         });
     },
 

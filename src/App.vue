@@ -79,7 +79,7 @@
             <org-user-list @orgUserSelected="orgUserSelected" :orgId="this.selectedOrg"></org-user-list>
         </div>
         <div v-if="this.contentView==this.VIEW_DISPLAY_LAYOUT">
-            <display-layout :layoutId="this.displayLayoutId"></display-layout>
+            <display-layout :layoutId="this.displayLayoutId" @layoutChanged="layoutChanged"></display-layout>
         </div>
         <layout  :layoutId="selectedLayoutId" :layoutCmd="layoutCmd" ref="editGrid" @cardClick="cardClick" @textEditor="textEditor" @layoutMessage="this.layoutMessage" @configurationHasBeenSaved="configurationHasBeenSaved" @cardDataLoaded="cardDataLoaded" @linkHelperRequested="linkHelperRequested" @newLayoutSaved="newLayoutSaved" @cardSaved="cardSaved" ></layout>
       </section>
@@ -122,7 +122,16 @@
     mounted: function() {
         console.log('app mounted');
         console.log(this.$route.path);
-        this.default_org=this.$route.path.substring(1);
+        var pathArray=this.$route.path.substring(1).split('/');
+        debugger;
+        if(pathArray[0]=='displayLayout'){
+//            this.default_org=this.$store.getters.getDefaultOrg;
+//            console.log('default org set from vuex = ', this.default_org);
+            this.displayLayoutId=pathArray[1];
+        }else{
+            this.default_org=pathArray[0];
+        }
+
         console.log('default org is:', this.default_org);
           this.navBarView = this.VIEW_TOP_MENU;
           if(typeof(this.displayLayoutId)=='undefined'){
@@ -136,6 +145,14 @@
               this.credentials.loggedInUser = sessionStorage.getItem('loggedInUser');
               this.credentials.loggedInUserId = sessionStorage.getItem('loggedInUserId');
               this.credentials.is_admin = sessionStorage.getItem('is_admin');
+              this.default_org = sessionStorage.getItem('default_org');
+
+              store.commit('setBearerToken', this.credentials.bearerToken);
+              store.commit('setLoggedInUserId', this.credentials.loggedInUserId);
+              store.commit('setLoggedInUser', this.credentials.loggedInUser);
+              store.commit('setIsAdmin', this.credentials.is_admin);
+              store.commit('setDefaultOrg', this.default_org);
+
           }
 
             console.log('layoutId='+this.displayLayoutId);
@@ -224,7 +241,9 @@
             perms: {
             },
             menuMsg:'',
-            currentPerms:{}
+            currentPerms:{},
+            currentContext:0,
+
         }
     },
 
@@ -239,8 +258,15 @@
             this.layoutCmd='displayLayout:'+msg[0];
             this.selectedLayoutId=msg[0];
         },
+        layoutChanged(){
+            debugger;
+            this.currentPerms=this.$store.getters.getPerms;
+            if(this.currentPerms.admin==true){
+                this.editMenuItems = ['Layout List', 'Create New Space', 'Modify this Space', 'Layout Permissions', 'Organization Spaces'];
+            }
+        },
         tokenInstalled(msg){
-//            debugger;
+            debugger;
             this.contentView = this.VIEW_LAYOUT_LIST;
             console.log('token has been installed');
             console.log(msg);
@@ -254,7 +280,8 @@
             this.credentials.is_admin = msg[0][2];
             sessionStorage.setItem('is_admin', this.is_admin);
             this.loggedInUserId = msg[0][3];
-            sessionStorage.setItem('loggeInUserId', this.loggedInUserId);
+            sessionStorage.setItem('loggedInUserId', this.loggedInUserId);
+            sessionStorage.setItem('default_org', this.default_org);
             this.credentials.loggedInUserId = msg[0][3];
             store.commit('setBearerToken', this.bearerToken);
             store.commit('setLoggedInUserId', this.loggedInUserId);
@@ -309,15 +336,10 @@
             }
         },
         userLogged(msg){
-//            debugger;
+            debugger;
           console.log('userLogged', msg);
-          console.log('is_admin:', msg[0][2]);
-          if(msg[0][2]>0){
-              this.navBarView = this.VIEW_TOP_MENU;
-              this.contentView = this.VIEW_LAYOUT_LIST;
-              this.layoutCmd='hide';
-              this.$refs.editGrid.hideGrid();
-          }
+
+
         },
         orgSelected(msg){
           console.log('org selected', msg);

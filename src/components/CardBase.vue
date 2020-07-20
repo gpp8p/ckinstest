@@ -180,6 +180,7 @@
         }
       },
       loadCardConfiguration(cardId){
+//        debugger;
         axios
           .get("http://localhost:8000/getCardDataById?cardId=" + cardId+"&&XDEBUG_SESSION_START=15122")
           .then(response => {

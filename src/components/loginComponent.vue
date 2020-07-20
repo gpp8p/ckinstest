@@ -14,24 +14,40 @@
             </span>
         </span>
         <span v-if="this.logStatus==this.LOGGED_IN">
-            <span class="welcomeMessage">Welcome {{this.loggedInUser}} ! <a @click="doLogout">Log Out</a></span>
+            <span class="welcomeMessage">Welcome {{this.credentials.loggedInUser}} ! <a @click="doLogout">Log Out</a></span>
         </span>
     </span>
 </template>
 
 <script>
     import axios from "axios";
+    import store from "../store";
     export default {
         name: "loginComponent",
         mounted(){
-//            debugger;
+            debugger;
             console.log('login component mounted',this.credentials);
-            if(this.credentials.bearerToken.length>0){
+            if(this.credentials.bearerToken.length>0) {
                 console.log('setting token from session data');
                 axios.defaults.headers.common['Authorization'] = `Bearer ${this.credentials.bearerToken}`;
-                this.loggedInUser= this.credentials.loggedInUser;
+                this.loggedInUser = this.credentials.loggedInUser;
                 this.is_admin = this.credentials.is_admin;
                 this.user_id = this.credentials.loggedInUserId;
+            }else if(sessionStorage.length>0) {
+                this.credentials.bearerToken = sessionStorage.getItem('bearerToken');
+                this.credentials.loggedInUser = sessionStorage.getItem('loggedInUser');
+                this.credentials.loggedInUserId = sessionStorage.getItem('loggedInUserId');
+                this.credentials.is_admin = sessionStorage.getItem('is_admin');
+                this.default_org = sessionStorage.getItem('default_org');
+
+                store.commit('setBearerToken', this.credentials.bearerToken);
+                store.commit('setLoggedInUserId', this.credentials.loggedInUser);
+                store.commit('setLoggedInUser', this.credentials.loggedInUser);
+                store.commit('setIsAdmin', this.credentials.is_admin);
+                store.commit('setDefaultOrg', this.default_org);
+                this.logStatus=this.LOGGED_IN;
+//                debugger;
+                this.$emit('userLogged')
             }else{
                 this.sendLogin('GuestUser@nomail.com', 'GuestUser');
             }
