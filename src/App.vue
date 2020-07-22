@@ -258,11 +258,12 @@
             this.layoutCmd='displayLayout:'+msg[0];
             this.selectedLayoutId=msg[0];
         },
-        layoutChanged(){
+        layoutChanged(msg){
             debugger;
+            this.selectedLayoutId = msg;
             this.currentPerms=this.$store.getters.getPerms;
             if(this.currentPerms.admin==true){
-                this.editMenuItems = ['Layout List', 'Create New Space', 'Modify this Space', 'Layout Permissions', 'Organization Spaces'];
+                this.displayMenuItems = ['Layout List', 'Create New Space', 'Modify this Space', 'Layout Permissions', 'Organization Spaces'];
             }
         },
         tokenInstalled(msg){
@@ -305,6 +306,8 @@
                         store.commit('setOrgHome', this.org_home);
                         store.commit('setOrgId', this.org_id);
                         store.commit('setPerms', this.perms);
+                        sessionStorage.setItem('orgHome', this.org_home);
+                        sessionStorage.setItem('orgId', this.org_id);
                         this.displayLayoutId = response.data.orgHome;
                         this.selectedLayoutId = response.data.orgHome;
                         this.navBarView = this.VIEW_GRID_MENU;
@@ -424,7 +427,7 @@
                   case 'Modify this Space':
                       this.navBarView = this.VIEW_GRID_MENU;
                       this.contentView = this.VIEW_GRID_MENU;
-                      this.editMenuItems = ['Page Preview','Layout Permissions', 'Layout List'];
+//                      this.editMenuItems = ['Page Preview','Layout Permissions', 'Layout List'];
                       this.layoutCmd='show:'+this.selectedLayoutId;
                       break;
                   case 'Go Back':

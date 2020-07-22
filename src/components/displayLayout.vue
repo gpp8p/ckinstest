@@ -55,7 +55,7 @@ export default {
   },
   mounted () {
 //    debugger;
-    this.reloadLayoutForDisplay(this.layoutId,sessionStorage.getItem('loggedInUserId'),sessionStorage.getItem('default_org'));
+    this.reloadLayoutForDisplay(this.layoutId,sessionStorage.getItem('loggedInUserId'),sessionStorage.getItem('orgId'));
   },
   props:{
     layoutId:{
@@ -114,8 +114,8 @@ export default {
                   response.data.layout.backgroundColor
           );
           this.LayoutPermissions = response.data.perms;
-          store.commit('setPerms', this.LayoutPermissions);
-          this.$emit('layoutChanged');
+          store.commit('setPerms', response.data.perms);
+          this.$emit('layoutChanged',[this.layoutId]);
         }).catch(e => {
                 console.log(e);
                 this.errors.push(e);
