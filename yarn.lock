@@ -734,6 +734,16 @@
     "@ckeditor/ckeditor5-engine" "^18.0.0"
     "@ckeditor/ckeditor5-utils" "^18.0.0"
 
+"@ckeditor/ckeditor5-clipboard@^27.0.0":
+  version "27.0.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-clipboard/-/ckeditor5-clipboard-27.0.0.tgz#2bddd2d9a64384c46eabb4522863c437cfd67d7d"
+  dependencies:
+    "@ckeditor/ckeditor5-core" "^27.0.0"
+    "@ckeditor/ckeditor5-engine" "^27.0.0"
+    "@ckeditor/ckeditor5-utils" "^27.0.0"
+    "@ckeditor/ckeditor5-widget" "^27.0.0"
+    lodash-es "^4.17.11"
+
 "@ckeditor/ckeditor5-cloud-services@^18.0.0":
   version "18.0.0"
   resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-cloud-services/-/ckeditor5-cloud-services-18.0.0.tgz#9ea0cdbfe4b758828ed16a482f16388578903ff9"
@@ -748,6 +758,15 @@
     "@ckeditor/ckeditor5-engine" "^18.0.0"
     "@ckeditor/ckeditor5-utils" "^18.0.0"
     lodash-es "^4.17.10"
+
+"@ckeditor/ckeditor5-core@^27.0.0":
+  version "27.0.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-core/-/ckeditor5-core-27.0.0.tgz#ccf77e4aa1e0117841dd5c9d7c30b950b7baefdd"
+  dependencies:
+    "@ckeditor/ckeditor5-engine" "^27.0.0"
+    "@ckeditor/ckeditor5-ui" "^27.0.0"
+    "@ckeditor/ckeditor5-utils" "^27.0.0"
+    lodash-es "^4.17.15"
 
 "@ckeditor/ckeditor5-dev-utils@^12.0.9":
   version "12.0.9"
@@ -805,6 +824,13 @@
     "@ckeditor/ckeditor5-utils" "^18.0.0"
     lodash-es "^4.17.10"
 
+"@ckeditor/ckeditor5-engine@^27.0.0":
+  version "27.0.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-engine/-/ckeditor5-engine-27.0.0.tgz#c325fc7636e866adc5ad98ba1b8823d488ab3633"
+  dependencies:
+    "@ckeditor/ckeditor5-utils" "^27.0.0"
+    lodash-es "^4.17.15"
+
 "@ckeditor/ckeditor5-enter@^18.0.0":
   version "18.0.0"
   resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-enter/-/ckeditor5-enter-18.0.0.tgz#37d5eb676ed022bb0cb5df8bcffa29af76fa3db1"
@@ -812,6 +838,14 @@
     "@ckeditor/ckeditor5-core" "^18.0.0"
     "@ckeditor/ckeditor5-engine" "^18.0.0"
     "@ckeditor/ckeditor5-utils" "^18.0.0"
+
+"@ckeditor/ckeditor5-enter@^27.0.0":
+  version "27.0.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-enter/-/ckeditor5-enter-27.0.0.tgz#1386047e6663fbe64c264691e36998602d31824b"
+  dependencies:
+    "@ckeditor/ckeditor5-core" "^27.0.0"
+    "@ckeditor/ckeditor5-engine" "^27.0.0"
+    "@ckeditor/ckeditor5-utils" "^27.0.0"
 
 "@ckeditor/ckeditor5-essentials@^18.0.0":
   version "18.0.0"
@@ -842,6 +876,13 @@
     "@ckeditor/ckeditor5-upload" "^18.0.0"
     "@ckeditor/ckeditor5-utils" "^18.0.0"
     "@ckeditor/ckeditor5-widget" "^18.0.0"
+
+"@ckeditor/ckeditor5-image@^27.0.0":
+  version "27.0.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-image/-/ckeditor5-image-27.0.0.tgz#4ee167953225243c9626f5367a4b3e471a53ffcd"
+  dependencies:
+    "@ckeditor/ckeditor5-ui" "^27.0.0"
+    ckeditor5 "^27.0.0"
 
 "@ckeditor/ckeditor5-inspector@^2.0.0":
   version "2.0.0"
@@ -874,6 +915,14 @@
     "@ckeditor/ckeditor5-ui" "^18.0.0"
     "@ckeditor/ckeditor5-utils" "^18.0.0"
 
+"@ckeditor/ckeditor5-paragraph@^27.0.0":
+  version "27.0.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-paragraph/-/ckeditor5-paragraph-27.0.0.tgz#ac9e9e623da07010b97a5baa8d0aa83638da2720"
+  dependencies:
+    "@ckeditor/ckeditor5-core" "^27.0.0"
+    "@ckeditor/ckeditor5-ui" "^27.0.0"
+    "@ckeditor/ckeditor5-utils" "^27.0.0"
+
 "@ckeditor/ckeditor5-paste-from-office@^18.0.0":
   version "18.0.0"
   resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-paste-from-office/-/ckeditor5-paste-from-office-18.0.0.tgz#421ca914940b747619c722dfdbb96cc55a258f4c"
@@ -881,6 +930,14 @@
     "@ckeditor/ckeditor5-clipboard" "^18.0.0"
     "@ckeditor/ckeditor5-core" "^18.0.0"
     "@ckeditor/ckeditor5-engine" "^18.0.0"
+
+"@ckeditor/ckeditor5-select-all@^27.0.0":
+  version "27.0.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-select-all/-/ckeditor5-select-all-27.0.0.tgz#77b80ec7334359c1831e5ca633e971065aeb42e5"
+  dependencies:
+    "@ckeditor/ckeditor5-core" "^27.0.0"
+    "@ckeditor/ckeditor5-ui" "^27.0.0"
+    "@ckeditor/ckeditor5-utils" "^27.0.0"
 
 "@ckeditor/ckeditor5-table@^18.0.0":
   version "18.0.0"
@@ -906,6 +963,15 @@
     "@ckeditor/ckeditor5-utils" "^18.0.0"
     lodash-es "^4.17.10"
 
+"@ckeditor/ckeditor5-typing@^27.0.0":
+  version "27.0.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-typing/-/ckeditor5-typing-27.0.0.tgz#9a493f98325d585b4bc8ff7e26c8ceeca12e29db"
+  dependencies:
+    "@ckeditor/ckeditor5-core" "^27.0.0"
+    "@ckeditor/ckeditor5-engine" "^27.0.0"
+    "@ckeditor/ckeditor5-utils" "^27.0.0"
+    lodash-es "^4.17.15"
+
 "@ckeditor/ckeditor5-ui@^18.0.0":
   version "18.0.0"
   resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-ui/-/ckeditor5-ui-18.0.0.tgz#19295293a230011ded53fe4e620405a69c0cb115"
@@ -913,6 +979,14 @@
     "@ckeditor/ckeditor5-core" "^18.0.0"
     "@ckeditor/ckeditor5-utils" "^18.0.0"
     lodash-es "^4.17.10"
+
+"@ckeditor/ckeditor5-ui@^27.0.0":
+  version "27.0.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-ui/-/ckeditor5-ui-27.0.0.tgz#91ac9f4b3d77ba47f1dfd2a988ab7c1168451e6e"
+  dependencies:
+    "@ckeditor/ckeditor5-utils" "^27.0.0"
+    ckeditor5 "^27.0.0"
+    lodash-es "^4.17.15"
 
 "@ckeditor/ckeditor5-undo@^18.0.0":
   version "18.0.0"
@@ -922,6 +996,14 @@
     "@ckeditor/ckeditor5-engine" "^18.0.0"
     "@ckeditor/ckeditor5-ui" "^18.0.0"
 
+"@ckeditor/ckeditor5-undo@^27.0.0":
+  version "27.0.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-undo/-/ckeditor5-undo-27.0.0.tgz#543294cfc4a9d08c465d8d647fafabc3b549575c"
+  dependencies:
+    "@ckeditor/ckeditor5-core" "^27.0.0"
+    "@ckeditor/ckeditor5-engine" "^27.0.0"
+    "@ckeditor/ckeditor5-ui" "^27.0.0"
+
 "@ckeditor/ckeditor5-upload@^18.0.0":
   version "18.0.0"
   resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-upload/-/ckeditor5-upload-18.0.0.tgz#6b2d454e1dfeadc290416ed4ae424d186424b5fa"
@@ -930,11 +1012,25 @@
     "@ckeditor/ckeditor5-ui" "^18.0.0"
     "@ckeditor/ckeditor5-utils" "^18.0.0"
 
+"@ckeditor/ckeditor5-upload@^27.0.0":
+  version "27.0.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-upload/-/ckeditor5-upload-27.0.0.tgz#f087441dd318c869fcd170e2548fe137224d4d13"
+  dependencies:
+    "@ckeditor/ckeditor5-core" "^27.0.0"
+    "@ckeditor/ckeditor5-ui" "^27.0.0"
+    "@ckeditor/ckeditor5-utils" "^27.0.0"
+
 "@ckeditor/ckeditor5-utils@^18.0.0":
   version "18.0.0"
   resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-utils/-/ckeditor5-utils-18.0.0.tgz#95cd6661c000e9157ebb7052a142a9daa34b5388"
   dependencies:
     lodash-es "^4.17.10"
+
+"@ckeditor/ckeditor5-utils@^27.0.0":
+  version "27.0.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-utils/-/ckeditor5-utils-27.0.0.tgz#8ae78bdcc34e5676c778912565f505dcb657aa79"
+  dependencies:
+    lodash-es "^4.17.15"
 
 "@ckeditor/ckeditor5-vue@^1.0.1":
   version "1.0.1"
@@ -949,6 +1045,18 @@
     "@ckeditor/ckeditor5-ui" "^18.0.0"
     "@ckeditor/ckeditor5-utils" "^18.0.0"
     lodash-es "^4.17.10"
+
+"@ckeditor/ckeditor5-widget@^27.0.0":
+  version "27.0.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-widget/-/ckeditor5-widget-27.0.0.tgz#7beda791e5bd64bb14ee9f321495ba1b508cafa2"
+  dependencies:
+    "@ckeditor/ckeditor5-core" "^27.0.0"
+    "@ckeditor/ckeditor5-engine" "^27.0.0"
+    "@ckeditor/ckeditor5-enter" "^27.0.0"
+    "@ckeditor/ckeditor5-typing" "^27.0.0"
+    "@ckeditor/ckeditor5-ui" "^27.0.0"
+    "@ckeditor/ckeditor5-utils" "^27.0.0"
+    lodash-es "^4.17.15"
 
 "@hapi/address@2.x.x":
   version "2.1.4"
@@ -2108,6 +2216,23 @@ cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
   dependencies:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
+
+ckeditor5@^27.0.0:
+  version "27.0.0"
+  resolved "https://registry.yarnpkg.com/ckeditor5/-/ckeditor5-27.0.0.tgz#ac4bec2987ce97d78f63aff416b5657906d91467"
+  dependencies:
+    "@ckeditor/ckeditor5-clipboard" "^27.0.0"
+    "@ckeditor/ckeditor5-core" "^27.0.0"
+    "@ckeditor/ckeditor5-engine" "^27.0.0"
+    "@ckeditor/ckeditor5-enter" "^27.0.0"
+    "@ckeditor/ckeditor5-paragraph" "^27.0.0"
+    "@ckeditor/ckeditor5-select-all" "^27.0.0"
+    "@ckeditor/ckeditor5-typing" "^27.0.0"
+    "@ckeditor/ckeditor5-ui" "^27.0.0"
+    "@ckeditor/ckeditor5-undo" "^27.0.0"
+    "@ckeditor/ckeditor5-upload" "^27.0.0"
+    "@ckeditor/ckeditor5-utils" "^27.0.0"
+    "@ckeditor/ckeditor5-widget" "^27.0.0"
 
 class-utils@^0.3.5:
   version "0.3.6"
@@ -4605,6 +4730,10 @@ locate-path@^5.0.0:
 lodash-es@^4.17.10:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.15.tgz#21bd96839354412f23d7a10340e5eac6ee455d78"
+
+lodash-es@^4.17.11, lodash-es@^4.17.15:
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
 
 lodash.defaultsdeep@^4.6.1:
   version "4.6.1"
